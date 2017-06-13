@@ -1,0 +1,8 @@
+/myproject
+/myproject.{elf,hex}
+/Makefile
+/myproject.cogui
+/myproject.comarker
+*.layout
+bin/
+*.depend

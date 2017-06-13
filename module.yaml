@@ -1,0 +1,13 @@
+name: hFramework
+
+ports: [stm32, linux, esp32]
+
+sdk-files:
+  hFramework.cmake: hFramework.cmake
+  hFrameworkPort.cmake: hFrameworkPort.cmake
+  stm32f4_linker.ld: stm32f4_linker.ld
+  ports/stm32/options.cmake: ports/stm32/options.cmake
+  project_template/CMakeLists.txt: project_template/CMakeLists.txt
+  project_template/main.cpp: project_template/main.cpp
+
+  tools/all/esptool: third-party/esp-idf/components/esptool_py/esptool/esptool.py

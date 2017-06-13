@@ -1,0 +1,109 @@
+name:hPyFramework
+include:hFramework.h
+namespace:hFramework
+num:0x05000000
+
+global:hSystem:sys
+
+class:hSystem
+	method:void:delay_ms:int
+	method:void:delay_us:int
+	method:int:getRefTime
+	method:int:getRandNr
+	method:void:reset
+	method:void:enableUsbCharging
+	method:void:disableUsbCharging
+endclass
+
+global:hLED:LED1
+global:hLED:LED2
+global:hLED:LED3
+
+class:hLED
+	method:void:on
+	method:void:off
+	method:void:toggle
+endclass
+
+global:hMotor:hMot1
+global:hMotor:hMot2
+global:hMotor:hMot3
+global:hMotor:hMot4
+global:hMotor:hMot5
+global:hMotor:hMot6
+
+class:hMotor
+	method:void:setPower:int
+	method:void:rotAbs:int:[int]:[bool]
+	method:void:rotRel:int:[int]:[bool]
+	method:void:setParallelMode
+	method:void:setSingleMode
+	method:void:resetEncoderCnt
+	method:int:getEncoderCnt
+endclass
+
+global:hButton:hBtn1
+global:hButton:hBtn2
+
+class:hButton
+	method:bool:isPressed
+	method:bool:waitForPressed:[int]
+	method:bool:waitForReleased:[int]
+endclass
+
+global:ISensor_i2c:hSens1
+global:ISensor_i2c:hSens2
+global:ISensor_serial:hSens3
+global:ISensor:hSens4
+global:ISensor:hSens5
+
+class:ISensor
+	method:void:selectGPIO
+	method:void:selectSoftI2C
+	method:void:currentSourceOn:bool
+	method:IGPIO_super&:getPinIntAdc
+	method:IGPIO&:getPin1
+	method:IGPIO&:getPin2
+	method:ISensor_i2c&:getSoftwareI2C
+endclass
+
+class:ISensor_i2c:ISensor
+	method:II2C&:getI2C
+	method:void:selectI2C
+endclass
+
+class:ISensor_serial:ISensor
+	method:void:selectSerial
+endclass
+
+class:IGPIO
+	method:void:setOut
+	method:void:setOutOD
+	method:void:setOutOD_pu
+	method:void:setOutOD_pd
+	method:void:setIn
+	method:void:setIn_pu
+	method:void:setIn_pd
+
+	method:bool:read
+	method:void:write:bool
+	method:void:toggle
+	method:void:reset
+endclass
+class:IGPIO_int:IGPIO
+endclass
+class:IGPIO_adc:IGPIO
+	method:void:enableADC
+	method:void:disableADC
+	method:float:analogReadVoltage
+	method:int:analogReadRaw
+endclass
+class:IGPIO_super:IGPIO_int:IGPIO_adc
+endclass
+
+class:II2C
+	method:void:setDataRate:int
+	method:bool:write:int:buffer[byte,in]
+	method:bool:read:int:buffer[byte,out]
+	method:bool:rw:int:buffer[byte,in]:buffer[byte,out]
+endclass
