@@ -15,7 +15,6 @@ $src_dir/build/driver/libdriver.a
 $src_dir/build/esp32/libesp32.a
 $sdk_dir/components/esp32/lib/libcore.a
 $sdk_dir/components/esp32/lib/librtc.a
-$sdk_dir/components/esp32/lib/librtc_clk.a
 $sdk_dir/components/esp32/lib/libphy.a
 $sdk_dir/components/esp32/lib/libcoexist.a
 $sdk_dir/components/esp32/lib/libnet80211.a
@@ -46,9 +45,17 @@ $src_dir/build/ulp/libulp.a
 $src_dir/build/vfs/libvfs.a
 $src_dir/build/wpa_supplicant/libwpa_supplicant.a
 $src_dir/build/xtensa-debug-module/libxtensa-debug-module.a
+$src_dir/build/soc/libsoc.a
 $sdk_dir/components/newlib/lib/libc.a
 $sdk_dir/components/newlib/lib/libm.a
 $sdk_dir/components/esp32/libhal.a"
+
+for archive in $archives; do
+    if [ ! -e "$archive" ]; then
+        make -C "$src_dir" IDF_PATH="$sdk_dir"
+        break
+    fi
+done
 
 for archive in $archives; do
     cp "$archive" "$build_dir"

@@ -11,6 +11,7 @@ include_directories("${CURRENT_DIR}/third-party/esp-idf/components/nvs_flash/inc
 include_directories("${CURRENT_DIR}/third-party/esp-idf/components/openssl/include")
 include_directories("${CURRENT_DIR}/third-party/esp-idf/components/app_update/include")
 include_directories("${CURRENT_DIR}/third-party/esp-idf/components/spi_flash/include")
+include_directories("${CURRENT_DIR}/third-party/esp-idf/components/soc/esp32/include")
 
 set(HFRAMEWORK_FILES
   )

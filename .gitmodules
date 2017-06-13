@@ -3,4 +3,4 @@
 	url = https://github.com/robocoreio/mpy-gen
 [submodule "third-party/esp-idf"]
 	path = third-party/esp-idf
-	url = https://github.com/husarion/esp-idf
+	url = https://github.com/espressif/esp-idf

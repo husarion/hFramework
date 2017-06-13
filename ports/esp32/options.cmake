@@ -5,7 +5,7 @@ set(prefix xtensa-esp32-elf-)
 disable_compiler_detection()
 set(${prefix})
 
-set(esp32_libs "-lapp_update -lbootloader_support -lbt -lcoap -lcxx -ldriver -lesp32 -lcore -lrtc -lrtc_clk -lphy -lcoexist -lnet80211 -lpp -lwpa -lsmartconfig -lcoexist -lwps -lwpa2 -lethernet -lexpat -lfatfs -lfreertos -ljson -llog -llwip -lmbedtls -lmdns -lmicro-ecc -lnewlib -lnghttp -lnvs_flash -lopenssl -lsdmmc -lspi_flash -ltcpip_adapter -lulp -lvfs -lwpa_supplicant -lxtensa-debug-module -lhal -lc -lm -lhFramework")
+set(esp32_libs "-lapp_update -lbootloader_support -lbt -lcoap -lcxx -ldriver -lesp32 -lcore -lrtc -lsoc -lphy -lcoexist -lnet80211 -lpp -lwpa -lsmartconfig -lcoexist -lwps -lwpa2 -lethernet -lexpat -lfatfs -lfreertos -ljson -llog -llwip -lmbedtls -lmdns -lmicro-ecc -lnewlib -lnghttp -lnvs_flash -lopenssl -lsdmmc -lspi_flash -ltcpip_adapter -lulp -lvfs -lwpa_supplicant -lxtensa-debug-module -lhal -lc -lm -lhFramework")
 
 set(port_flags "")
 set(port_lflags "-nostdlib -Wl,--gc-sections -Wl,-static -Wl,--start-group -u uxTopUsedPriority -u call_user_start_cpu0 -u __cxa_guard_dummy ${esp32_libs} -lgcc -lstdc++ -T esp32_out.ld -T esp32.common.ld -T esp32.rom.ld -T esp32.peripherals.ld -Wl,--end-group -Wl,-EL")
