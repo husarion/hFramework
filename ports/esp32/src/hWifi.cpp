@@ -8,19 +8,25 @@
 #include <cstring>
 #include "esp_wifi.h"
 #include "esp_system.h"
+#include "esp_event_loop.h"
 
 namespace hFramework {
 
 hMutex mutex;
+esp_err_t eventCallback(void *arg, system_event_t *event);
 
 void init() {
     static bool initDone = false;
     if (initDone) return;
     initDone = true;
 
+    esp_event_loop_init(&eventCallback, NULL);
+
     wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
     ESP_ERROR_CHECK( esp_wifi_init(&cfg) );
     ESP_ERROR_CHECK( esp_wifi_set_storage(WIFI_STORAGE_RAM) );
+    ESP_ERROR_CHECK( esp_wifi_set_mode(WIFI_MODE_STA) );
+    ESP_ERROR_CHECK( esp_wifi_start() );
 }
 
 void _hWifi::setupAP(const AccessPointConfig& config) {
@@ -40,7 +46,7 @@ void _hWifi::setupAP(const AccessPointConfig& config) {
         return;
     }
 
-    ESP_ERROR_CHECK( esp_wifi_set_mode(WIFI_MODE_AP) );
+    ESP_ERROR_CHECK( esp_wifi_set_mode((wifi_mode_t)(WIFI_MODE_AP | WIFI_MODE_STA)) );
 
     ap_config.ap.channel = config.channel;
     strcpy((char*)ap_config.ap.ssid, config.ssid);
@@ -117,16 +123,23 @@ void _hWifi::connect(const NetworkConfig* config, int count) {
 }
 
 bool _hWifi::scan(std::vector<ScannedNetwork>& networks) {
+    hMutexGuard guard (mutex);
+    init();
+
     ::printf("start scan RAM left: %d\n", esp_get_free_heap_size());
     wifi_scan_config_t cfg;
     cfg.ssid = nullptr;
     cfg.bssid = nullptr;
     cfg.channel = 0;
     cfg.show_hidden = false;
-    //cfg.scan_type = WIFI_SCAN_TYPE_PASSIVE;
-    //cfg.scan_time.passive = 300;
-    esp_wifi_scan_start(&cfg, true);
-    ::printf("finish scan RAM left: %d\n", esp_get_free_heap_size());
+    cfg.scan_type = WIFI_SCAN_TYPE_ACTIVE;
+    cfg.scan_time.active.min = 100;
+    cfg.scan_time.active.max = 300;
+    {
+        ::printf("start scan RAM left: %d\n", esp_get_free_heap_size());
+        esp_wifi_scan_start(&cfg, true);
+        ::printf("finish scan RAM left: %d\n", esp_get_free_heap_size());
+    }
     uint16_t num = -1;
     ESP_ERROR_CHECK(esp_wifi_scan_get_ap_num(&num));
     ::printf("found %d networks\n", num);
@@ -145,4 +158,27 @@ bool _hWifi::scan(std::vector<ScannedNetwork>& networks) {
 
 _hWifi Wifi;
 
+esp_err_t eventCallback(void *arg, system_event_t *event) {
+    ::printf("wifi event (id=%d)\n", event->event_id);
+    if(event->event_id == SYSTEM_EVENT_STA_DISCONNECTED) {
+        uint8_t reason = event->event_info.disconnected.reason;
+        ::printf("wifi disconnected (reason=%d)", (int)reason);
+        if(reason == WIFI_REASON_NO_AP_FOUND ||
+           reason == WIFI_REASON_BEACON_TIMEOUT || reason == WIFI_REASON_HANDSHAKE_TIMEOUT ||
+           reason == WIFI_REASON_AUTH_EXPIRE) {
+             // reattempt connection
+             esp_wifi_connect();
+        } else if(reason == WIFI_REASON_AUTH_FAIL || reason == WIFI_REASON_ASSOC_FAIL) {
+
+        }
+    } else if(event->event_id == SYSTEM_EVENT_STA_START) {
+
+    } else if(event->event_id == SYSTEM_EVENT_STA_STOP) {
+
+    } else if(event->event_id == SYSTEM_EVENT_STA_GOT_IP) {
+
+    }
+
+    return 0;
+}
 }
