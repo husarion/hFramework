@@ -1,6 +1,6 @@
 [submodule "py-connector/mpy-gen"]
 	path = py-connector/mpy-gen
-	url = git@github.com:robocoreio/mpy-gen.git
+	url = https://github.com/robocoreio/mpy-gen
 [submodule "third-party/esp-idf"]
 	path = third-party/esp-idf
 	url = https://github.com/husarion/esp-idf
