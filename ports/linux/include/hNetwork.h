@@ -11,7 +11,6 @@
 
 namespace hFramework {
 class _Network {
-    char localIp[16] = {0};
 public:
 
     bool isOnline();
@@ -19,7 +18,7 @@ public:
     std::unique_ptr<hTCPConnection> connect(InetAddress addr);
     std::unique_ptr<hTCPConnection> connect(const char* hostname, int port);
     std::unique_ptr<hUdpSocket> bindUdp(int port);
-    const char* getLocalIp() { return localIp; }
+    const char* getLocalIp();
 };
 
 extern _Network Network;

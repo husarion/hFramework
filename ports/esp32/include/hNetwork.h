@@ -16,6 +16,7 @@
 namespace hFramework {
 class _Network {
     char localIp[16] = {0};
+    friend class _hWifi;
 public:
 
     bool isOnline() { return true; }
