@@ -60,6 +60,24 @@ void _hWifi::connect(const NetworkConfig* configs, int count) {
 }
 
 bool _hWifi::scan(std::vector<ScannedNetwork>& networks) {
+    std::cerr << "scanning..." << std::endl;
+    cmd({
+            "husarion-wifi", "scan-write"
+        });
+
+    std::cerr << "scanning..." << std::endl;
+    FILE* f = fopen("/run/husarion-wifi-networks", "rb");
+    short count;
+    if (fread(&count, sizeof(short), 1, f) != 1) {
+        std::cerr << "scanning failed" << std::endl;
+        return false;
+    }
+    std::cerr << "found " << count << " networks" << std::endl;
+
+    networks.resize(count);
+    if ((int)fread(networks.data(), sizeof(ScannedNetwork), count, f) != (int)count) return false;
+    fclose(f);
+
     return true;
 }
 
