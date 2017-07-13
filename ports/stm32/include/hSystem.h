@@ -280,6 +280,12 @@ public:
 	 */
 	static void setLogDev(hPrintfDev* dev);
 
+	 /**
+	   * @brief Set default log device for hFramework internal events.
+	   *
+	   *
+	 * @param dev device
+	 */
 	static void setSysLogDev(hPrintfDev* dev);
 
 	/**
