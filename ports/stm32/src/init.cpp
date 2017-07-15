@@ -116,9 +116,9 @@ void portInit()
 #if BOARD(ROBOCORE)
 	Edison.init(460800);
 #elif BOARD(CORE2)
-	RPi.init(460800);
+	RPi.init(500000);
 #elif BOARD(CORE2MINI)
-	RPi.init(460800);
+	RPi.init(500000);
 #else
 #  error no board
 #endif
