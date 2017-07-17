@@ -57,6 +57,7 @@ set(PORT_FILES
 	src/hGenericQueue_rtos.cpp
 	src/hMutex_rtos.cpp
 	src/hSystem_rtos.cpp
+        src/hCondVar.cpp
 
 	third-party/cmsis_lib/source/misc.c
 	third-party/FatFS/diskio.c
