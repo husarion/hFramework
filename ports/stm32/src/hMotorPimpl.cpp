@@ -303,11 +303,11 @@ void hMotorPimpl::updatePower_internal(bool force, int16_t power)
 	myPWM_counter_enable(pinPWM);
 	portENABLE_INTERRUPTS();
 }
-void hMotorPimpl::setSlewRate(float time)
+void hMotorPimpl::setSlewRate(float rate_mul)
 {
 	hMutexGuard guard(accessMutex);
 
-	slewRate = time * 100;
+	slewRate = rate_mul * 100;
 	if (slewRate > 0)
 	{
 		if (!slewTaskRunning)
@@ -343,6 +343,10 @@ void hMotorPimpl::slewRateTask()
 
 		int32_t newPower = curPower + diffMult;
 		updatePower_internal(false, newPower);
+		//*
+ + +		//	Some form of delay
+ + +		//	Due to its lack , slope rate change too quickly
+ + +		//*
 	}
 
 	LOG("slew task ended");
