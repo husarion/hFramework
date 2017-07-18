@@ -77,9 +77,9 @@ void hMotor::setPowerLimit(int16_t limit)
 	impl.limit = limit;
 	impl.updatePower_internal(false);
 }
-void hMotor::setSlewRate(float time)
+void hMotor::setSlewRate(float rate_mul)
 {
-	impl.setSlewRate(time);
+	impl.setSlewRate(rate_mul);
 }
 
 void hMotor::attachPositionRegulator(hRegulator& regPosition)
