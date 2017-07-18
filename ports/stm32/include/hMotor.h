@@ -154,7 +154,7 @@ public:
 
 	void setPowerLimit(int16_t limit);
 
-	void setSlewRate(float time);
+	void setSlewRate(float rate_mul);
 
 	/**
 	 * @brief Get number of encoder ticks.

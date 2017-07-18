@@ -98,6 +98,7 @@ class _DevNull : public hStreamDev {
 };
 
 __attribute__((used)) static _DevNull DevNull;
+__attribute__((used)) static _DevNull devNull;
 
 }
 #endif //H_STREAM_DEV
