@@ -123,7 +123,7 @@ public:
 	void setPower(int16_t power);
 	void updatePower_internal(bool force) { updatePower_internal(force, curPower); }
 	void updatePower_internal(bool force, int16_t power);
-	void setSlewRate(float time);
+	void setSlewRate(float rate_mul);
 	void slewRateTask();
 
 	void attachPositionRegulator(hRegulator& regPosition);
