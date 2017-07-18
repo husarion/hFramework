@@ -96,7 +96,11 @@ void hSSL::processPendingReads() {
     if (!running) return;
     if (!processPendingConnect()) return;
 
-    int ret = SSL_read(ssl, readBuffer, sizeof(readBuffer));
+    int maxSize = std::min((int)sizeof(readBuffer), (int)readQ.freeSpace());
+    if (maxSize == 0)
+        return;
+
+    int ret = SSL_read(ssl, readBuffer, maxSize);
     if (ret > 0) {
         readQ.write(readBuffer, ret);
     } else {
@@ -153,6 +157,7 @@ int hSSL::write(const void* data, int len, uint32_t timeout) {
 }
 
 int hSSL::read(void* data, int len, uint32_t timeout) {
+    //::printf("::read %d timeout=%d\n", len, (int)timeout);
     {
         hMutexGuard guard (sslMutex);
 
@@ -160,6 +165,7 @@ int hSSL::read(void* data, int len, uint32_t timeout) {
         if (readQ.getElementCnt() == 0) processPendingReads(); // no deadlock here
         if (!running) return -1;
     }
+    //::printf("::read DO\n");
 
     return readQ.read(data, len, timeout);
 }
