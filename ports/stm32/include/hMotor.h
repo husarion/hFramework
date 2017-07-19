@@ -153,7 +153,12 @@ public:
 	void setPower(int16_t power);
 
 	void setPowerLimit(int16_t limit);
-
+	
+	
+	/**
+	* @brief Set slew rate for motor
+	* @param time (min 0.01) Time constant of rate regulation 
+	*/
 	void setSlewRate(float time);
 
 	/**
