@@ -89,7 +89,6 @@ set(PORT_FILES
 	third-party/FreeRTOS/hooks.c
 	third-party/FreeRTOS/list.c
 	third-party/FreeRTOS/portable/GCC/ARM_CM4F/port.c
-	third-party/FreeRTOS/portable/MemMang/heap_5.c
 	third-party/FreeRTOS/queue.c
 	third-party/FreeRTOS/tasks.c
 	third-party/FreeRTOS/timers.c

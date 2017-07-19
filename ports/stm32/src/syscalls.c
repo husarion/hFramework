@@ -2,13 +2,14 @@
 #include <stdarg.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <string.h>
 
 #include "system.h"
 
 #undef errno
-extern int errno;
-extern int _end;
-extern int __HeapLimit;
+extern unsigned int errno;
+extern unsigned int _end;
+extern unsigned int __HeapLimit;
 
 int sys_log_data_crnl(const char* buf, int len);
 
@@ -17,20 +18,16 @@ caddr_t _sbrk(int incr)
 {
 	static unsigned char *heap = NULL;
 	unsigned char *prev_heap;
-
-	if (heap == NULL)
-	{
+	if (heap == NULL) {
 		heap = (unsigned char *)&_end;
 	}
-	prev_heap = heap;
 
+	prev_heap = heap;
 	heap += incr;
 
-	if ((int)heap >= __HeapLimit) {
-		const char msg[] = "warning: heap exhausted";
-		sys_log_data_crnl(msg, sizeof(msg));
-		errno = 1;
-		return (void*)-1;
+	if ((int)(heap) + 0x100 > 0x20020000) {
+		sys_fault_log("heap memory exhausted\r\n");
+		sys_fault_handler();
 	}
 
 	return (caddr_t) prev_heap;
@@ -88,16 +85,18 @@ int _write(int file, char *ptr, int len)
 __attribute__((used))
 void abort(void)
 {
-	while (1);
+	const char msg[] = "abort called\n";
+	sys_log_data_crnl(msg, sizeof(msg));
+	sys_fault_handler();
+	__builtin_unreachable();
 }
 
 __attribute__((used))
 void _exit(int n)
 {
-	while (1)
-	{
-		n = n;
-	}
+	const char msg[] = "exit called\n";
+	sys_log_data_crnl(msg, sizeof(msg));
+	sys_fault_handler();
 }
 
 int sys_log_data_crnl(const char* buf, int len)

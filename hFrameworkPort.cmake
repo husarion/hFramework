@@ -116,7 +116,7 @@ set(errors_flags_cpp "-Wno-reorder")
 if (${BOARD_TYPE} STREQUAL robocore)
   set(optimization_flags "-O0")
 else()
-  set(optimization_flags "-O2") # really?
+  set(optimization_flags "-Og")
 endif()
 
 # set(common_flags "-static ${errors_flags} -ffunction-sections -fdata-sections")

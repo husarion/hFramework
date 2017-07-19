@@ -131,6 +131,7 @@ void hMainInit();
 
 void initFunc(void*)
 {
+	hLED1.on();
 	hFramework::portInit();
 	hFramework::hMainInit();
 #if BOARD(ROBOCORE)
@@ -139,12 +140,16 @@ void initFunc(void*)
 	vTaskDelete(NULL);
 }
 
+static int initialSetupDone;
+
 int main(void)
 {
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
 
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2, ENABLE);
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA1, ENABLE);
+
+	initialSetupDone = 1;
 
 	if (xTaskCreate(initFunc, (const char*)"start", 400, 0, configMAX_PRIORITIES - 1, 0) == pdTRUE)
 	{
@@ -155,26 +160,31 @@ int main(void)
 
 extern "C" void HardFault_Handler()
 {
-	sys.fail_log("HardFault_Handler\r\n");
+	if (initialSetupDone == 1)
+		sys.fail_log("HardFault_Handler\r\n");
 	sys.fault_handler();
 }
 extern "C" void NMI_Handler()
 {
-	sys.fail_log("NMI_Handler\r\n");
+	if (initialSetupDone == 1)
+		sys.fail_log("NMI_Handler\r\n");
 	sys.fault_handler();
 }
 extern "C" void MemManage_Handler()
 {
-	sys.fail_log("MemManage_Handler\r\n");
+	if (initialSetupDone == 1)
+		sys.fail_log("MemManage_Handler\r\n");
 	sys.fault_handler();
 }
 extern "C" void BusFault_Handler()
 {
-	sys.fail_log("BusFault_Handler\r\n");
+	if (initialSetupDone == 1)
+		sys.fail_log("BusFault_Handler\r\n");
 	sys.fault_handler();
 }
 extern "C" void UsageFault_Handler()
 {
-	sys.fail_log("UsageFault_Handler\r\n");
+	if (initialSetupDone == 1)
+		sys.fail_log("UsageFault_Handler\r\n");
 	sys.fault_handler();
 }

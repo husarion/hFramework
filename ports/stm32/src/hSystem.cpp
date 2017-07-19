@@ -217,13 +217,40 @@ void hSystem::endCritical()
 
 void* hSystem::malloc(uint32_t size)
 {
-	return pvPortMalloc(size);
+	return ::malloc((size_t)size);
 }
 
 void hSystem::free(void * ptr)
 {
-	return vPortFree(ptr);
+	return ::free(ptr);
 }
+
+static int mallocLockCounter = 0;
+
+extern "C" void __malloc_lock(void* unused) {
+	taskENTER_CRITICAL();
+	if (mallocLockCounter == 0)
+		vTaskSuspendAll();
+
+	mallocLockCounter ++;
+	taskEXIT_CRITICAL();
+}
+
+extern "C" void __malloc_unlock(void* unused) {
+	mallocLockCounter --;
+	if (mallocLockCounter == 0)
+		xTaskResumeAll();
+}
+
+extern "C" void* pvPortMalloc(size_t xWantedSize) {
+	return malloc(xWantedSize);
+}
+
+extern "C" void vPortFree(void* pv) {
+	free(pv);
+}
+
+// for newlib
 
 char* hSystem::getTaskList(char* taskList)
 {
@@ -406,6 +433,11 @@ int hSystem::fail_vlog(const char* format, va_list arg)
 	return ctx.doFormat();
 }
 
+void hSystem::fault_log(const char* msg) {
+	for (int i=0; msg[i]; i ++)
+		myUSART_fail_putc(msg[i]);
+}
+
 void hSystem::idleTask()
 {
 	while (1)
@@ -521,7 +553,8 @@ bool TRoboCOREHeader::isKeyValid() const
 		return false;
 
 	uint16_t expectedCrc = crc16_calc(key + 1, 16);
-	uint16_t calcCrc = *(uint16_t*)(key + 17);
+	uint16_t calcCrc;
+	memcpy(&calcCrc, (key + 17), 2);
 
 	return expectedCrc == calcCrc;
 }
@@ -549,14 +582,3 @@ const TRoboCOREHeader* getRobocoreHeader()
 }
 
 }
-void* operator new(unsigned int sz)
-{
-	// hFramework::sys.log("global op new called, size = %u\r\n", sz);
-	return hFramework::sys.malloc(sz);
-}
-void operator delete(void* ptr) noexcept
-{
-	// hFramework::sys.log("global op delete called\r\n");
-	hFramework::sys.free(ptr);
-}
-

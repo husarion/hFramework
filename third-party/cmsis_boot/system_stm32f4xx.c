@@ -196,10 +196,6 @@ static void SetSysClock(void);
   * @{
   */
 
-
-volatile uint8_t ucHeap1[ configTOTAL_HEAP_SIZE_CCRAM ] __attribute__((section(".ccm")));
-volatile uint8_t ucHeap2[ configTOTAL_HEAP_SIZE_SRAM ];
-
 /**
   * @brief  Setup the microcontroller system
   *         Initialize the Embedded Flash Interface, the PLL and update the
@@ -247,16 +243,6 @@ void SystemInit(void)
 #else
   SCB->VTOR = FLASH_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH */
 #endif
-
-  const HeapRegion_t xHeapRegions[] =
-  {
-      { ( uint8_t * ) &ucHeap1, configTOTAL_HEAP_SIZE_CCRAM },
-      { ( uint8_t * ) &ucHeap2, configTOTAL_HEAP_SIZE_SRAM },
-      { NULL, 0 } /* Terminates the array. */
-  };
-
-  /* Pass the array into vPortDefineHeapRegions(). */
-  vPortDefineHeapRegions( xHeapRegions );
 }
 
 /**

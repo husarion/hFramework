@@ -56,6 +56,9 @@ void hButton_int::init()
 
 	timer = xTimerCreate("", msToTicks(10), pdFALSE, this, userHandler);
 
+	if (!releaseHandler) releaseHandler = doNothing;
+	if (!pressHandler) pressHandler = doNothing;
+
 	pin.interruptOn(InterruptEdge::Both, [this]()
 	{
 		BaseType_t xHigherPriorityTaskWoken = pdFALSE;

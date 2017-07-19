@@ -32,6 +32,7 @@ void sys_tick_hook();
 int sys_log(const char* format, ...);
 int sys_syslog(const char* format, ...);
 int sys_vlog(const char* format, va_list arg);
+void sys_fault_log(const char* msg);
 int sys_write_log(const char* buf, int len);
 int sys_read_log(char* buf, int len);
 int fail_log(const char* format, ...);

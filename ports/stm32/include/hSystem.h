@@ -322,6 +322,7 @@ public:
 
 	static int fail_log(const char* format, ...);
 	static int fail_vlog(const char* format, va_list arg);
+	static void fault_log(const char* msg);
 
 	static void idleTask();
 	static void tickHook();
