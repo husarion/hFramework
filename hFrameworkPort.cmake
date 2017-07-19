@@ -113,10 +113,10 @@ add_definitions(-DSUPPORT_CPLUSPLUS)
 
 set(errors_flags "-Wall -Wextra -Werror=parentheses -Werror=implicit -Wno-write-strings -Wno-main -Wno-unused-parameter")
 set(errors_flags_cpp "-Wno-reorder")
-if (${PORT} STREQUAL esp32)
-  set(optimization_flags "-O2")
+if (${BOARD_TYPE} STREQUAL robocore)
+  set(optimization_flags "-O0")
 else()
-  set(optimization_flags "-O0") # really?
+  set(optimization_flags "-O2") # really?
 endif()
 
 # set(common_flags "-static ${errors_flags} -ffunction-sections -fdata-sections")
