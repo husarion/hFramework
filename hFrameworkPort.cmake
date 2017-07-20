@@ -135,7 +135,7 @@ endmacro()
 macro(update_flags)
   set(tmp "${common_flags} ${optimization_flags} ${port_flags}")
 
-  set(CMAKE_EXE_LINKER_FLAGS "${compiler_flags} ${tmp} -Wl,--gc-sections -lstdc++ -lsupc++")
+  set(CMAKE_EXE_LINKER_FLAGS "${compiler_flags} ${tmp} -Wl,--gc-sections -lg -lstdc++ -lsupc++")
   set(CMAKE_CXX_FLAGS        "${compiler_flags} ${tmp} ${errors_flags_cpp} -std=c++11")
   set(CMAKE_C_FLAGS          "${compiler_flags} ${tmp} -std=c99")
   set(CMAKE_ASM_FLAGS        "${tmp}")
