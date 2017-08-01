@@ -265,9 +265,9 @@ void hSystem::delayUs(uint32_t delay)
 
 void hSystem::delaySync(uint32_t& refTime, uint32_t delay)
 {
-    uint32_t refticks = refTime * configTICK_RATE_HZ / 1000;
+    uint32_t refticks = refTime * configTICK_RATE_HZ / 1000; // * 2 on STM32
     vTaskDelayUntil((portTickType*)&refticks, msToTicks(delay));
-    refTime = refticks * configTICK_RATE_HZ / 1000;
+    refTime = refticks * 1000 / configTICK_RATE_HZ; // / 2 on STM32
 }
 
 uint32_t hSystem::getRefTime()
