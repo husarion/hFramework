@@ -161,30 +161,30 @@ int main(void)
 extern "C" void HardFault_Handler()
 {
 	if (initialSetupDone == 1)
-		sys.fail_log("HardFault_Handler\r\n");
+		sys.fault_log("HardFault_Handler\r\n");
 	sys.fault_handler();
 }
 extern "C" void NMI_Handler()
 {
 	if (initialSetupDone == 1)
-		sys.fail_log("NMI_Handler\r\n");
+		sys.fault_log("NMI_Handler\r\n");
 	sys.fault_handler();
 }
 extern "C" void MemManage_Handler()
 {
 	if (initialSetupDone == 1)
-		sys.fail_log("MemManage_Handler\r\n");
+		sys.fault_log("MemManage_Handler\r\n");
 	sys.fault_handler();
 }
 extern "C" void BusFault_Handler()
 {
 	if (initialSetupDone == 1)
-		sys.fail_log("BusFault_Handler\r\n");
+		sys.fault_log("BusFault_Handler\r\n");
 	sys.fault_handler();
 }
 extern "C" void UsageFault_Handler()
 {
 	if (initialSetupDone == 1)
-		sys.fail_log("UsageFault_Handler\r\n");
+		sys.fault_log("UsageFault_Handler\r\n");
 	sys.fault_handler();
 }
