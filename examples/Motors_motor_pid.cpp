@@ -32,15 +32,15 @@ void hMain()
 	sys.taskCreate([]() {
 		while (true)
 		{
-			hMot1.rotRel(360, 200, 1); // rotate relatively hMot1 360 tics right with 200 power and block task until finished
+			hMot1.rotRel(360, 200, 1); // rotate relatively hMot1 360 ticks right with 200 power and block task until finished
 		}
 	});
 
 	sys.taskCreate([]() {
 		while (true)
 		{
-			hMot2.rotAbs(360, 200, 1); // rotate absolutely hMot2 to 360 tics with 200 power and block task until finished
-			hMot2.rotAbs(0, 200, 1);   // rotate absolutely hMot2 to 0 tics with 200 power and block task until finished
+			hMot2.rotAbs(360, 200, 1); // rotate absolutely hMot2 to 360 ticks with 200 power and block task until finished
+			hMot2.rotAbs(0, 200, 1);   // rotate absolutely hMot2 to 0 ticks with 200 power and block task until finished
 		}
 	});
 }
