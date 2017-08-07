@@ -1,13 +1,28 @@
 @PORTS: stm32
-@BOARDS: robocore,core2,core2mini
+@BOARDS: core2,core2mini
 @NAME: motor_angle
 @CATEGORY: Motors
+
 #include <hFramework.h>
 
 void hMain()
 {
-	// rotate 10 encoder ticks right
-	hMot1.rotRel(10);
-	// restore motor to original position
-	hMot1.rotAbs(0);
+	char c;
+	while (1)
+	{
+		c = Serial.getch();
+		if(c == 'a') {
+			hMot3.rotRel(500, 200, false, INFINITE); //relative rotate 500 encoder ticks right with 20% of power without blocking task
+			hLED1.toggle();
+		}
+		if(c == 's') {
+			hMot3.rotRel(-500, 200, true, INFINITE); //relative rotate 500 encoder ticks left with 20% of power with blocking task
+			hLED1.toggle();
+		}
+		if(c == 'd') {
+			hMot3.rotAbs(0, 200, true, INFINITE); //absolut rotate to 0 tics position with 20% of power and with blocking task
+			hLED1.toggle();
+		}
+		sys.delay(200);
+	}
 }

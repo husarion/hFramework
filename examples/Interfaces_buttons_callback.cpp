@@ -1,26 +1,28 @@
 @PORTS: stm32
-@BOARDS: robocore,core2,core2mini
+@BOARDS: core2,core2mini
 @NAME: buttons_callback
 @CATEGORY: Interfaces
 #include <hFramework.h>
 
-void onPress()
+void onPress() // instruction executed by clicking the button 
 {
-	LED1.on();
+	hLED1.on();
+	hLED2.toggle();
 	hMot1.setPower(500);
 }
 
-void onRelease()
+void onRelease() // instruction executed by releasing the button 
 {
-	LED1.off();
+	hLED1.off();
 	hMot1.setPower(0);
 }
 
 void hMain()
 {
-	// onPress will be invoked when hBtn1 is pressed
-	hBtn1.setOnPressHandler(onPress);
-
-	// onRelease will be invoked when hBtn1 is released
-	hBtn1.setOnReleaseHandler(onRelease);
+	for (;;)
+	{
+		hBtn1.setOnPressHandler(onPress);	 // onPress will be invoked when hBtn1 is pressed
+		hBtn1.setOnReleaseHandler(onRelease); // onRelease will be invoked when hBtn1 is released
+		sys.delay(100);
+	}
 }

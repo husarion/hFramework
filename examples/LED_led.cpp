@@ -1,22 +1,28 @@
 @PORTS: stm32
-@BOARDS: robocore,core2,core2mini
+@BOARDS: core2,core2mini
 @NAME: led
 @CATEGORY: LED
 #include <hFramework.h>
 
 void hMain()
 {
-	LED1.on();
-	sys.delay(300);
-	LED2.on();
-	sys.delay(300);
-	LED3.on();
-	sys.delay(300);
-	for (;;)
+	// turn on LEDs
+	hLED1.on();
+	hLED2.on();
+	hLED3.on();
+	sys.delay(500);
+	// turn off LEDs
+	hLED1.off();
+	hLED2.off();
+	hLED3.off();
+
+	while (true)
 	{
-		LED1.toggle();
-		LED2.toggle();
-		LED3.toggle();
-		sys.delay(50);
+		hLED1.toggle();  // switch state LED1
+		sys.delay(100);
+		hLED3.toggle();  // switch state LED2
+		sys.delay(100); 
+		hLED2.toggle();  // switch state LED3
+		sys.delay(100);
 	}
 }

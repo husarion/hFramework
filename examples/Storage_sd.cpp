@@ -1,5 +1,5 @@
 @PORTS: stm32
-@BOARDS: robocore,core2,core2mini
+@BOARDS: core2,core2mini
 @NAME: sd
 @CATEGORY: Storage
 #include <hFramework.h>

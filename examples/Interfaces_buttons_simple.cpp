@@ -1,5 +1,5 @@
 @PORTS: stm32
-@BOARDS: robocore,core2,core2mini
+@BOARDS: core2,core2mini
 @NAME: buttons_simple
 @CATEGORY: Interfaces
 #include <hFramework.h>
@@ -8,23 +8,19 @@ void hMain()
 {
 	while (true)
 	{
-		bool state = hBtn1.isPressed();
-		printf("%d\r\n", state);
+		bool state = hBtn1.isPressed();  // creating a variable containig value of hBtn1.isPressed
+		printf("%d\r\n", state); 
 
-		// Is the button pressed?
-		if (state)
-		{
-			// if it is, LEDs will be lit
-			LED1.on();
-			LED3.on();
+		if (state)  // checking if the button is pressed. If it is, LEDs will be turned on
+		{ 
+			hLED1.on();
+			hLED3.on();
 		}
-		else
+		else  // if it isn't, LEDs will be turned off
 		{
-			// if it is, LEDs will be turned off
-			LED1.off();
-			LED3.off();
+			hLED1.off();
+			hLED3.off();
 		}
-		// wait 50 ms
 		sys.delay(50);
 	}
 }

@@ -1,25 +1,4 @@
-@PORTS: stm32
-@BOARDS: robocore
-@NAME: adc
-@DESC: This example shows how to use A/D converter.
-@CATEGORY: GPIO
-#include <hFramework.h>
 
-void hMain()
-{
-	// enable ADC on our ports
-	hSens4.pinIntAdc.enableADC();
-	hExt1.pin7.enableADC();
-	while (true)
-	{
-		// read analog values (voltage)
-		float v1 = hSens4.pinIntAdc.analogReadVoltage();
-		float v2 = hExt1.pin7.analogReadVoltage();
-		printf("%f %f\r\n", v1, v2);
-		sys.delay(50);
-	}
-}
-#####
 @PORTS: stm32
 @BOARDS: core2
 @NAME: adc
@@ -29,16 +8,14 @@ void hMain()
 
 void hMain()
 {
-	// enable ADC on our ports
-	hSens4.pin1.enableADC();
-	hExt.pin1.enableADC();
-	while (true)
+	hSens4.pin1.enableADC(); // enable ADC on pin1 on hSens4 port 
+	hExt.pin1.enableADC(); // enable ADC on pin1 on hExt port
+	for(;;)
 	{
-		// read analog values (voltage)
-		float v1 = hSens4.pin1.analogReadVoltage();
-		float v2 = hExt.pin1.analogReadVoltage();
-		printf("%f %f\r\n", v1, v2);
-		sys.delay(50);
+		float val1 = hSens4.pin1.analogReadVoltage(); // read analog value (voltage in [V])
+		int val2 = hExt.pin1.analogReadRaw(); // read analog value (in range from 0 to 4095)
+		Serial.printf("Voltage hSens4.pin1: %f\tRaw data hExt.pin1: %d\r\n", val1, val2); // send string via USB Serial at 460800
+		sys.delay(100); 
 	}
 }
 #####
@@ -51,13 +28,12 @@ void hMain()
 
 void hMain()
 {
-	// enable ADC on our ports
-	hSens1.pin1.enableADC();
-	while (true)
+	hSens1.pin1.enableADC();  // enable ADC on pin1 on hSens1 port 
+	for(;;)
 	{
-		// read analog values (voltage)
-		float v1 = hSens1.pin1.analogReadVoltage();
-		printf("%f\r\n", v1);
-		sys.delay(50);
+		float val1 = hSens1.pin1.analogReadVoltage();  // read analog values (voltage  in [V])
+		int val2 = hSens1.pin1.analogReadRaw(); // read analog value (in range from 0 to 4095)
+		Serial.printf("Voltage hSens1.pin1: %f\tRaw data hExt.pin1: %d\r\n", val1, val2); // send string via USB Serial at 460800
+		sys.delay(100);
 	}
 }

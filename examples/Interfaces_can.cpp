@@ -1,5 +1,5 @@
 @PORTS: stm32
-@BOARDS: robocore,core2
+@BOARDS: core2
 @NAME: can_recv
 @CATEGORY: Interfaces
 #include <hFramework.h>
@@ -17,7 +17,7 @@ void hMain()
 }
 #####
 @PORTS: stm32
-@BOARDS: robocore,core2
+@BOARDS: core2
 @NAME: can_send
 @CATEGORY: Interfaces
 #include <hFramework.h>

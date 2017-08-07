@@ -7,19 +7,16 @@
 
 void hMain()
 {
-	hServo.enablePower();
-	hServo.setVoltage5V();
+	hServoModule.enablePower();  // enable servos
+	hServoModule.setVoltage5V(); // set power line voltage for all servos to about 5 [V].
 
-	IServo& s1 = hServo.servo1;
-	// minAngle, minWidth, maxAngle, maxWidth
-	s1.calibrate(-90, 700, 90, 1500);
+	hServoModule.servo1.calibrate(-90, 700, 90, 1500); // calibrate servo with params minAngle, minWidth, maxAngle, maxWidth
 
 	while (true)
 	{
-		// wave the servo there and back using `sin` function
 		int time = sys.getRefTime();
 		float pos = sinf(time / 3000.0f * 2 * M_PI);
-		s1.rotAbs(pos * 90.0f);
+		hServoModule.servo1.rotAbs(pos * 90.0f); // wave the servo there and back using `sin` function
 	}
 }
 @PORTS: stm32
@@ -31,18 +28,14 @@ void hMain()
 
 void hMain()
 {
-	hServo.enablePower();
+	hServoModule.enablePower();  // enable servos
 
-
-	IServo& s1 = hServo.servo1;
-	// minAngle, minWidth, maxAngle, maxWidth
-	s1.calibrate(-90, 700, 90, 1500);
-
+	hServoModule.servo1.calibrate(-90, 700, 90, 1500); // calibrate servo with params minAngle, minWidth, maxAngle, maxWidth
+	
 	while (true)
 	{
-		// wave the servo there and back using `sin` function
 		int time = sys.getRefTime();
-		float pos = sinf(time / 3000.0f * 2 * M_PI);
-		s1.rotAbs(pos * 90.0f);
+		float pos = sinf(time / 3000.0f * 2 * M_PI);hServoModule.servo1.rotAbs(pos * 90.0f); 
+		hServoModule.servo1.rotAbs(pos * 90.0f); // wave the servo there and back using `sin` function
 	}
 }

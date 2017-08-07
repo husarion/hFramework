@@ -1,57 +1,46 @@
 @PORTS: stm32
-@BOARDS: robocore,core2,core2mini
+@BOARDS: core2,core2mini
 @NAME: motor_pid
 @CATEGORY: Motors
 #include <hFramework.h>
 
-hPIDRegulator pidReg, pidReg2;
+hPIDRegulator pidReg, pidReg2; // creating PID regulator objects
 
 void hMain()
 {
-	sys.setLogDev(&Serial);
+	pidReg.setScale(1);		 // setting Scale for PID regulator
+	pidReg.setKP(40.0);		 // setting the proportional coefficient
+	pidReg.setKI(0.05);		 // setting the integral coefficient
+	pidReg.setKD(1000);		 // setting the derivative coefficient
+	pidReg.dtMs = 5;		 // setting time increment (Delta T)
+	pidReg.stableRange = 10; // setting the value of stable range
+	pidReg.stableTimes = 3;  // setting the valu of stable time
 
-	// hPID
-	pidReg.setScale(1);
-	pidReg.setKP(40.0);
-	pidReg.setKI(0.05);
-	pidReg.setKD(1000);
-	// hRegulator
-	pidReg.dtMs = 5;
-	pidReg.stableRange = 10;
-	pidReg.stableTimes = 3;
+	pidReg2 = pidReg; // Copy pid instances
 
-	// copy pid instances
-	pidReg2 = pidReg;
+	hMot1.attachPositionRegulator(pidReg);  // attaching pidReg regulator to motor1
+	hMot2.attachPositionRegulator(pidReg2); // attaching pidReg2 regulator to motor2
 
-	hMot1.attachPositionRegulator(pidReg);
-	hMot2.attachPositionRegulator(pidReg2);
-
-	sys.taskCreate([]()
-	{
-		for (;;)
+	sys.taskCreate([]() {
+		while (true)
 		{
 			sys.delay(50);
-			printf("encoder ticks: %5d %5d\r\n", hMot1.getEncoderCnt(), hMot2.getEncoderCnt());
+			Serial.printf("encoder ticks: %5d %5d\r\n", hMot1.getEncoderCnt(), hMot2.getEncoderCnt());
 		}
 	});
 
-	sys.taskCreate([]()
-	{
+	sys.taskCreate([]() {
 		while (true)
 		{
-			hMot1.rotRel(180, 1000, 1);
-			sys.delay(300);
+			hMot1.rotRel(360, 200, 1); // rotate relatively hMot1 360 tics right with 200 power and block task until finished
 		}
 	});
 
-	sys.taskCreate([]()
-	{
+	sys.taskCreate([]() {
 		while (true)
 		{
-			hMot2.rotAbs(180, 1000, 1);
-			sys.delay(300);
-			hMot2.rotAbs(0, 1000, 1);
-			sys.delay(300);
+			hMot2.rotAbs(360, 200, 1); // rotate absolutely hMot2 to 360 tics with 200 power and block task until finished
+			hMot2.rotAbs(0, 200, 1);   // rotate absolutely hMot2 to 0 tics with 200 power and block task until finished
 		}
 	});
 }

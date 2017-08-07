@@ -1,3 +1,5 @@
+@PORTS: stm32
+@BOARDS: core2,core2mini
 @NAME: sys_mutex
 @CATEGORY: System
 #include <hFramework.h>
