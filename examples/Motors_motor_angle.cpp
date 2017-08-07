@@ -20,7 +20,7 @@ void hMain()
 			hLED1.toggle();
 		}
 		if(c == 'd') {
-			hMot3.rotAbs(0, 200, true, INFINITE); //absolut rotate to 0 tics position with 20% of power and with blocking task
+			hMot3.rotAbs(0, 200, true, INFINITE); //absolute rotate to 0 ticks position with 20% of power and with blocking task
 			hLED1.toggle();
 		}
 		sys.delay(200);
