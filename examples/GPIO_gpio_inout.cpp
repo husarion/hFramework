@@ -11,7 +11,7 @@ void hMain()
 	while (true)
 	{
 		bool value = hExt.pin1.read(); // read from pin1 on hExt
-		hExt.pin2.write(value);  // write valu to pin2 on hExt
+		hExt.pin2.write(value);  // write value to pin2 on hExt
 		sys.delay(300);
 	}
 }
