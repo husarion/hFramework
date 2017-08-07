@@ -12,7 +12,7 @@ void hMain()
 	{
 		c = Serial.getch();
 		if(c == 'a') {
-			hMot3.rotRel(500, 200, false, INFINITE); //relative rotate 500 encoder ticks right with 20% of power without blocking task
+			hMot3.rotRel(500, 200, false, INFINITE); //rotate by 500 ticks relatively to the current position, with 20% power
 			hLED1.toggle();
 		}
 		if(c == 's') {
@@ -20,7 +20,7 @@ void hMain()
 			hLED1.toggle();
 		}
 		if(c == 'd') {
-			hMot3.rotAbs(0, 200, true, INFINITE); //absolute rotate to 0 ticks position with 20% of power and with blocking task
+			hMot3.rotAbs(0, 200, true, INFINITE); //rotate to "0" ticks absolute position, and block program until task finishes
 			hLED1.toggle();
 		}
 		sys.delay(200);
