@@ -20,9 +20,9 @@ void hMain()
 	{
 		hLED1.toggle();  // switch state LED1
 		sys.delay(100);
-		hLED3.toggle();  // switch state LED2
+		hLED2.toggle();  // switch state LED2
 		sys.delay(100); 
-		hLED2.toggle();  // switch state LED3
+		hLED3.toggle();  // switch state LED3
 		sys.delay(100);
 	}
 }
