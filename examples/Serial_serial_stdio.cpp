@@ -11,13 +11,13 @@ void hMain()
 	while (true)
 	{
 		char c = getchar(); // getting one character from Serial
-		switch (c)			// deciding based on pulled charakter
+		switch (c)			// decision based on pulled character
 		{
-		case 'q':					  // in case of geting q
+		case 'q':					  // in case of getting q
 			printf("function 1\r\n"); // print "function 1" on default output (USB-serial)
 			hLED1.on();
 			break;
-		case 'a': // in case of geting a
+		case 'a': // in case of getting a
 			printf("function 2\r\n");
 			hLED1.off();
 			break;
