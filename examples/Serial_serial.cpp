@@ -11,13 +11,13 @@ void hMain()
 		if (Serial.available() > 0) // checking Serial availability
 		{
 			char c = Serial.getch(); // getting one character from Serial
-			switch (c)				 // deciding based on pulled charakter
+			switch (c)				 // decision based on received character
 			{
-			case 'q': // in case of geting q
+			case 'q': // in case of getting q
 				Serial.printf("function 1\r\n"); // print "function 1" on USB-serial 
 				hLED1.on();
 				break;
-			case 'a': // in case of geting a
+			case 'a': // in case of getting a
 				Serial.printf("function 2\r\n");
 				hLED1.off();
 				break;
@@ -39,16 +39,16 @@ void hMain()
 {
 	while (true)
 	{
-		if (Stdio.available() > 0) // checking Serial availability
+		if (Stdio.available() > 0) // checking the standard output availability
 		{
-			char c = Stdio.getch(); // getting one character from Serial
-			switch (c)				// deciding based on pulled charakter
+			char c = Stdio.getch(); // getting one character from the standard input
+			switch (c)				// decision based on received character
 			{
-			case 'q': // in case of geting q
+			case 'q': // in case of getting q
 				Stdio.printf("function 1\r\n");  // print "function 1"
 				hLED1.on();
 				break;
-			case 'a': // in case of geting a
+			case 'a': // in case of getting a
 				Stdio.printf("function 2\r\n");
 				hLED1.off();
 				break;
