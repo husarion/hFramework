@@ -1,3 +1,5 @@
+@PORTS: stm32
+@BOARDS: core2,core2mini,robocore
 @NAME: sys_mutex
 @CATEGORY: System
 #include <hFramework.h>
@@ -7,7 +9,7 @@ hMutex counter_mutex;
 
 void add_1()
 {
-	// Modify counter in mutex to ensure that the modification is not lost
+	// modify counter in mutex to ensure that the modification is not lost
 	counter_mutex.take();
 	int new_value = counter + 1;
 	counter = new_value;

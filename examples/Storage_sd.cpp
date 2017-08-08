@@ -1,5 +1,5 @@
 @PORTS: stm32
-@BOARDS: robocore,core2,core2mini
+@BOARDS: core2,core2mini,robocore
 @NAME: sd
 @CATEGORY: Storage
 #include <hFramework.h>
@@ -30,7 +30,7 @@ void hMain()
 		{
 			char d[30];
 			uint16_t written;
-			int len = sprintf(d, "test %d\r\n", sys.getRefTime());
+			int len = sprintf(d, "test %ld\r\n", sys.getRefTime());
 			r = file.write(d, len, &written);
 			printf("write %d %d\r\n", r, written);
 			file.close();
