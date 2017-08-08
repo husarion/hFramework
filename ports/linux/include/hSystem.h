@@ -31,7 +31,7 @@ constexpr int DEFAULT_STACK_SIZE = 0; // stack size is ignored on Linux
 class hSystem
 {
 	hSystem(const hSystem&) = delete;
-	static int startTime;
+	static uint64_t startTime;
 
 public:
 	hSystem(); //!< Initialize system object.
