@@ -24,7 +24,7 @@
 namespace hFramework
 {
 
-int hSystem::hSystem::startTime = 0;
+uint64_t hSystem::hSystem::startTime = 0;
 
 hSystem::hSystem()
 {
@@ -57,10 +57,11 @@ void hSystem::delayUs(uint32_t delay)
 
 unsigned long hSystem::getRefTime()
 {
-	struct timeval tv;
-	gettimeofday(&tv, 0);
-	uint32_t curTime = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-	return curTime - startTime;
+	struct timespec tv;
+	clock_gettime(CLOCK_MONOTONIC, &tv);
+
+	uint64_t curTime = uint64_t(tv.tv_sec) * 1000 + uint64_t(tv.tv_nsec) / 1000 / 1000;
+	return (unsigned long)(curTime - startTime);
 }
 
 uint32_t hSystem::getRandNr()
@@ -87,5 +88,7 @@ void hSystem::free(void * ptr)
 {
 	::free(ptr);
 }
+
+hSystem sys;
 
 }
