@@ -8,7 +8,7 @@ void encoder()
 {
 	while (true)
 	{
-		Serial.printf("pos: %d\r\n", hMot1.getEncoderCnt()); // print on Serial currently counted encoder (of Motor1) ticks
+		Serial.printf("pos: %d\r\n", hMot1.getEncoderCnt()); // print the current position of Motor 1 (no. of encoder ticks)
 		hLED1.toggle();
 		sys.delay(100);
 	}

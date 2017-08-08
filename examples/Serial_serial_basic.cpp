@@ -1,5 +1,5 @@
 @PORTS: stm32
-@BOARDS: core2
+@BOARDS: core2,robocore
 @NAME: serial_basic
 @CATEGORY: Serial I/O
 #include <hFramework.h>
@@ -13,7 +13,7 @@ void hMain()
 
 	for (;;)
 	{
-		printf("Current lifetime: %d\r\n",sys.getRefTime());
+		printf("Current lifetime: %ld\r\n",sys.getRefTime());
 		sys.delay(500);
 	}
 }

@@ -1,5 +1,5 @@
 @PORTS: stm32
-@BOARDS: core2,core2mini
+@BOARDS: core2,core2mini,robocore
 @NAME: serial
 @CATEGORY: Serial I/O
 #include <hFramework.h>
