@@ -1,6 +1,7 @@
 @PORTS: stm32
 @BOARDS: robocore,core2,core2mini
 @NAME: serial_stdio
+@DESC: USB Serial as a standard input/output
 @CATEGORY: Serial I/O
 #include <hFramework.h>
 

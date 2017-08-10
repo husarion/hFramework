@@ -1,6 +1,7 @@
 @PORTS: stm32
 @BOARDS: core2,robocore
-@NAME: can_recv
+@NAME: can_receive
+@DESC: The example shows how to receive frames with the CAN interface
 @CATEGORY: Interfaces
 #include <hFramework.h>
 
@@ -19,6 +20,7 @@ void hMain()
 @PORTS: stm32
 @BOARDS: core2,robocore
 @NAME: can_send
+@DESC: The example shows how to transmit frames with the CAN interface
 @CATEGORY: Interfaces
 #include <hFramework.h>
 

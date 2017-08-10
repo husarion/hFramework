@@ -1,6 +1,7 @@
 @PORTS: stm32
 @BOARDS: core2,core2mini,robocore
 @NAME: sd
+@DESC: Reading from and writing to file on microSD card 
 @CATEGORY: Storage
 #include <hFramework.h>
 

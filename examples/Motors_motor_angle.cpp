@@ -1,6 +1,7 @@
 @PORTS: stm32
 @BOARDS: core2,core2mini,robocore
 @NAME: motor_angle
+@DESC: This example shows how to control the motor rotation angle
 @CATEGORY: Motors
 
 #include <hFramework.h>

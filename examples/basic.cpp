@@ -1,6 +1,8 @@
 @PORTS: stm32
 @BOARDS: core2,core2mini
 @NAME: basic
+@DESC: The "hello world" program
+@CATEGORY: Basics
 #include <hFramework.h>
 
 void hMain() // main function containing your code
@@ -17,6 +19,8 @@ void hMain() // main function containing your code
 @PORTS: stm32
 @BOARDS: robocore
 @NAME: basic
+@DESC: The "hello world" program
+@CATEGORY: Basics
 #include <hFramework.h>
 
 void hMain() // main task containing your code

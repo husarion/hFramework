@@ -1,6 +1,7 @@
 @PORTS: stm32
 @BOARDS: core2,core2mini,robocore
 @NAME: buttons_simple
+@DESC: The simplest use of on-board pushbuttons
 @CATEGORY: Interfaces
 #include <hFramework.h>
 

@@ -1,7 +1,7 @@
 @PORTS: stm32
 @BOARDS: core2,core2mini,robocore
 @NAME: storage
-@DESC: This example shows how to use storage object implemented in hFramework.
+@DESC: This example shows how to use a non-volatile memory in your programs
 @CATEGORY: Storage
 #include <hFramework.h>
 

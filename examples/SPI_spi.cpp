@@ -1,6 +1,7 @@
 @PORTS: stm32
 @BOARDS: core2
 @NAME: spi
+@DESC: Example of using SPI interface
 @CATEGORY: SPI
 #include <hFramework.h>
 
