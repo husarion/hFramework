@@ -7,6 +7,7 @@
 #include <condition_variable>
 
 #include <hCondVar.h>
+#include <hSystem.h>
 
 #include <mutex>
 
@@ -26,10 +27,21 @@ bool hCondVar::wait(hMutex& mutex, uint32_t timeout)
 			d_condition.wait(*mutex.wrapped_rmutex);
 		return true;
 	} else {
-		if (mutex.wrapped_mutex)
-			return d_condition.wait_for(*mutex.wrapped_mutex, std::chrono::milliseconds(timeout)) == std::cv_status::no_timeout;
-		else
-			return d_condition.wait_for(*mutex.wrapped_rmutex, std::chrono::milliseconds(timeout)) == std::cv_status::no_timeout;
+		uint64_t deadline = timeout + sys.getRefTime();
+		while (true) {
+			bool ret;
+			if (mutex.wrapped_mutex)
+				ret = d_condition.wait_for(*mutex.wrapped_mutex, std::chrono::milliseconds(timeout)) == std::cv_status::no_timeout;
+			else
+				ret = d_condition.wait_for(*mutex.wrapped_rmutex, std::chrono::milliseconds(timeout)) == std::cv_status::no_timeout;
+
+			uint64_t currTime = sys.getRefTime(); // probably spurious wakeup!
+			if (!ret && currTime < deadline) {
+				timeout = deadline - currTime;
+				continue;
+			}
+			return ret;
+		}
 	}
 }
 

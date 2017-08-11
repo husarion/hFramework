@@ -88,7 +88,15 @@ bool _hWifi::isComboModeSupported() {
 _hWifi Wifi;
 
 bool _Network::isOnline() {
-    return system("ip route get 8.8.8.8 >/dev/null 2>&1") == 0;
+    static bool lastValue = false;
+    static uint64_t lastCheck = 0;
+
+    // check only once a second
+    if (sys.getRefTime() > (lastCheck + 1000)) {
+        lastValue = system("ip route get 8.8.8.8 >/dev/null 2>&1") == 0;
+    }
+
+    return lastValue;
 }
 
 const char* _Network::getLocalIp() {

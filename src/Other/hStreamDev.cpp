@@ -8,6 +8,7 @@
 
 #include <hSystem.h>
 #include <hUtils.h>
+#include <cstdio>
 
 namespace hFramework
 {
@@ -41,6 +42,7 @@ int hStreamDev::readAll(void* data, int len, uint32_t timeout)
 		pos += ret;
 		len -= ret;
 	}
+
 	return pos;
 }
 
