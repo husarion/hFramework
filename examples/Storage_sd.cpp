@@ -16,7 +16,7 @@ void hMain()
     char d[30];     // make space for new data to write
     char s[60];     // make place for read data
 	
-    int len = sprintf(d, "test %d\n\r", sys.getRefTime());  // make a string to write
+    int len = sprintf(d, "test %d\n\r", (int)sys.getRefTime());  // make a string to write
     printf("\r\n\tbytes to write:\r\n%d\n\r\tstring:\r\n%s\r\n", len, d); // show it
 
     SD.mount(); // attach SD card to the system
