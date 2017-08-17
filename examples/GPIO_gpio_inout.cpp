@@ -1,6 +1,7 @@
 @PORTS: stm32
 @BOARDS: core2
 @NAME: gpio_inout
+@DESC: Configuring the GPIO settings
 @CATEGORY: GPIO
 #include <hFramework.h>
 
@@ -30,6 +31,7 @@ void hMain2()
 @PORTS: stm32
 @BOARDS: core2mini
 @NAME: gpio_inout
+@DESC: Configuring the GPIO settings
 @CATEGORY: GPIO
 #include <hFramework.h>
 
@@ -59,6 +61,7 @@ void hMain2()
 @PORTS: stm32
 @BOARDS: robocore
 @NAME: gpio_inout
+@DESC: Configuring the GPIO settings
 @CATEGORY: GPIO
 #include <hFramework.h>
 

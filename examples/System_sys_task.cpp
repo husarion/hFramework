@@ -1,6 +1,7 @@
 @PORTS: stm32
 @BOARDS: core2,core2mini,robocore
 @NAME: sys_task
+@DESC: RTOS - how to create tasks
 @CATEGORY: System
 #include <hFramework.h>
 #include <cmath>

@@ -1,6 +1,7 @@
 @PORTS: stm32
-@BOARDS: core2,core2mini,robocore
+@BOARDS: robocore
 @NAME: motor_servo
+@DESC: How to use a servo connected to hMotor port (used for Ralph)
 @CATEGORY: Servo
 #include <hFramework.h>
 

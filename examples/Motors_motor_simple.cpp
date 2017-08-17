@@ -1,6 +1,7 @@
 @PORTS: stm32
 @BOARDS: core2,core2mini,robocore
 @NAME: motor_simple
+@DESC: The simplest way to use a motor
 @CATEGORY: Motors
 #include <hFramework.h>
 

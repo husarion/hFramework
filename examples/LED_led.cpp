@@ -1,6 +1,7 @@
 @PORTS: stm32
 @BOARDS: core2,core2mini,robocore
 @NAME: led
+@DESC: Using on-board LEDs
 @CATEGORY: LED
 #include <hFramework.h>
 

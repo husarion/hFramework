@@ -1,6 +1,7 @@
 @PORTS: stm32
 @BOARDS: core2
 @NAME: serial_config
+@DESC: Using on-board UART interfaces
 @CATEGORY: Serial I/O
 #include <hFramework.h>
 
@@ -34,6 +35,7 @@ void hMain()
 @PORTS: stm32
 @BOARDS: core2mini
 @NAME: serial_config
+@DESC: Using on-board UART interfaces
 @CATEGORY: Serial I/O
 #include <hFramework.h>
 
@@ -46,6 +48,7 @@ void hMain()
 @PORTS: stm32
 @BOARDS: robocore
 @NAME: serial_config
+@DESC: Using on-board UART interfaces
 @CATEGORY: Serial I/O
 #include <hFramework.h>
 

@@ -1,6 +1,7 @@
 @PORTS: stm32
 @BOARDS: core2,core2mini,robocore
 @NAME: motor_pid
+@DESC: Setting up the software-based PID regulator for motors
 @CATEGORY: Motors
 #include <hFramework.h>
 

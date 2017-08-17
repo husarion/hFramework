@@ -1,6 +1,7 @@
 @PORTS: stm32
 @BOARDS: core2,core2mini,robocore
 @NAME: buttons_callback
+@DESC: How to read the state of on-board button
 @CATEGORY: Interfaces
 #include <hFramework.h>
 

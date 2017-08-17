@@ -1,6 +1,7 @@
 @PORTS: stm32
 @BOARDS: core2,core2mini,robocore
 @NAME: sys_mutex
+@DESC: RTOS - how to use mutex
 @CATEGORY: System
 #include <hFramework.h>
 
