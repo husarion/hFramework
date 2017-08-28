@@ -22,6 +22,7 @@ This section describes how to build hFramework yourself,
 
   On Windows, all required dependencies are bundled as part of VSCode plugin. You can also download standalone package: [HusarionTools-v3.exe](https://cdn.atomshare.net/cc70b0184feefaf7ead3741c58f98200cf8e017b/HusarionTools-v3.exe).
 
+  A complete tutorial how to ude hFramework library can be found here: https://husarion.com/core2/tutorials/howtostart/hframework-library-development/
 
 2. Configure and build the project.
 
