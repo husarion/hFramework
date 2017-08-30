@@ -35,3 +35,7 @@ macro(add_hexecutable_port name)
     USES_TERMINAL
     COMMAND ${HFRAMEWORK_PATH}/tools/${TOOLS_ARCH_NAME}/core2-flasher "${OUTDIR}${name}.hex")
 endmacro()
+
+add_custom_target("console"
+  USES_TERMINAL
+  COMMAND ${HFRAMEWORK_PATH}/tools/${TOOLS_ARCH_NAME}/core2-flasher --console)

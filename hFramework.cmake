@@ -1,6 +1,12 @@
 get_filename_component(HFRAMEWORK_DIR ${CMAKE_CURRENT_LIST_FILE} PATH) # for cmake before 2.8.3
 set(HFRAMEWORK_DIR_Q "\"${HFRAMEWORK_DIR}\"")
 
+if(WIN32)
+  set(TOOLS_ARCH_NAME win)
+else()
+  set(TOOLS_ARCH_NAME amd64-linux)
+endif()
+
 include("${HFRAMEWORK_DIR}/hFrameworkPort.cmake")
 
 set(compiler_flags "-g")
@@ -29,12 +35,6 @@ macro(enable_module name)
     set(module_libraries "${module_libraries} -l${name}")
   endif()
 endmacro()
-
-if(WIN32)
-  set(TOOLS_ARCH_NAME win)
-else()
-  set(TOOLS_ARCH_NAME amd64-linux)
-endif()
 
 macro(add_hexecutable name)
   if (NOT ${PORT} STREQUAL esp32)
