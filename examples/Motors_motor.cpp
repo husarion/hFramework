@@ -1,6 +1,7 @@
 @PORTS : stm32
 @BOARDS : robocore,core2,core2mini
 @NAME : motor
+@DESC: Controlling the motor and reading the encoder value
 @CATEGORY : Motors
 #include <hFramework.h>
 

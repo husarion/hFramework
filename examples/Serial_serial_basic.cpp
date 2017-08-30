@@ -1,6 +1,7 @@
 @PORTS: stm32
 @BOARDS: core2,robocore
 @NAME: serial_basic
+@DESC: How to config USB Serial
 @CATEGORY: Serial I/O
 #include <hFramework.h>
 

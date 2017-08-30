@@ -1,6 +1,7 @@
 @PORTS: stm32
 @BOARDS: core2
 @NAME: servo_module
+@DESC: Controlling servos with an integrated servo controller
 @CATEGORY: Servo
 #include <hFramework.h>
 #include <cmath>
@@ -22,6 +23,7 @@ void hMain()
 @PORTS: stm32
 @BOARDS: core2mini
 @NAME: servo_module
+@DESC: Controlling servos with an integrated servo controller
 @CATEGORY: Servo
 #include <hFramework.h>
 #include <cmath>

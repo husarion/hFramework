@@ -1,6 +1,7 @@
 @PORTS: stm32
 @BOARDS: core2,core2mini,robocore
 @NAME: buttons_threads
+@DESC: Example of using button-related events in thread
 @CATEGORY: Interfaces
 #include <hFramework.h>
 

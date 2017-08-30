@@ -1,6 +1,7 @@
 @PORTS: stm32
 @BOARDS: core2,core2mini,robocore
 @NAME: sys_queue
+@DESC: RTOS - how to use queues
 @CATEGORY: System
 #include <hFramework.h>
 

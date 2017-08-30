@@ -1,9 +1,10 @@
 @PORTS: stm32
 @BOARDS: core2
 @NAME: power_supply
+@DESC: The best way to reset devices conected to hSensor ports is to turn of power supply. Code below shows how to turn off supply line of hSens and hExt port to reset problematic devices.
 @CATEGORY: GPIO
 /*
-	The best way to reset devices conected to hSensor ports is to turn of power supply. Code below shows how to turn off supply line of hSens and h Ext port to reset problematic devices.
+	
 */
 #include <hFramework.h>
 

@@ -1,6 +1,7 @@
 @PORTS: stm32
 @BOARDS: core2,core2mini,robocore
 @NAME: serial
+@DESC: How to transmit data via USB Serial
 @CATEGORY: Serial I/O
 #include <hFramework.h>
 
