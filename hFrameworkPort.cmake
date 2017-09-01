@@ -120,7 +120,8 @@ else()
 endif()
 
 # set(common_flags "-static ${errors_flags} -ffunction-sections -fdata-sections")
-set(common_flags "${errors_flags} -g -ffunction-sections -fdata-sections") # -Wfatal-errors
+set(common_flags "${errors_flags} -g -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti") # -Wfatal-errors
+set(common_lflags "-fno-exceptions -fno-rtti")
 
 if(NOT RELEASE)
 	add_definitions(-DDEBUG)
@@ -139,7 +140,7 @@ macro(update_flags)
   set(CMAKE_CXX_FLAGS        "${compiler_flags} ${tmp} ${errors_flags_cpp} -std=c++11")
   set(CMAKE_C_FLAGS          "${compiler_flags} ${tmp} -std=c99")
   set(CMAKE_ASM_FLAGS        "${tmp}")
-  set(CMAKE_CXX_LINK_EXECUTABLE "${prefix}g++ ${CMAKE_EXE_LINKER_FLAGS} <OBJECTS> -o <TARGET> ${ADDITIONAL_LINK_DIRS} ${ADDITIONAL_LIBS} ${port_lflags}")
+  set(CMAKE_CXX_LINK_EXECUTABLE "${prefix}g++ ${CMAKE_EXE_LINKER_FLAGS} <OBJECTS> -o <TARGET> ${ADDITIONAL_LINK_DIRS} ${ADDITIONAL_LIBS} ${port_lflags} ${common_lflags}")
 endmacro()
 
 update_flags()
