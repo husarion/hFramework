@@ -3,6 +3,8 @@ set(HFRAMEWORK_DIR_Q "\"${HFRAMEWORK_DIR}\"")
 
 if(WIN32)
   set(TOOLS_ARCH_NAME win)
+elseif(APPLE)
+  set(TOOLS_ARCH_NAME macos)
 else()
   set(TOOLS_ARCH_NAME amd64-linux)
 endif()
