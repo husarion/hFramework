@@ -31,12 +31,14 @@ uint8_t twi_writeTo(uint8_t address, uint8_t* data, uint8_t length, uint8_t wait
    return TWI.write (address, *data, length);
 }
 
-uint8_t twi_transmit(const uint8_t*, uint8_t){}//TODO:
+int8_t twi_transmit(const uint8_t* data, uint8_t length){
+    return twi_writeTo(I2C_ADDR, *data, length, 0, 0);
+}
   
 void twi_attachSlaveRxEvent( void (*)(uint8_t*, int) ){}
 void twi_attachSlaveTxEvent( void (*)(void) ){}
 
-void twi_reply(uint8_t){}//TODO:
+void twi_reply(uint8_t data){}//TODO:
 
 void twi_stop(void){
   TWI.pinScl.write(false);
