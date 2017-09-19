@@ -188,7 +188,7 @@ void delay(int ms) {
 }
   
 void delayMicroseconds(unsigned int us) {
-  sys.delay(us/1000);
+    sys.delayUs(us);
 }
 
 }
