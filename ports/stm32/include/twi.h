@@ -27,10 +27,10 @@
   void twi_setFrequency(uint32_t freq);
   uint8_t twi_readFrom(uint8_t adress, uint8_t* data, uint8_t length, uint8_t sendStop);
   uint8_t twi_writeTo(uint8_t adress, uint8_t* data, uint8_t length, uint8_t wait, uint8_t sendStop);
-  uint8_t twi_transmit(const uint8_t*, uint8_t);
+  uint8_t twi_transmit(const uint8_t* data, uint8_t length);
   void twi_attachSlaveRxEvent( void (*)(uint8_t*, int) );
   void twi_attachSlaveTxEvent( void (*)(void) );
-  void twi_reply(uint8_t);
+  void twi_reply(uint8_t data);
   void twi_stop(void);
   void twi_releaseBus(void);
 
