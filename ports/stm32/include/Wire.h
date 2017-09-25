@@ -18,20 +18,16 @@
  
   Modified 2012 by Todd Krein (todd@krein.org) to implement repeated starts
 */
+#define NO_USING_HFRAMEWORK
+#include <hFramework.h>
 
 #ifndef TwoWire_h
 #define TwoWire_h
 
-
-extern "C" {
-    #include <stdlib.h>
-    #include <string.h>
-    #include <inttypes.h>
-    #include "utility/twi.h"
-  }
-
-  #include "Stream.h"
-  #include <inttypes.h>
+  #include <stdlib.h>
+  #include <string.h>
+  #include <twi.h>
+  #include <Stream.h>
   
   // Initialize Class Variables //////////////////////////////////////////////////
   

@@ -6,7 +6,7 @@
 #endif
 
 void twi_init(void){
-TWI.setDataRate(100000);
+TWI.setDataRate(TWI_FREQ);
 }
 
 void twi_disable(void){
@@ -14,7 +14,7 @@ void twi_disable(void){
   TWI.pinSda.setOutOD();
 }
 
-uint8_t I2C_ADDR = TWI_FREQ;
+uint8_t I2C_ADDR = 0;
 void twi_setAddress(uint8_t adress){
   I2C_ADDR = adress;
 }
@@ -28,11 +28,11 @@ uint8_t twi_readFrom(uint8_t adress, uint8_t* data, uint8_t length, uint8_t send
 }
 
 uint8_t twi_writeTo(uint8_t address, uint8_t* data, uint8_t length, uint8_t wait, uint8_t sendStop){
-   return TWI.write (address, *data, length);
+   return TWI.write (address, data, length);
 }
 
-int8_t twi_transmit(const uint8_t* data, uint8_t length){
-    return twi_writeTo(I2C_ADDR, *data, length, 0, 0);
+uint8_t twi_transmit(uint8_t* data, uint8_t length){
+    return twi_writeTo(I2C_ADDR, data, length, 0, 0);
 }
   
 void twi_attachSlaveRxEvent( void (*)(uint8_t*, int) ){}

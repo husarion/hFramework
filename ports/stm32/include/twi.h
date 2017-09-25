@@ -13,13 +13,13 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+#define NO_USING_HFRAMEWORK
+#include <hFramework.h>
 
 #ifndef twi_h
 #define twi_h
 
-  #ifndef TWI_FREQ
-  #define TWI_FREQ 100000
-  #endif
+  const int TWI_FREQ = 100000;
 
   void twi_init(void);
   void twi_disable(void);
@@ -27,7 +27,7 @@
   void twi_setFrequency(uint32_t freq);
   uint8_t twi_readFrom(uint8_t adress, uint8_t* data, uint8_t length, uint8_t sendStop);
   uint8_t twi_writeTo(uint8_t adress, uint8_t* data, uint8_t length, uint8_t wait, uint8_t sendStop);
-  uint8_t twi_transmit(const uint8_t* data, uint8_t length);
+  uint8_t twi_transmit(uint8_t* data, uint8_t length);
   void twi_attachSlaveRxEvent( void (*)(uint8_t*, int) );
   void twi_attachSlaveTxEvent( void (*)(void) );
   void twi_reply(uint8_t data);

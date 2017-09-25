@@ -53,6 +53,8 @@ set(PORT_FILES
 
 	${PORT_DIR}/src/hMotor.cpp
 	${PORT_DIR}/src/hMotorPimpl.cpp
+	
+	${PORT_DIR}/src/twi.cpp
 
 	src/hGenericQueue_rtos.cpp
 	src/hMutex_rtos.cpp
