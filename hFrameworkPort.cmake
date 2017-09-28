@@ -8,6 +8,11 @@ cmake_policy(SET CMP0011 OLD) # policy
 #set(CMAKE_ASM_COMPILER_ID GNU)
 #set(CMAKE_ASM_COMPILER_ID_RUN 1)
 
+set(CMAKE_STATIC_LIBRARY_SUFFIX_CXX ".a")
+set(CMAKE_STATIC_LIBRARY_SUFFIX_C ".a")
+set(CMAKE_STATIC_LIBRARY_PREFIX_CXX "lib")
+set(CMAKE_STATIC_LIBRARY_PREFIX_C "lib")
+
 macro(disable_compiler_detection)
   set(CMAKE_C_COMPILER ${prefix}gcc${exesuffix})
   set(CMAKE_ASM_COMPILER ${prefix}gcc${exesuffix})
