@@ -24,11 +24,14 @@
 #ifndef TwoWire_h
 #define TwoWire_h
 
-  #include <stdlib.h>
-  #include <string.h>
-  #include <twi.h>
-  #include <Stream.h>
+  #define BUFFER_LENGTH 16
   
+  #include <stdlib.h>
+  //#include <string.h>
+  #include <twi.h>
+  //#include <Stream.h>
+  
+  class TwoWire{
   // Initialize Class Variables //////////////////////////////////////////////////
   
   uint8_t rxBuffer[BUFFER_LENGTH];
@@ -45,7 +48,7 @@
   void (*user_onReceive)(int);
   
   // Constructors ////////////////////////////////////////////////////////////////
-  
+  public:
   TwoWire()
   {
   }
@@ -66,8 +69,8 @@
   void begin(uint8_t address)
   {
     twi_setAddress(address);
-    twi_attachSlaveTxEvent(onRequestService);
-    twi_attachSlaveRxEvent(onReceiveService);
+    //twi_attachSlaveTxEvent(onRequestService);
+    //twi_attachSlaveRxEvent(onReceiveService);
     begin();
   }
   
@@ -196,7 +199,7 @@
     // in master transmitter mode
       // don't bother if buffer is full
       if(txBufferLength >= BUFFER_LENGTH){
-        setWriteError();
+        //setWriteError();?
         return 0;
       }
       // put byte in tx buffer
@@ -215,7 +218,7 @@
   // must be called in:
   // slave tx event callback
   // or after beginTransmission(address)
-  size_t write(const uint8_t *data, size_t quantity)
+  size_t write(uint8_t *data, size_t quantity)
   {
     if(transmitting){
     // in master transmitter mode
@@ -324,9 +327,9 @@
   {
     user_onRequest = function;
   }
-  
+  };  
   // Preinstantiate Objects //////////////////////////////////////////////////////
   
   TwoWire Wire = TwoWire();
-  
+
   #endif
