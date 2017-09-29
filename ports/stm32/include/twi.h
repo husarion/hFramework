@@ -19,12 +19,12 @@
 #ifndef twi_h
 #define twi_h
 
-auto I2C = hExt.i2c;
-auto I2C1 = hSens1.getSoftwareI2C();
-auto I2C2 = hSens2.getSoftwareI2C();
+//#define I2C hExt.i2c
+//#define I2C1 hSens1.getSoftwareI2C()
+//#define I2C2 hSens2.getSoftwareI2C()
 
 #ifndef TWI
-#define TWI I2C
+#define TWI hExt.i2c
 #endif
 
   const int TWI_FREQ = 100000;

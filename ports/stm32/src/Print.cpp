@@ -43,7 +43,7 @@ size_t Print::write(const uint8_t *buffer, size_t size)
 	}
   return n;
 }
-
+/*
 size_t Print::print(const __FlashStringHelper *ifsh)//TODO
 {
   PGM_P p = reinterpret_cast<PGM_P>(ifsh);
@@ -56,7 +56,7 @@ size_t Print::print(const __FlashStringHelper *ifsh)//TODO
   }
   return n;
 }
-
+*/
 size_t Print::print(const String &s)//TODO
 {
   return write(s.c_str(), s.length());
@@ -116,7 +116,7 @@ size_t Print::print(double n, int digits)
 {
   return printFloat(n, digits);
 }
-
+/*
 size_t Print::println(const __FlashStringHelper *ifsh)//TODO
 {
   size_t n = print(ifsh);
@@ -128,7 +128,7 @@ size_t Print::print(const Printable& x)//TODO
 {
   return x.printTo(*this);
 }
-
+*/
 size_t Print::println(void)
 {
 	PRINTTARGET.printf("\n");
@@ -197,17 +197,17 @@ size_t Print::println(double num, int digits)
   n += println();
   return n;
 }
-
+/*
 size_t Print::println(const Printable& x)//TODO
 {
   size_t n = print(x);
   n += println();
   return n;
 }
-
+*/
 // Private Methods /////////////////////////////////////////////////////////////
 
-size_t Print::printNumber(unsigned long n, uint8_t base)//TODO
+size_t Print::printNumber(unsigned long n, uint8_t base)
 {
   char buf[8 * sizeof(long) + 1]; // Assumes 8-bit chars plus zero byte.
   char *str = &buf[sizeof(buf) - 1];
@@ -224,11 +224,11 @@ size_t Print::printNumber(unsigned long n, uint8_t base)//TODO
     *--str = c < 10 ? c + '0' : c + 'A' - 10;
   } while(n);
 	
-	PRINTTARGET.printf("%c", str);
+	PRINTTARGET.printf("%s", str);
   return sizeof(str);
 }
 
-size_t Print::printFloat(double number, uint8_t digits) //TODO
+size_t Print::printFloat(double number, uint8_t digits)
 { 
   PRINTTARGET.printf("%f", number);
   return 1;
