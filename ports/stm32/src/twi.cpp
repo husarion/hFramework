@@ -1,10 +1,6 @@
 #include <hFramework.h>
 #include <twi.h>
 
-#ifndef TWI
-#define TWI hSens1.i2c
-#endif
-
 void twi_init(void){
 TWI.setDataRate(TWI_FREQ);
 }
