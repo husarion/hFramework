@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "Wire.h"
 #include <stdlib.h>
 #include <twi.h>

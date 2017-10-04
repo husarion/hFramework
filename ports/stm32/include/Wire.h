@@ -76,6 +76,6 @@
   };  
   // Preinstantiate Objects //////////////////////////////////////////////////////
   
-  TwoWire Wire = TwoWire();
+  static TwoWire Wire = TwoWire();
 
   #endif
