@@ -75,7 +75,7 @@
   void onRequest( void (*function)(void) );
   };  
   // Preinstantiate Objects //////////////////////////////////////////////////////
-  
-  static TwoWire Wire = TwoWire();
 
+  extern TwoWire Wire;
+  
   #endif

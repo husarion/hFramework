@@ -73,14 +73,14 @@ static auto pins = std::make_tuple();
 #define sq(x) ((x)*(x))
 
 template <typename T>
-__attribute__((noreturn)) T& getPin(int index, const char* error) {
+static __attribute__((noreturn)) T& getPin(int index, const char* error) {
     sys.fail_log("ERROR: pin %d doesn't support %s", index, error);
     sys.fault_handler();
     abort();
 }
 
 template <typename T, int pin, int... allowed>
-T& getPin(int index, const char* error) { // this should result in unrolled loop
+static T& getPin(int index, const char* error) { // this should result in unrolled loop
     if (index == pin) {
         return std::get<pin>(pins);
     } else {
@@ -88,23 +88,23 @@ T& getPin(int index, const char* error) { // this should result in unrolled loop
     }
 }
 
-void digitalWrite(int pinIndex, int value) {
+static void digitalWrite(int pinIndex, int value) {
     hGPIO& gpio = getPin<hGPIO, H_DIGITAL_PINS>(pinIndex, "digitalWrite");
     gpio.write(value);
 }
 
-int digitalRead(int pinIndex) {
+static int digitalRead(int pinIndex) {
     hGPIO& gpio = getPin<hGPIO, H_DIGITAL_PINS>(pinIndex, "digitalRead");
     return gpio.read();
 }
 
-int analogRead(int pinIndex) {
+static int analogRead(int pinIndex) {
     hGPIO_adc& gpio = getPin<hGPIO_adc, H_ANALOG_PINS>(pinIndex, "analogRead");
     gpio.enableADC();
     return gpio.analogReadRaw() / 4; // 0..4095 -> 0..1023
 }
 
-void pinMode(int pinIndex, int value) {
+static void pinMode(int pinIndex, int value) {
     hGPIO& gpio = getPin<hGPIO, H_DIGITAL_PINS>(pinIndex, "pinMode");
     switch (value) {
     case INPUT:
@@ -175,19 +175,19 @@ struct ArduinoSerial {
     }
 };
 
-unsigned long millis(void) {
+static unsigned long millis(void) {
    return sys.getRefTime();
 }
   
-unsigned long micros(void) {
+static unsigned long micros(void) {
    return sys.getRefTime()*1000;
 }
   
-void delay(int ms) {
+static void delay(int ms) {
     sys.delay(ms);
 }
   
-void delayMicroseconds(unsigned int us) {
+static void delayMicroseconds(unsigned int us) {
     sys.delayUs(us);
 }
 

@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <twi.h>
 
+TwoWire Wire;
+
 TwoWire::TwoWire(){}
 
 void TwoWire::begin(void)
