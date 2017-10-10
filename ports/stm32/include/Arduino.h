@@ -71,6 +71,8 @@ static auto pins = std::make_tuple();
 #define radians(deg) ((deg)*DEG_TO_RAD)
 #define degrees(rad) ((rad)*RAD_TO_DEG)
 #define sq(x) ((x)*(x))
+#define min(a, b) (a<b?a:b)
+#define max(a, b) (a>b?a:b)
 
 template <typename T>
 static __attribute__((noreturn)) T& getPin(int index, const char* error) {
@@ -196,7 +198,7 @@ static void delayMicroseconds(unsigned int us) {
 void setup();
 void loop();
 
-hFramework::ArduinoSerial Serial(hFramework::Serial);
+extern hFramework::ArduinoSerial Serial;
 
 using hFramework::digitalWrite;
 using hFramework::digitalRead;
