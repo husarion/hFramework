@@ -193,14 +193,32 @@ static void delayMicroseconds(unsigned int us) {
     sys.delayUs(us);
 }
 
+static void memset(const void* ptr, int value, size_t size){
+    unsigned char a = value;
+    for(size_t i = 0 ; i<size; i++)
+	{
+        ptr = &a;
+        ptr + 1;
+	}
+}
+
+static int memcmp ( const void * ptr1, const void * ptr2, size_t num )
+{
+    int const *a=*(( int const **)ptr1);
+    int const *b=*(( int const **)ptr2);
+	for(size_t i = 0; i< num ; i++)
+	{ 
+		if(a[i] > b[i])
+			return 1;
+		if(a[i] < b[i])
+			return 2;
+	}
+	return 0;
+}
+
 }
 
 void setup();
 void loop();
 
 extern hFramework::ArduinoSerial Serial;
-
-using hFramework::digitalWrite;
-using hFramework::digitalRead;
-using hFramework::analogRead;
-using hFramework::pinMode;
