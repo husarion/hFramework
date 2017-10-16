@@ -177,44 +177,12 @@ struct ArduinoSerial {
     }
 };
 
-static unsigned long millis(void) {
-   return sys.getRefTime();
-}
-  
-static unsigned long micros(void) {
-   return sys.getRefTime()*1000;
-}
-  
-static void delay(int ms) {
-    sys.delay(ms);
-}
-  
-static void delayMicroseconds(unsigned int us) {
-    sys.delayUs(us);
-}
-
-static void memset(const void* ptr, int value, size_t size){
-    unsigned char a = value;
-    for(size_t i = 0 ; i<size; i++)
-	{
-        ptr = &a;
-        ptr + 1;
-	}
-}
-
-static int memcmp ( const void * ptr1, const void * ptr2, size_t num )
-{
-    int const *a=*(( int const **)ptr1);
-    int const *b=*(( int const **)ptr2);
-	for(size_t i = 0; i< num ; i++)
-	{ 
-		if(a[i] > b[i])
-			return 1;
-		if(a[i] < b[i])
-			return 2;
-	}
-	return 0;
-}
+unsigned long millis(void);  
+unsigned long micros(void);  
+void delay(int ms);  
+void delayMicroseconds(unsigned int us);
+void memset(const void* ptr, int value, size_t size);
+int memcmp ( const void * ptr1, const void * ptr2, size_t num );
 
 }
 
