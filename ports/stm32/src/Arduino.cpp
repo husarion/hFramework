@@ -1,44 +1,94 @@
 #include <hFramework.h>
 #include "Arduino.h"
 
-hFramework::ArduinoSerial Serial(hFramework::Serial);
+//hFramework::ArduinoSerial Serial(Serial);
 
-unsigned long hFramework::millis(void) {
+#if BOARD(CORE2)
+static auto pins = std::make_tuple(hExt.serial.pinRx, hExt.serial.pinTx,
+                                   hExt.spi.pinSck, hExt.spi.pinMiso, hExt.spi.pinMosi,
+                                   hExt.i2c.pinSda, hExt.i2c.pinScl,
+                                   0, 0, 0, 0, 0, 0,
+                                   hSens1.pin2, hSens1.pin3, hSens1.pin4, hSens2.pin2,
+                                   hSens2.pin3, hSens2.pin4, hSens3.pin2, hSens3.pin3,
+                                   hSens3.pin4, hSens4.pin2, hSens4.pin3, hSens4.pin4,
+                                   hSens5.pin2, hSens5.pin3, hSens5.pin4, hSens6.pin2,
+                                   hSens6.pin3, hSens6.pin4,
+                                   0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                   hExt.pin1, hExt.pin2, hExt.pin3, hExt.pin4, hExt.pin5,
+                                   hSens1.pin1, hSens2.pin1, hSens3.pin1,
+                                   hSens4.pin1, hSens5.pin1, hSens6.pin1);
+#define H_DIGITAL_PINS 0, 1, 2, 3, 4, 5, 6, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30
+#define H_ANALOG_PINS A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10
+#else
+#define H_DIGITAL_PINS
+#define H_ANALOG_PINS
+static auto pins = std::make_tuple();
+#endif
+
+template <typename T>
+static __attribute__((noreturn)) T& getPin(int index, const char* error) {
+    sys.fail_log("ERROR: pin %d doesn't support %s", index, error);
+    sys.fault_handler();
+    abort();
+}
+
+template <typename T, int pin, int... allowed>
+static T& getPin(int index, const char* error) { // this should result in unrolled loop
+    if (index == pin) {
+        return std::get<pin>(pins);
+    } else {
+        return getPin<T, allowed...>(index, error);
+    }
+}
+
+extern "C" {
+unsigned long millis(void) {
    return sys.getRefTime();
 }
   
-unsigned long hFramework::micros(void) {
+unsigned long micros(void) {
    return sys.getRefTime()*1000;
 }
   
-void hFramework::delay(int ms) {
+void delay(int ms) {
     sys.delay(ms);
 }
   
-void hFramework::delayMicroseconds(unsigned int us) {
+void delayMicroseconds(unsigned int us) {
     sys.delayUs(us);
 }
 
-void hFramework::memset(const void* ptr, int value, size_t size){
-    unsigned char const *a=*(( unsigned char const **)ptr);
-    unsigned char const b = (unsigned char)value;
-    for(size_t i = 0 ; i<size; i++)
-	{
-        a = &b;
-        a += 1;
-	}
+void digitalWrite(int pinIndex, int value) {
+    hGPIO& gpio = getPin<hGPIO, H_DIGITAL_PINS>(pinIndex, "digitalWrite");
+    gpio.write(value);
 }
 
-int hFramework::memcmp( const void * ptr1, const void * ptr2, size_t num )
-{
-    int const *a=*(( int const **)ptr1);
-    int const *b=*(( int const **)ptr2);
-	for(size_t i = 0; i< num ; i++)
-	{ 
-		if(a[i] > b[i])
-			return 1;
-		if(a[i] < b[i])
-			return 2;
-	}
-	return 0;
+int digitalRead(int pinIndex) {
+    hGPIO& gpio = getPin<hGPIO, H_DIGITAL_PINS>(pinIndex, "digitalRead");
+    return gpio.read();
+}
+
+int analogRead(int pinIndex) {
+    hGPIO_adc& gpio = getPin<hGPIO_adc, H_ANALOG_PINS>(pinIndex, "analogRead");
+    gpio.enableADC();
+    return gpio.analogReadRaw() / 4; // 0..4095 -> 0..1023
+}
+
+void pinMode(int pinIndex, int value) {
+    hGPIO& gpio = getPin<hGPIO, H_DIGITAL_PINS>(pinIndex, "pinMode");
+    switch (value) {
+    case INPUT:
+        gpio.setIn();
+        break;
+    case OUTPUT:
+        gpio.setOut();
+        break;
+    case INPUT_PULLUP:
+        gpio.setIn_pu();
+        break;
+    default:
+        sys.fail_log("ERROR: invalid pin mode %d", value);
+        sys.fault_handler();
+    }
+}
 }

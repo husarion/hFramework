@@ -1,4 +1,5 @@
 echo off
+del build
 mkdir build\stm32_core2_1.0.0\
 cd build\stm32_core2_1.0.0\
 set PATH=C:\Users\%username%\.vscode\HusarionTools\bin;%PATH%
