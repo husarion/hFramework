@@ -8,10 +8,8 @@
 
 void hMain()
 {
-    hMot3.setEncoderPolarity(Polarity::Reversed);  //changing encoder polarity
-        hMot1.setEncoderPolarity(Polarity::Normal);  //set default encoder polarization
+    hMot3.setEncoderPolarity(Polarity::Reversed);  //changing encoder polarity (Polarity::Normal is default)
         hMot3.setMotorPolarity(Polarity::Reversed);  //changing motor polarity
-        hMot1.setMotorPolarity(Polarity::Normal);  //set default motor polarization
     char c;
     while (1)
     {  
