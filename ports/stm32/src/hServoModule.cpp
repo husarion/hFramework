@@ -95,8 +95,6 @@ void hServoModuleClass::init()
 
 	for (int i = 0; i < SERVOS_COUNT; i++)
 	{
-		if(servo_active[i] == 0)
-		{
 			int pinPWM = pins[i];
 
 			myPWM_init(pinPWM, PWM_POLARITY_LOW);
@@ -104,7 +102,6 @@ void hServoModuleClass::init()
 			myPWM_setCnt_ns(pinPWM, 0);
 			myPWM_setPeriod_us(pinPWM, 20000);
 			myPWM_counter_enable(pinPWM);
-		}
 	}
 }
 
@@ -112,22 +109,16 @@ void hServoModuleClass::setWidth(int num, uint16_t widthUs)
 {
 	if (num >= SERVOS_COUNT)
 		return;
-	if(servo_active[num] > 0)
-		return;
 	int pinPWM = pins[num];
 	myPWM_setWidth_us(pinPWM, widthUs);
-	
 }
 
 void hServoModuleClass::setPeriod(uint16_t periodUs)
 {
 	for (int i = 0; i < SERVOS_COUNT; i++)
 	{
-		if(servo_active[i] == 0)
-		{
 			int pinPWM = pins[i];
 			myPWM_setPeriod_us(pinPWM, periodUs);
-		}
 	}
 }
 

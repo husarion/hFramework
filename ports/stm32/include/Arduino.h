@@ -3,19 +3,25 @@
  * Distributed under the MIT license.
  * For full terms see the file LICENSE.md.
  */
-
+#ifdef __cplusplus
 #define NO_USING_HFRAMEWORK
 #include <hFramework.h>
+#endif
+#include <string.h>
+#include <stdbool.h>
+
+#ifndef arduino_cost
+#define arduino_cost
 
 // bases
-const int HEX = 16;
-const int DEC = 10;
-const int OCT = 8;
-const int BIN = 2;
+//const int HEX = 16;
+//const int DEC = 10;
+//const int OCT = 8;
+//const int BIN = 2;
 
 // digital states
-const int LOW = 0;
-const int HIGH = 1;
+//const int LOW = 0;
+//const int HIGH = 1;
 
 // pin modes
 const int INPUT = 1;
@@ -34,31 +40,11 @@ const int A8 = 48;
 const int A9 = 49;
 const int A10 = 50;
 
-typedef unsigned int word;
-typedef bool boolean;
+//typedef unsigned int word;
+//typedef bool boolean;
 
-namespace hFramework {
-#if BOARD(CORE2)
-static auto pins = std::make_tuple(hExt.serial.pinRx, hExt.serial.pinTx,
-                                   hExt.spi.pinSck, hExt.spi.pinMiso, hExt.spi.pinMosi,
-                                   hExt.i2c.pinSda, hExt.i2c.pinScl,
-                                   0, 0, 0, 0, 0, 0,
-                                   hSens1.pin2, hSens1.pin3, hSens1.pin4, hSens2.pin2,
-                                   hSens2.pin3, hSens2.pin4, hSens3.pin2, hSens3.pin3,
-                                   hSens3.pin4, hSens4.pin2, hSens4.pin3, hSens4.pin4,
-                                   hSens5.pin2, hSens5.pin3, hSens5.pin4, hSens6.pin2,
-                                   hSens6.pin3, hSens6.pin4,
-                                   0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                   hExt.pin1, hExt.pin2, hExt.pin3, hExt.pin4, hExt.pin5,
-                                   hSens1.pin1, hSens2.pin1, hSens3.pin1,
-                                   hSens4.pin1, hSens5.pin1, hSens6.pin1);
-#define H_DIGITAL_PINS 0, 1, 2, 3, 4, 5, 6, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30
-#define H_ANALOG_PINS A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10
-#else
-#define H_DIGITAL_PINS
-#define H_ANALOG_PINS
-static auto pins = std::make_tuple();
-#endif
+
+//namespace hFramework {
 
 #define PI 3.1415926535897932384626433832795
 #define HALF_PI 1.5707963267948966192313216916398
@@ -74,59 +60,24 @@ static auto pins = std::make_tuple();
 #define min(a, b) (a<b?a:b)
 #define max(a, b) (a>b?a:b)
 
-template <typename T>
-static __attribute__((noreturn)) T& getPin(int index, const char* error) {
-    sys.fail_log("ERROR: pin %d doesn't support %s", index, error);
-    sys.fault_handler();
-    abort();
+#ifdef __cplusplus
+extern "C" {
+#endif
+void pinMode(int pinIndex, int value);
+int analogRead(int pinIndex);
+int digitalRead(int pinIndex);
+void digitalWrite(int pinIndex, int value);
+
+unsigned long millis(void);
+unsigned long micros(void);
+void delay(int ms);
+void delayMicroseconds(unsigned int us);
+
+#ifdef __cplusplus
 }
 
-template <typename T, int pin, int... allowed>
-static T& getPin(int index, const char* error) { // this should result in unrolled loop
-    if (index == pin) {
-        return std::get<pin>(pins);
-    } else {
-        return getPin<T, allowed...>(index, error);
-    }
-}
 
-static void digitalWrite(int pinIndex, int value) {
-    hGPIO& gpio = getPin<hGPIO, H_DIGITAL_PINS>(pinIndex, "digitalWrite");
-    gpio.write(value);
-}
-
-static int digitalRead(int pinIndex) {
-    hGPIO& gpio = getPin<hGPIO, H_DIGITAL_PINS>(pinIndex, "digitalRead");
-    return gpio.read();
-}
-
-static int analogRead(int pinIndex) {
-    hGPIO_adc& gpio = getPin<hGPIO_adc, H_ANALOG_PINS>(pinIndex, "analogRead");
-    gpio.enableADC();
-    return gpio.analogReadRaw() / 4; // 0..4095 -> 0..1023
-}
-
-static void pinMode(int pinIndex, int value) {
-    hGPIO& gpio = getPin<hGPIO, H_DIGITAL_PINS>(pinIndex, "pinMode");
-    switch (value) {
-    case INPUT:
-        gpio.setIn();
-        break;
-    case OUTPUT:
-        gpio.setOut();
-        break;
-    case INPUT_PULLUP:
-        gpio.setIn_pu();
-        break;
-    default:
-        sys.fail_log("ERROR: invalid pin mode %d", value);
-        sys.fault_handler();
-    }
-}
-
-#undef H_DIGITAL_PINS
-#undef H_ANALOG_PINS
-
+namespace hFramework {
 struct ArduinoSerial {
     hSerial& hserial;
 
@@ -145,9 +96,9 @@ struct ArduinoSerial {
         case 2:
             hserial.printf("%b", num);
             break;
-        case 8:
-            hserial.printf("%o", num);
-            break;
+        //case 8:
+        //    hserial.printf("%o", num);
+        //    break;
         case 10:
             hserial.printf("%d", num);
             break;
@@ -169,6 +120,14 @@ struct ArduinoSerial {
         hserial.printf("%s", s);
     }
 	
+	void println(const char* s) {
+        hserial.printf("%s\n", s);
+    }
+	
+	void println() {
+        hserial.printf("\n");
+    }
+	
 	long random(long max);
 	long random(long min, long max);
 
@@ -177,16 +136,10 @@ struct ArduinoSerial {
     }
 };
 
-unsigned long millis(void);  
-unsigned long micros(void);  
-void delay(int ms);  
-void delayMicroseconds(unsigned int us);
-void memset(const void* ptr, int value, size_t size);
-int memcmp ( const void * ptr1, const void * ptr2, size_t num );
-
 }
 
-void setup();
-void loop();
-
 extern hFramework::ArduinoSerial Serial;
+
+#endif
+
+#endif
