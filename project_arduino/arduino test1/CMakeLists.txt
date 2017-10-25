@@ -8,4 +8,4 @@ include(${HFRAMEWORK_PATH}/hFramework.cmake)
 #enable_module(hModules)
 #enable_module(hROS)
 
-add_hexecutable(myproject main.cpp SparkFunMPU9250-DMP.cpp util/inv_mpu.cpp util/inv_mpu_dmp_motion_driver.cpp util/arduino_mpu9250_log.cpp util/arduino_mpu9250_i2c.cpp util/arduino_mpu9250_clk.cpp)
+add_hexecutable(myproject main.cpp SparkFunMPU9250-DMP.cpp util/inv_mpu.c util/inv_mpu_dmp_motion_driver.c util/arduino_mpu9250_log.cpp util/arduino_mpu9250_i2c.cpp util/arduino_mpu9250_clk.c)

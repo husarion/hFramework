@@ -28,9 +28,10 @@ Supported Platforms:
 #define COMPASS_ENABLED
 
 // Include the Invensense MPU9250 driver and DMP keys:
+extern "C" {
 #include "util/inv_mpu.h"
 #include "util/inv_mpu_dmp_motion_driver.h"
-
+}
 
 typedef int inv_error_t;
 #define INV_SUCCESS 0

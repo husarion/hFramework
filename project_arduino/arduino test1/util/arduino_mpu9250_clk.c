@@ -17,7 +17,6 @@ Supported Platforms:
 ******************************************************************************/
 #include "arduino_mpu9250_clk.h"
 #include <Arduino.h>
-using namespace hFramework;
 
 int arduino_get_clock_ms(unsigned long *count)
 {

@@ -32,18 +32,9 @@ void logString(char * string)
 {
 }
 
-//int _MLPrintLog (int priority, unsigned char* tag, unsigned char* fmt, ...)
-//{
-//}
-
-int _MLPrintLog (unsigned char* tag, ...)
+int _MLPrintLog (int priority, const char* tag, const char* fmt)
 {
-	return 1;
-}
-
-int _MLPrintLog (const char* tag, ...)
-{
-	return 1;
+	return 0;
 }
 
 void eMPL_send_quat(long *quat)

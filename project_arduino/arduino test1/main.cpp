@@ -16,20 +16,10 @@ Supported Platforms:
 - ATSAMD21 (Arduino Zero, SparkFun SAMD21 Breakouts)
 *************************************************************/
 #include <hFramework.h>
-using namespace hFramework;
-#include <stdio.h>
+#include <Arduino.h>
 #include "SparkFunMPU9250-DMP.h"
 
-void hMain()
-{
-  setup();
-	for (;;)
-	{
-    loop();
-  }
-}
-
-ArduinoSerial hserial(hFramework::Serial);
+hFramework::ArduinoSerial SerialPort(hFramework::Serial);
 
 MPU9250_DMP imu;
 
@@ -37,7 +27,7 @@ void printIMUData(void);
 
 void setup() 
 {
-  hserial.begin(115200);
+  SerialPort.begin(115200);
 
   // Call imu.begin() to verify communication with and
   // initialize the MPU-9250 to it's default values.
@@ -47,9 +37,9 @@ void setup()
   {
     while (1)
     {
-      hserial.print("Unable to communicate with MPU-9250\n");
-      hserial.print("Check connections, and try again.\n");
-      hserial.print("\n");
+      SerialPort.println("Unable to communicate with MPU-9250");
+      SerialPort.println("Check connections, and try again.");
+      SerialPort.println();
       delay(5000);
     }
   }
@@ -114,7 +104,6 @@ void printIMUData(void)
   // Use the calcAccel, calcGyro, and calcMag functions to
   // convert the raw sensor readings (signed 16-bit values)
   // to their respective units.
-
   float accelX = imu.calcAccel(imu.ax);
   float accelY = imu.calcAccel(imu.ay);
   float accelZ = imu.calcAccel(imu.az);
@@ -124,27 +113,45 @@ void printIMUData(void)
   float magX = imu.calcMag(imu.mx);
   float magY = imu.calcMag(imu.my);
   float magZ = imu.calcMag(imu.mz);
+  
+  SerialPort.print("Accel: ");
+  SerialPort.print(accelX);
+  SerialPort.print(", ");
+  SerialPort.print(accelY);
+  SerialPort.print(", ");
+  SerialPort.print(accelZ);
+  SerialPort.println(" g");
 
-  hserial.print("Accel: ");
-  hserial.print(accelX);
-  hserial.print(", ");
-  hserial.print(accelY);
-  hserial.print(", ");
-  hserial.print(accelZ);
+  SerialPort.print("Gyro: ");
+  SerialPort.print(gyroX);
+  SerialPort.print(", ");
+  SerialPort.print(gyroY);
+  SerialPort.print(", ");
+  SerialPort.print(gyroZ);
+  SerialPort.println(" g");
 
-  hserial.print("Accel: ");
-  hserial.print(gyroX);
-  hserial.print(", ");
-  hserial.print(gyroY);
-  hserial.print(", ");
-  hserial.print(gyroZ);
+  SerialPort.print("Mag: ");
+  SerialPort.print(magX);
+  SerialPort.print(", ");
+  SerialPort.print(magY);
+  SerialPort.print(", ");
+  SerialPort.print(magZ);
+  SerialPort.println(" g");
+  
+  //SerialPort.println("Accel: " + String(accelX) + ", " +
+  //            String(accelY) + ", " + String(accelZ) + " g");
+  //SerialPort.println("Gyro: " + String(gyroX) + ", " +
+  //            String(gyroY) + ", " + String(gyroZ) + " dps");
+  //SerialPort.println("Mag: " + String(magX) + ", " +
+  //            String(magY) + ", " + String(magZ) + " uT");
+  //SerialPort.println("Time: " + String(imu.time) + " ms");
+  SerialPort.println();
+}
 
-  hserial.print("Accel: ");
-  hserial.print(magX);
-  hserial.print(", ");
-  hserial.print(magY);
-  hserial.print(", ");
-  hserial.print(magZ);
-
-  hserial.print("\n");
+void hMain()
+{
+  setup();
+  for(;;){
+    loop();
+  } 
 }

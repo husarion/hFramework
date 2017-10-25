@@ -14,14 +14,9 @@
  *      @details    All functions are preceded by the dmp_ prefix to
  *                  differentiate among MPL and general driver function calls.
  */
-#include <hFramework.h>
-
-using namespace hFramework;
-
-
-//#include <stdio.h>
-//#include <stdint.h>
-//#include <stdlib.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include "inv_mpu.h"
@@ -607,7 +602,7 @@ int dmp_set_accel_bias(long *bias)
 
     mpu_get_accel_sens(&accel_sens);
     accel_sf = (long long)accel_sens << 15;
-    //__no_operation(); //TODO:
+    //__no_operation();
 
     accel_bias_body[0] = bias[dmp.orient & 3];
     if (dmp.orient & 4)

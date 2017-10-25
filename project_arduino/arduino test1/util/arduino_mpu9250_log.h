@@ -46,15 +46,12 @@ extern "C" {
 #include <stdarg.h>
 
 void logString(char * string);
-//int _MLPrintLog (int priority, unsigned char* tag, unsigned char* fmt, ...);
+int _MLPrintLog (int priority, const char* tag, const char* fmt);
 void eMPL_send_quat(long *quat);
 void eMPL_send_data(unsigned char type, long *data);
 
 #if defined(__cplusplus) 
 }
 #endif
-
-int _MLPrintLog (unsigned char* tag, ...);
-int _MLPrintLog (const char* tag, ...);
 
 #endif // _ARDUINO_MPU9250_LOG_H_
