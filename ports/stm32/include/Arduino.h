@@ -3,6 +3,9 @@
  * Distributed under the MIT license.
  * For full terms see the file LICENSE.md.
  */
+ #ifndef hArduino
+ #define hArduino
+ 
 #ifdef __cplusplus
 #define NO_USING_HFRAMEWORK
 #include <hFramework.h>
@@ -14,31 +17,31 @@
 #define arduino_cost
 
 // bases
-//const int HEX = 16;
-//const int DEC = 10;
-//const int OCT = 8;
-//const int BIN = 2;
+static const int HEX = 16;
+static const int DEC = 10;
+static const int OCT = 8;
+static const int BIN = 2;
 
 // digital states
-//const int LOW = 0;
-//const int HIGH = 1;
+static const int LOW = 0;
+static const int HIGH = 1;
 
 // pin modes
-const int INPUT = 1;
-const int OUTPUT = 2;
-const int INPUT_PULLUP = 3;
+static const int INPUT = 1;
+static const int OUTPUT = 2;
+static const int INPUT_PULLUP = 3;
 
-const int A0 = 40;
-const int A1 = 41;
-const int A2 = 42;
-const int A3 = 43;
-const int A4 = 44;
-const int A5 = 45;
-const int A6 = 46;
-const int A7 = 47;
-const int A8 = 48;
-const int A9 = 49;
-const int A10 = 50;
+static const int A0 = 40;
+static const int A1 = 41;
+static const int A2 = 42;
+static const int A3 = 43;
+static const int A4 = 44;
+static const int A5 = 45;
+static const int A6 = 46;
+static const int A7 = 47;
+static const int A8 = 48;
+static const int A9 = 49;
+static const int A10 = 50;
 
 //typedef unsigned int word;
 //typedef bool boolean;
@@ -143,3 +146,4 @@ extern hFramework::ArduinoSerial Serial;
 #endif
 
 #endif
+#endif //hArduino
