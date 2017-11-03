@@ -92,3 +92,29 @@ void pinMode(int pinIndex, int value) {
     }
 }
 }
+
+template <typename T>
+char * to_string(T data) {
+	//TODO:
+	return new char;
+}
+
+hFramework::String::String(int n) {
+	this->assign(to_string(n));
+}
+
+hFramework::String::String(unsigned int n) {
+	this->assign(to_string(n));
+}
+
+hFramework::String::String(float n) {
+	this->assign(to_string(n));
+}
+
+hFramework::String::String(double n) {
+	this->assign(to_string(n));
+}
+
+hFramework::String::String(long unsigned int n) {
+	this->assign(to_string(n));
+}

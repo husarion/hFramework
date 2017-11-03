@@ -81,6 +81,20 @@ void delayMicroseconds(unsigned int us);
 
 
 namespace hFramework {
+class String : public std::string 
+{
+public :
+	String(){}
+	String(std::string text){this->assign(text.c_str());}
+	String(char* text){this->assign(text);}
+	String(int n);
+	String(unsigned int n);
+	String(float n);
+	String(double n);
+	String(long unsigned int n);
+	~String(){}
+};
+	
 struct ArduinoSerial {
     hSerial& hserial;
 
@@ -123,6 +137,14 @@ struct ArduinoSerial {
         hserial.printf("%s", s);
     }
 	
+	void print(String s) {
+		hserial.printf("%s", s);
+	}
+	
+	void println(String s) {
+		hserial.printf("%s\n", s);
+	}
+	
 	void println(const char* s) {
         hserial.printf("%s\n", s);
     }
@@ -142,6 +164,19 @@ struct ArduinoSerial {
 }
 
 extern hFramework::ArduinoSerial Serial;
+
+void setup();
+void loop();
+
+#ifdef Arduino_hMain
+void hMain()
+{
+  setup();
+  for(;;){
+    loop();
+  } 
+}
+#endif
 
 #endif
 
