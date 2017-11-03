@@ -5,6 +5,7 @@
 *.map
 *.hex
 *.pyc
+/build
 /hFramework
 /hclient.mk
 Makefile

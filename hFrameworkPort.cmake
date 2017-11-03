@@ -125,7 +125,7 @@ else()
 endif()
 
 # set(common_flags "-static ${errors_flags} -ffunction-sections -fdata-sections")
-set(common_flags "${errors_flags} -g -ffunction-sections -fdata-sections -fno-exceptions -fno-rtti") # -Wfatal-errors
+set(common_flags "${errors_flags} -g -ffunction-sections -fdata-sections") # -Wfatal-errors
 set(common_lflags "-fno-exceptions -fno-rtti")
 
 if(NOT RELEASE)
