@@ -93,6 +93,10 @@ public :
 	String(double n);
 	String(long unsigned int n);
 	~String(){}
+	
+	char charAt(size_t poz);
+	void setCharAt(size_t index, char c);
+	
 };
 	
 struct ArduinoSerial {

@@ -118,3 +118,11 @@ hFramework::String::String(double n) {
 hFramework::String::String(long unsigned int n) {
 	this->assign(to_string(n));
 }
+
+char hFramework::String::charAt(size_t poz) {
+	return this->at(poz);
+}
+
+void hFramework::String::setCharAt(size_t index, char c) {
+	this->insert(index, c, sizeof(c));
+}
