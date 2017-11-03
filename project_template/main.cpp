@@ -1,5 +1,6 @@
 #include "hFramework.h"
 //#include "hCloudClient.h"
+#include <stddef.h>
 #include <stdio.h>
 
 using namespace hFramework;

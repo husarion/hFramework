@@ -62,7 +62,7 @@ public:
 	 * @param upar an UART parity value (NONE, ODD, EVEN)
 	 * @param ustopb usart stop bits (ONE, TWO)
 	 */
-	void init(uint32_t baudrate = 230400, Parity parity = Parity::None, StopBits stopBits = StopBits::One);
+	void init(uint32_t baudrate = 460800, Parity parity = Parity::None, StopBits stopBits = StopBits::One);
 
 	int write(const void* data, int len, uint32_t timeout = INFINITE) override;
 	int read(void* data, int len, uint32_t timeout = INFINITE) override;
