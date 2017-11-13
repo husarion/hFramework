@@ -152,13 +152,13 @@ void hMotor::setEncoderPolarity(Polarity polarity)
 	portENABLE_INTERRUPTS();
 }
 void hMotor::setEncoderPu(){
-	impl->setPullup();
+	impl.setPullup();
 }
 void hMotor::setEncoderPd(){
-	impl->setPulldown();
+	impl.setPulldown();
 }
 void hMotor::setEncoderHI(){
-	impl->setPullReset();
+	impl.setPullReset();
 }
 Polarity hMotor::getMotorPolarity() const
 {
