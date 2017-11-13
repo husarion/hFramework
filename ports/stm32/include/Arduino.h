@@ -70,6 +70,7 @@ void pinMode(int pinIndex, int value);
 int analogRead(int pinIndex);
 int digitalRead(int pinIndex);
 void digitalWrite(int pinIndex, int value);
+void analogWrite(int pinIndex, int value);
 
 unsigned long millis(void);
 unsigned long micros(void);

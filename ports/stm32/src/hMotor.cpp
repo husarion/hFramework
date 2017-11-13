@@ -151,6 +151,15 @@ void hMotor::setEncoderPolarity(Polarity polarity)
 	myEncoder_setPolarity(hMotorDefs[impl.motorId].encoderNr, polarity == Polarity::Normal ? 0 : 1);
 	portENABLE_INTERRUPTS();
 }
+void hMotor::setEncoderPu(){
+	impl->setPullup();
+}
+void hMotor::setEncoderPd(){
+	impl->setPulldown();
+}
+void hMotor::setEncoderHI(){
+	impl->setPullReset();
+}
 Polarity hMotor::getMotorPolarity() const
 {
 	return impl.motorPolarity;

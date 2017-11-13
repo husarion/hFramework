@@ -34,7 +34,9 @@ enum
 #  error no board
 #endif
 };
-
+void myEncoder_setPullup(uint8_t motorNr);
+void myEncoder_setPulldown(uint8_t motorNr);
+void myEncoder_setPullReset(uint8_t motorNr);
 void myEncoder_init(uint8_t motorNr);
 void myEncoder_setPolarity(uint8_t motorNr, uint8_t polarity);
 int32_t myEncoder_getCnt(uint8_t motorNr);

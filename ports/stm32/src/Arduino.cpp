@@ -69,9 +69,44 @@ int digitalRead(int pinIndex) {
 }
 
 int analogRead(int pinIndex) {
-    hGPIO_adc& gpio = getPin<hGPIO_adc, H_ANALOG_PINS>(pinIndex, "analogRead");
+	hGPIO_adc& gpio = getPin<hGPIO_adc, H_ANALOG_PINS>(pinIndex, "analogRead");
     gpio.enableADC();
     return gpio.analogReadRaw() / 4; // 0..4095 -> 0..1023
+}
+
+void analogWrite(int pinIndex, int value) {
+	value %= 255;
+	hServoModule.enablePower();
+	#if BOARD(CORE2)
+		switch(pinIndex) {
+			case 7:
+			hServoModule.servo1.setPeriod(1000);
+			hServoModule.servo1.setWidth((value+1)/255*1000);
+			break;
+			case 8:
+			hServoModule.servo2.setPeriod(1000);
+			hServoModule.servo2.setWidth((value+1)/255*1000);
+			break;
+			case 9:
+			hServoModule.servo3.setPeriod(1000);
+			hServoModule.servo3.setWidth((value+1)/255*1000);
+			break;
+			case 10:
+			hServoModule.servo4.setPeriod(1000);
+			hServoModule.servo4.setWidth((value+1)/255*1000);
+			break;
+			case 11:
+			hServoModule.servo5.setPeriod(1000);
+			hServoModule.servo5.setWidth((value+1)/255*1000);
+			break;
+			case 12:
+			hServoModule.servo6.setPeriod(1000);
+			hServoModule.servo6.setWidth((value+1)/255*1000);
+			break;
+			default:
+			sys.fail_log("ERROR: pin %d doesn't support PWM", pinIndex);
+		};
+	#endif
 }
 
 void pinMode(int pinIndex, int value) {
