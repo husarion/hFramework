@@ -157,7 +157,7 @@ void hMotor::setEncoderPu(){
 void hMotor::setEncoderPd(){
 	impl.setPulldown();
 }
-void hMotor::setEncoderHI(){
+void hMotor::setEncoderHZ(){
 	impl.setPullReset();
 }
 Polarity hMotor::getMotorPolarity() const

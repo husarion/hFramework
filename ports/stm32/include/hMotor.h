@@ -238,9 +238,9 @@ public:
 	void setEncoderPd();
 	
 	/**
-	* @brief Reset encoder pin A and B
+	* @brief set encoder pin A and B as floating
 	*/
-	void setEncoderHI();
+	void setEncoderHZ();
 
 	/**
 	 * @brief Return motor polarity.
