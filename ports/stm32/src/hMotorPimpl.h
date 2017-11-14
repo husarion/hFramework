@@ -139,6 +139,10 @@ public:
 	void setSingleMode();
 	void setActiveBreaking() { activeBreaking = true; updatePower_internal(true); }
 	void setPassiveBreaking() { activeBreaking = false; updatePower_internal(true); }
+	
+	void setPullup();
+	void setPulldown();
+	void setPullReset();
 
 	int getDriverId() const
 	{

@@ -70,6 +70,7 @@ void pinMode(int pinIndex, int value);
 int analogRead(int pinIndex);
 int digitalRead(int pinIndex);
 void digitalWrite(int pinIndex, int value);
+void analogWrite(int pinIndex, int value);
 
 unsigned long millis(void);
 unsigned long micros(void);
@@ -93,6 +94,10 @@ public :
 	String(double n);
 	String(long unsigned int n);
 	~String(){}
+  
+	char charAt(size_t poz);
+	void setCharAt(size_t index, char c);
+	
 };
 	
 struct ArduinoSerial {
@@ -181,4 +186,5 @@ void hMain()
 #endif
 
 #endif
+
 #endif //hArduino

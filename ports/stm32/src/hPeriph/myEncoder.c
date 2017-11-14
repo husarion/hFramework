@@ -79,6 +79,54 @@ void timX_irqHandler(TIM_TypeDef* tim, uint8_t motorNr)
 	}
 }
 
+void myEncoder_setPullup(uint8_t motorNr)
+{
+	GPIO_InitTypeDef GPIO_InitStructure;
+
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+
+	GPIO_InitStructure.GPIO_Pin = encoder_desc[motorNr].GPIO_Pin_x_MxA_out;
+	GPIO_Init(encoder_desc[motorNr].GPIOy_MxA_out, &GPIO_InitStructure);
+
+	GPIO_InitStructure.GPIO_Pin = encoder_desc[motorNr].GPIO_Pin_x_MxB_out;
+	GPIO_Init(encoder_desc[motorNr].GPIOy_MxB_out, &GPIO_InitStructure);
+}
+
+void myEncoder_setPulldown(uint8_t motorNr)
+{
+	GPIO_InitTypeDef GPIO_InitStructure;
+
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
+
+	GPIO_InitStructure.GPIO_Pin = encoder_desc[motorNr].GPIO_Pin_x_MxA_out;
+	GPIO_Init(encoder_desc[motorNr].GPIOy_MxA_out, &GPIO_InitStructure);
+
+	GPIO_InitStructure.GPIO_Pin = encoder_desc[motorNr].GPIO_Pin_x_MxB_out;
+	GPIO_Init(encoder_desc[motorNr].GPIOy_MxB_out, &GPIO_InitStructure);
+}
+
+void myEncoder_setPullReset(uint8_t motorNr)
+{
+	GPIO_InitTypeDef GPIO_InitStructure;
+
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+
+	GPIO_InitStructure.GPIO_Pin = encoder_desc[motorNr].GPIO_Pin_x_MxA_out;
+	GPIO_Init(encoder_desc[motorNr].GPIOy_MxA_out, &GPIO_InitStructure);
+
+	GPIO_InitStructure.GPIO_Pin = encoder_desc[motorNr].GPIO_Pin_x_MxB_out;
+	GPIO_Init(encoder_desc[motorNr].GPIOy_MxB_out, &GPIO_InitStructure);
+}
+
 void myEncoder_init(uint8_t motorNr)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
