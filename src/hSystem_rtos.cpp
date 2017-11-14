@@ -265,14 +265,43 @@ void hSystem::delayUs(uint32_t delay)
 
 void hSystem::delaySync(uint32_t& refTime, uint32_t delay)
 {
-    uint32_t refticks = refTime * configTICK_RATE_HZ / 1000; // * 2 on STM32
-    vTaskDelayUntil((portTickType*)&refticks, msToTicks(delay));
-    refTime = refticks * 1000 / configTICK_RATE_HZ; // / 2 on STM32
+    refTime += delay;
+    uint32_t now32 = getRefTime() & 0xFFFFFFFF;
+
+    uint32_t half = 2147483647;
+    if (refTime > now32 || /*overflow*/(refTime < half && now32 > half))
+        hSystem::delay(refTime - now32);
 }
 
-uint32_t hSystem::getRefTime()
+void hSystem::delaySync(uint64_t& refTime, uint32_t delay)
 {
-    return xTaskGetTickCount() * 1000 / configTICK_RATE_HZ;
+    refTime += delay;
+    uint64_t now = getRefTime();
+    if (refTime > now)
+        hSystem::delay(refTime - now);
+}
+
+uint64_t ticks2time(uint64_t ticks) {
+#if configTICK_RATE_HZ < 1000
+    const int rate = 1000 / configTICK_RATE_HZ; // 10 on ESP32
+    return ticks * rate;
+#else
+    const int rate = configTICK_RATE_HZ / 1000; // 2 on STM32
+    return ticks / rate;
+#endif
+}
+
+uint64_t lastTicks = 0;
+
+uint64_t hSystem::getRefTime()
+{
+    uint64_t ticks32 = xTaskGetTickCount();
+    uint64_t newTicks = (lastTicks & 0xFFFFFFFF00000000ull) | ticks32;
+    if (ticks32 < (lastTicks & 0xFFFFFFFFull)) {
+        newTicks += 0x100000000ull;
+    }
+    lastTicks = newTicks;
+    return ticks2time(lastTicks);
 }
 
 }

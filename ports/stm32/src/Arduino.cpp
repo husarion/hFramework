@@ -69,7 +69,7 @@ int digitalRead(int pinIndex) {
 }
 
 int analogRead(int pinIndex) {
-	hGPIO_adc& gpio = getPin<hGPIO_adc, H_ANALOG_PINS>(pinIndex, "analogRead");
+	  hGPIO_adc& gpio = getPin<hGPIO_adc, H_ANALOG_PINS>(pinIndex, "analogRead");
     gpio.enableADC();
     return gpio.analogReadRaw() / 4; // 0..4095 -> 0..1023
 }

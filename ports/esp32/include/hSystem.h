@@ -34,13 +34,14 @@ public:
      */
     static void delayUs(uint32_t delay);
 
+    static void delaySync(uint64_t& refTime, uint32_t delay);
     static void delaySync(uint32_t& refTime, uint32_t delay);
 
     static void* malloc(size_t size) { return ::malloc(size); }
     static void free(void* p) { return ::free(p); }
     static uint32_t getRandNr();
 
-    static uint32_t getRefTime();
+    static uint64_t getRefTime();
 
     static hTask& taskCreate(const std::function<void()>& handler, uint8_t priority = 2, uint32_t stack = DEFAULT_STACK_SIZE, const char* desc = 0);
     static hTask& taskCreate(const std::function<void()>& handler, const char* desc) {
