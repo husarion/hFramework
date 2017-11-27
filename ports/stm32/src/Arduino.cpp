@@ -109,6 +109,20 @@ void analogWrite(int pinIndex, int value) {
 	#endif
 }
 
+//int hFramework::pulseIn(int pinIndex, int value, unsigned int timeout) {
+//	unsigned int time = sys.getRefTime();
+//	unsigned int time_us;
+//	pinMode(pinIndex, INPUT);
+//	while(digitalRead(pinIndex) != value) {
+//		if(time+timeout/1000 < sys.getRefTime()) {
+//			return 0;
+//		}
+//	}
+//	time_us = sys.getUsTimVal();
+//	while(digitalRead(pinIndex) == value);
+//	return sys.getUsTimVal() - time_us;
+//}
+
 void pinMode(int pinIndex, int value) {
     hGPIO& gpio = getPin<hGPIO, H_DIGITAL_PINS>(pinIndex, "pinMode");
     switch (value) {
@@ -128,10 +142,29 @@ void pinMode(int pinIndex, int value) {
 }
 }
 
-template <typename T>
-char * to_string(T data) {
+std::string to_string(int data) {	
 	//TODO:
-	return new char;
+	return std::string(" ");
+}
+
+std::string to_string(unsigned int data) {	
+	//TODO:
+	return std::string(" ");
+}
+
+std::string to_string(float data) {	
+	//TODO:
+	return std::string(" ");
+}
+
+std::string to_string(double data) {	
+	//TODO:
+	return std::string(" ");
+}
+
+std::string to_string(long unsigned int data) {	
+	//TODO:
+	return std::string(" ");
 }
 
 hFramework::String::String(int n) {

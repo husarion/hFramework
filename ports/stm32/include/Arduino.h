@@ -80,8 +80,9 @@ void delayMicroseconds(unsigned int us);
 #ifdef __cplusplus
 }
 
-
 namespace hFramework {
+//void pulseIn(int pinIndex, int value, unsigned int timeout);
+	
 class String : public std::string 
 {
 public :
@@ -147,7 +148,7 @@ struct ArduinoSerial {
 	}
 	
 	void println(String s) {
-		hserial.printf("%s\n", s);
+		hserial.printf("%s\n", s.c_str());
 	}
 	
 	void println(const char* s) {
