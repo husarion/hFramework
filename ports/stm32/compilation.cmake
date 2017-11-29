@@ -53,10 +53,8 @@ set(PORT_FILES
 
 	${PORT_DIR}/src/hMotor.cpp
 	${PORT_DIR}/src/hMotorPimpl.cpp
-	
-	${PORT_DIR}/src/Arduino.cpp
+
 	${PORT_DIR}/src/arduino.c
-	${PORT_DIR}/src/twi.cpp
 	${PORT_DIR}/src/Wire.cpp
 
 	src/hGenericQueue_rtos.cpp
@@ -114,4 +112,8 @@ if(BOARD_TYPE STREQUAL "robocore")
 		third-party/usblib/usbh_ioreq.c
 		third-party/usblib/usbh_stdreq.c
 	)
+else()
+  list(APPEND PORT_FILES
+	${PORT_DIR}/src/twi.cpp
+    ${PORT_DIR}/src/Arduino.cpp)
 endif()

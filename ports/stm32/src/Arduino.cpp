@@ -69,10 +69,59 @@ int digitalRead(int pinIndex) {
 }
 
 int analogRead(int pinIndex) {
-    hGPIO_adc& gpio = getPin<hGPIO_adc, H_ANALOG_PINS>(pinIndex, "analogRead");
+	  hGPIO_adc& gpio = getPin<hGPIO_adc, H_ANALOG_PINS>(pinIndex, "analogRead");
     gpio.enableADC();
     return gpio.analogReadRaw() / 4; // 0..4095 -> 0..1023
 }
+
+void analogWrite(int pinIndex, int value) {
+	value %= 255;
+	hServoModule.enablePower();
+	#if BOARD(CORE2)
+		switch(pinIndex) {
+			case 7:
+			hServoModule.servo1.setPeriod(1000);
+			hServoModule.servo1.setWidth((value+1)/255*1000);
+			break;
+			case 8:
+			hServoModule.servo2.setPeriod(1000);
+			hServoModule.servo2.setWidth((value+1)/255*1000);
+			break;
+			case 9:
+			hServoModule.servo3.setPeriod(1000);
+			hServoModule.servo3.setWidth((value+1)/255*1000);
+			break;
+			case 10:
+			hServoModule.servo4.setPeriod(1000);
+			hServoModule.servo4.setWidth((value+1)/255*1000);
+			break;
+			case 11:
+			hServoModule.servo5.setPeriod(1000);
+			hServoModule.servo5.setWidth((value+1)/255*1000);
+			break;
+			case 12:
+			hServoModule.servo6.setPeriod(1000);
+			hServoModule.servo6.setWidth((value+1)/255*1000);
+			break;
+			default:
+			sys.fail_log("ERROR: pin %d doesn't support PWM", pinIndex);
+		};
+	#endif
+}
+
+//int hFramework::pulseIn(int pinIndex, int value, unsigned int timeout) {
+//	unsigned int time = sys.getRefTime();
+//	unsigned int time_us;
+//	pinMode(pinIndex, INPUT);
+//	while(digitalRead(pinIndex) != value) {
+//		if(time+timeout/1000 < sys.getRefTime()) {
+//			return 0;
+//		}
+//	}
+//	time_us = sys.getUsTimVal();
+//	while(digitalRead(pinIndex) == value);
+//	return sys.getUsTimVal() - time_us;
+//}
 
 void pinMode(int pinIndex, int value) {
     hGPIO& gpio = getPin<hGPIO, H_DIGITAL_PINS>(pinIndex, "pinMode");
@@ -93,10 +142,29 @@ void pinMode(int pinIndex, int value) {
 }
 }
 
-template <typename T>
-char * to_string(T data) {
+std::string to_string(int data) {	
 	//TODO:
-	return new char;
+	return std::string(" ");
+}
+
+std::string to_string(unsigned int data) {	
+	//TODO:
+	return std::string(" ");
+}
+
+std::string to_string(float data) {	
+	//TODO:
+	return std::string(" ");
+}
+
+std::string to_string(double data) {	
+	//TODO:
+	return std::string(" ");
+}
+
+std::string to_string(long unsigned int data) {	
+	//TODO:
+	return std::string(" ");
 }
 
 hFramework::String::String(int n) {
@@ -117,4 +185,12 @@ hFramework::String::String(double n) {
 
 hFramework::String::String(long unsigned int n) {
 	this->assign(to_string(n));
+}
+
+char hFramework::String::charAt(size_t poz) {
+	return this->at(poz);
+}
+
+void hFramework::String::setCharAt(size_t index, char c) {
+	this->insert(index, c, sizeof(c));
 }
