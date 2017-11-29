@@ -226,6 +226,21 @@ public:
 	 * @param polarity encoder polarity
 	 */
 	void setEncoderPolarity(Polarity polarity);
+	
+	/**
+	* @brief Set encoder pin A and B as pullups
+	*/
+	void setEncoderPu();
+	
+	/**
+	* @brief Set encoder pin A and B as pulldownss
+	*/
+	void setEncoderPd();
+	
+	/**
+	* @brief set encoder pin A and B as floating
+	*/
+	void setEncoderHZ();
 
 	/**
 	 * @brief Return motor polarity.

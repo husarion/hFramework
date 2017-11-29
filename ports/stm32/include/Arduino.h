@@ -70,6 +70,7 @@ void pinMode(int pinIndex, int value);
 int analogRead(int pinIndex);
 int digitalRead(int pinIndex);
 void digitalWrite(int pinIndex, int value);
+void analogWrite(int pinIndex, int value);
 
 unsigned long millis(void);
 unsigned long micros(void);
@@ -79,8 +80,9 @@ void delayMicroseconds(unsigned int us);
 #ifdef __cplusplus
 }
 
-
 namespace hFramework {
+//void pulseIn(int pinIndex, int value, unsigned int timeout);
+	
 class String : public std::string 
 {
 public :
@@ -93,6 +95,10 @@ public :
 	String(double n);
 	String(long unsigned int n);
 	~String(){}
+  
+	char charAt(size_t poz);
+	void setCharAt(size_t index, char c);
+	
 };
 	
 struct ArduinoSerial {
@@ -138,11 +144,11 @@ struct ArduinoSerial {
     }
 	
 	void print(String s) {
-		hserial.printf("%s", s);
+		hserial.printf("%s", s.c_str());
 	}
 	
 	void println(String s) {
-		hserial.printf("%s\n", s);
+		hserial.printf("%s\n", s.c_str());
 	}
 	
 	void println(const char* s) {
@@ -181,4 +187,5 @@ void hMain()
 #endif
 
 #endif
+
 #endif //hArduino
