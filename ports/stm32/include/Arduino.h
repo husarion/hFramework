@@ -144,7 +144,7 @@ struct ArduinoSerial {
     }
 	
 	void print(String s) {
-		hserial.printf("%s", s);
+		hserial.printf("%s", s.c_str());
 	}
 	
 	void println(String s) {
