@@ -26,88 +26,102 @@ static auto pins = std::make_tuple();
 #endif
 
 template <typename T>
-static __attribute__((noreturn)) T& getPin(int index, const char* error) {
-    sys.fail_log("ERROR: pin %d doesn't support %s", index, error);
-    sys.fault_handler();
-    abort();
+static __attribute__((noreturn)) T& getPin(int index, const char* error)
+{
+	sys.fail_log("ERROR: pin %d doesn't support %s", index, error);
+	sys.fault_handler();
+	abort();
 }
 
 template <typename T, int pin, int... allowed>
-static T& getPin(int index, const char* error) { // this should result in unrolled loop
-    if (index == pin) {
-        return std::get<pin>(pins);
-    } else {
-        return getPin<T, allowed...>(index, error);
-    }
+static T& getPin(int index, const char* error)   // this should result in unrolled loop
+{
+	if (index == pin)
+	{
+		return std::get<pin>(pins);
+	}
+	else
+	{
+		return getPin<T, allowed...>(index, error);
+	}
 }
 
 extern "C" {
-unsigned long millis(void) {
-   return sys.getRefTime();
-}
-  
-unsigned long micros(void) {
-   return sys.getRefTime()*1000;
-}
-  
-void delay(int ms) {
-    sys.delay(ms);
-}
-  
-void delayMicroseconds(unsigned int us) {
-    sys.delayUs(us);
-}
+	unsigned long millis(void)
+	{
+		return sys.getRefTime();
+	}
 
-void digitalWrite(int pinIndex, int value) {
-    hGPIO& gpio = getPin<hGPIO, H_DIGITAL_PINS>(pinIndex, "digitalWrite");
-    gpio.write(value);
-}
+	unsigned long micros(void)
+	{
+		return sys.getRefTime() * 1000;
+	}
 
-int digitalRead(int pinIndex) {
-    hGPIO& gpio = getPin<hGPIO, H_DIGITAL_PINS>(pinIndex, "digitalRead");
-    return gpio.read();
-}
+	void delay(int ms)
+	{
+		sys.delay(ms);
+	}
 
-int analogRead(int pinIndex) {
-	  hGPIO_adc& gpio = getPin<hGPIO_adc, H_ANALOG_PINS>(pinIndex, "analogRead");
-    gpio.enableADC();
-    return gpio.analogReadRaw() / 4; // 0..4095 -> 0..1023
-}
+	void delayMicroseconds(unsigned int us)
+	{
+		sys.delayUs(us);
+	}
 
-void analogWrite(int pinIndex, int value) {
-	value %= 255;
-	hServoModule.enablePower();
-	#if BOARD(CORE2)
-		switch(pinIndex) {
-			case 7:
+	void digitalWrite(int pinIndex, int value)
+	{
+		hGPIO& gpio = getPin<hGPIO, H_DIGITAL_PINS>(pinIndex, "digitalWrite");
+		gpio.write(value);
+	}
+
+	int digitalRead(int pinIndex)
+	{
+		hGPIO& gpio = getPin<hGPIO, H_DIGITAL_PINS>(pinIndex, "digitalRead");
+		return gpio.read();
+	}
+
+	int analogRead(int pinIndex)
+	{
+		hGPIO_adc& gpio = getPin<hGPIO_adc, H_ANALOG_PINS>(pinIndex, "analogRead");
+		gpio.enableADC();
+		return gpio.analogReadRaw() / 4; // 0..4095 -> 0..1023
+	}
+
+	void analogWrite(int pinIndex, int value)
+	{
+		value %= 255;
+		hServoModule.enablePower();
+#if BOARD(CORE2)
+		switch (pinIndex)
+		{
+		case 7:
 			hServoModule.servo1.setPeriod(1000);
-			hServoModule.servo1.setWidth((value+1)/255*1000);
+			hServoModule.servo1.setWidth((value + 1) / 255 * 1000);
 			break;
-			case 8:
+		case 8:
 			hServoModule.servo2.setPeriod(1000);
-			hServoModule.servo2.setWidth((value+1)/255*1000);
+			hServoModule.servo2.setWidth((value + 1) / 255 * 1000);
 			break;
-			case 9:
+		case 9:
 			hServoModule.servo3.setPeriod(1000);
-			hServoModule.servo3.setWidth((value+1)/255*1000);
+			hServoModule.servo3.setWidth((value + 1) / 255 * 1000);
 			break;
-			case 10:
+		case 10:
 			hServoModule.servo4.setPeriod(1000);
-			hServoModule.servo4.setWidth((value+1)/255*1000);
+			hServoModule.servo4.setWidth((value + 1) / 255 * 1000);
 			break;
-			case 11:
+		case 11:
 			hServoModule.servo5.setPeriod(1000);
-			hServoModule.servo5.setWidth((value+1)/255*1000);
+			hServoModule.servo5.setWidth((value + 1) / 255 * 1000);
 			break;
-			case 12:
+		case 12:
 			hServoModule.servo6.setPeriod(1000);
-			hServoModule.servo6.setWidth((value+1)/255*1000);
+			hServoModule.servo6.setWidth((value + 1) / 255 * 1000);
 			break;
-			default:
+		default:
 			sys.fail_log("ERROR: pin %d doesn't support PWM", pinIndex);
 		};
-	#endif
-}
+#endif
+	}
 
 //int hFramework::pulseIn(int pinIndex, int value, unsigned int timeout) {
 //	unsigned int time = sys.getRefTime();
@@ -123,74 +137,88 @@ void analogWrite(int pinIndex, int value) {
 //	return sys.getUsTimVal() - time_us;
 //}
 
-void pinMode(int pinIndex, int value) {
-    hGPIO& gpio = getPin<hGPIO, H_DIGITAL_PINS>(pinIndex, "pinMode");
-    switch (value) {
-    case INPUT:
-        gpio.setIn();
-        break;
-    case OUTPUT:
-        gpio.setOut();
-        break;
-    case INPUT_PULLUP:
-        gpio.setIn_pu();
-        break;
-    default:
-        sys.fail_log("ERROR: invalid pin mode %d", value);
-        sys.fault_handler();
-    }
-}
+	void pinMode(int pinIndex, int value)
+	{
+		hGPIO& gpio = getPin<hGPIO, H_DIGITAL_PINS>(pinIndex, "pinMode");
+		switch (value)
+		{
+		case INPUT:
+			gpio.setIn();
+			break;
+		case OUTPUT:
+			gpio.setOut();
+			break;
+		case INPUT_PULLUP:
+			gpio.setIn_pu();
+			break;
+		default:
+			sys.fail_log("ERROR: invalid pin mode %d", value);
+			sys.fault_handler();
+		}
+	}
 }
 
-std::string to_string(int data) {	
+std::string to_string(int data)
+{
 	//TODO:
 	return std::string(" ");
 }
 
-std::string to_string(unsigned int data) {	
+std::string to_string(unsigned int data)
+{
 	//TODO:
 	return std::string(" ");
 }
 
-std::string to_string(float data) {	
+std::string to_string(float data)
+{
 	//TODO:
 	return std::string(" ");
 }
 
-std::string to_string(double data) {	
+std::string to_string(double data)
+{
 	//TODO:
 	return std::string(" ");
 }
 
-std::string to_string(long unsigned int data) {	
+std::string to_string(long unsigned int data)
+{
 	//TODO:
 	return std::string(" ");
 }
 
-hFramework::String::String(int n) {
+hFramework::String::String(int n)
+{
 	this->assign(to_string(n));
 }
 
-hFramework::String::String(unsigned int n) {
+hFramework::String::String(unsigned int n)
+{
 	this->assign(to_string(n));
 }
 
-hFramework::String::String(float n) {
+hFramework::String::String(float n)
+{
 	this->assign(to_string(n));
 }
 
-hFramework::String::String(double n) {
+hFramework::String::String(double n)
+{
 	this->assign(to_string(n));
 }
 
-hFramework::String::String(long unsigned int n) {
+hFramework::String::String(long unsigned int n)
+{
 	this->assign(to_string(n));
 }
 
-char hFramework::String::charAt(size_t poz) {
+char hFramework::String::charAt(size_t poz)
+{
 	return this->at(poz);
 }
 
-void hFramework::String::setCharAt(size_t index, char c) {
+void hFramework::String::setCharAt(size_t index, char c)
+{
 	this->insert(index, c, sizeof(c));
 }

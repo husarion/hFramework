@@ -13,7 +13,8 @@
 #include <hStorage.h>
 #include <hPrintfDev.h>
 
-namespace hFramework {
+namespace hFramework
+{
 constexpr int DEFAULT_STACK_SIZE = 400;
 }
 
@@ -281,12 +282,12 @@ public:
 	 */
 	static void setLogDev(hPrintfDev* dev);
 
-	 /**
-	   * @brief Set default log device for hFramework internal events.
-	   *
-	   *
-	 * @param dev device
-	 */
+	/**
+	  * @brief Set default log device for hFramework internal events.
+	  *
+	  *
+	* @param dev device
+	*/
 	static void setSysLogDev(hPrintfDev* dev);
 
 	/**

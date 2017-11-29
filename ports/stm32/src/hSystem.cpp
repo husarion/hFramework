@@ -227,7 +227,8 @@ void hSystem::free(void * ptr)
 
 static int mallocLockCounter = 0;
 
-extern "C" void __malloc_lock(void* unused) {
+extern "C" void __malloc_lock(void* unused)
+{
 	taskENTER_CRITICAL();
 	if (mallocLockCounter == 0)
 		vTaskSuspendAll();
@@ -236,17 +237,20 @@ extern "C" void __malloc_lock(void* unused) {
 	taskEXIT_CRITICAL();
 }
 
-extern "C" void __malloc_unlock(void* unused) {
+extern "C" void __malloc_unlock(void* unused)
+{
 	mallocLockCounter --;
 	if (mallocLockCounter == 0)
 		xTaskResumeAll();
 }
 
-extern "C" void* pvPortMalloc(size_t xWantedSize) {
+extern "C" void* pvPortMalloc(size_t xWantedSize)
+{
 	return malloc(xWantedSize);
 }
 
-extern "C" void vPortFree(void* pv) {
+extern "C" void vPortFree(void* pv)
+{
 	free(pv);
 }
 
@@ -433,8 +437,9 @@ int hSystem::fail_vlog(const char* format, va_list arg)
 	return ctx.doFormat();
 }
 
-void hSystem::fault_log(const char* msg) {
-	for (int i=0; msg[i]; i ++)
+void hSystem::fault_log(const char* msg)
+{
+	for (int i = 0; msg[i]; i ++)
 		myUSART_fail_putc(msg[i]);
 }
 

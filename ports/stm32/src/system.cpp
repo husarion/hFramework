@@ -41,7 +41,8 @@ int sys_syslog(const char* format, ...)
 	return hFramework::sys.vsyslog(format, arg);
 }
 
-void sys_fault_log(const char* msg) {
+void sys_fault_log(const char* msg)
+{
 	sys.fault_log(msg);
 }
 

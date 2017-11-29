@@ -79,7 +79,7 @@ public:
 	 * @param handler handler
 	 * @param userdata data passed as argument when handler is invoked
 	 */
-	 __attribute__((deprecated))
+	__attribute__((deprecated))
 	void setOnReleaseHandler(UserDataFunc handler, void* userdata) { releaseHandler = std::bind(handler, userdata); }
 
 	/**

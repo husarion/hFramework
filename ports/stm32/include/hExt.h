@@ -56,12 +56,12 @@ public:
 	 * @brief Pin 4 of the hExt socket.
 	 */
 	hGPIO       pin4;
-	
+
 	/**
 	 * @brief Pin 5 of the hExt socket.
 	 */
 	hGPIO       pin5;
-	
+
 	/**
 	 * @brief Pin 6 of the hExt socket.
 	 */
@@ -128,12 +128,12 @@ public:
 	 * @brief Pin 4 of the hExt socket.
 	 */
 	hGPIO_adc   pin4;
-	
+
 	/**
 	 * @brief Pin 5 of the hExt socket.
 	 */
 	hGPIO_adc   pin5;
-	
+
 	hGPIO& getPin(int num);
 
 	/**

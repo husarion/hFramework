@@ -26,19 +26,19 @@
 #define TWI hExt.i2c
 #endif
 
-  const int TWI_FREQ = 100000;
+const int TWI_FREQ = 100000;
 
-  void twi_init(void);
-  void twi_disable(void);
-  void twi_setAddress(uint8_t adress);
-  void twi_setFrequency(uint32_t freq);
-  uint8_t twi_readFrom(uint8_t adress, uint8_t* data, uint8_t length, uint8_t sendStop);
-  uint8_t twi_writeTo(uint8_t adress, uint8_t* data, uint8_t length, uint8_t wait, uint8_t sendStop);
-  uint8_t twi_transmit(uint8_t* data, uint8_t length);
-  void twi_attachSlaveRxEvent( void (*)(uint8_t*, int) );
-  void twi_attachSlaveTxEvent( void (*)(void) );
-  void twi_reply(uint8_t data);
-  void twi_stop(void);
-  void twi_releaseBus(void);
+void twi_init(void);
+void twi_disable(void);
+void twi_setAddress(uint8_t adress);
+void twi_setFrequency(uint32_t freq);
+uint8_t twi_readFrom(uint8_t adress, uint8_t* data, uint8_t length, uint8_t sendStop);
+uint8_t twi_writeTo(uint8_t adress, uint8_t* data, uint8_t length, uint8_t wait, uint8_t sendStop);
+uint8_t twi_transmit(uint8_t* data, uint8_t length);
+void twi_attachSlaveRxEvent(void (*)(uint8_t*, int));
+void twi_attachSlaveTxEvent(void (*)(void));
+void twi_reply(uint8_t data);
+void twi_stop(void);
+void twi_releaseBus(void);
 
 #endif

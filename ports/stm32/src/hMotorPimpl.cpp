@@ -532,13 +532,16 @@ void hMotorPimpl::setParallelMode()
 	pimpls[controlMotorId].updatePower_internal(true, pimpls[motorId].curPower);
 }
 
-void hMotorPimpl::setPullup(){
+void hMotorPimpl::setPullup()
+{
 	myEncoder_setPullup(hMotorDefs[motorId].encoderNr);
 }
-void hMotorPimpl::setPulldown(){
+void hMotorPimpl::setPulldown()
+{
 	myEncoder_setPulldown(hMotorDefs[motorId].encoderNr);
 }
-void hMotorPimpl::setPullReset(){
+void hMotorPimpl::setPullReset()
+{
 	myEncoder_setPullReset(hMotorDefs[motorId].encoderNr);
 }
 

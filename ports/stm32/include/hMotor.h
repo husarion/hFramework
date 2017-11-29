@@ -145,19 +145,19 @@ public:
 
 	/**
 	 * @brief Set a power attached to a motor.
-	 * @param power a power that is attached to a motor, the higher the value, the more power is attached to a motor 
-	 * (values from -1000 to 1000). The positive and negative values correspond to normal or reversed polarity of the motor. 
+	 * @param power a power that is attached to a motor, the higher the value, the more power is attached to a motor
+	 * (values from -1000 to 1000). The positive and negative values correspond to normal or reversed polarity of the motor.
 	 * In other words, this value is proportional to the the average voltage between the A and B outputs of H-bridge driver (can be positive or negative).
 	 * @return 1 if order has been successfully stored in motor queue
 	 */
 	void setPower(int16_t power);
 
 	void setPowerLimit(int16_t limit);
-	
-	
+
+
 	/**
 	* @brief Set slew rate for motor
-	* @param time (min 0.01) Time constant of rate regulation 
+	* @param time (min 0.01) Time constant of rate regulation
 	*/
 	void setSlewRate(float time);
 
@@ -226,17 +226,17 @@ public:
 	 * @param polarity encoder polarity
 	 */
 	void setEncoderPolarity(Polarity polarity);
-	
+
 	/**
 	* @brief Set encoder pin A and B as pullups
 	*/
 	void setEncoderPu();
-	
+
 	/**
 	* @brief Set encoder pin A and B as pulldownss
 	*/
 	void setEncoderPd();
-	
+
 	/**
 	* @brief set encoder pin A and B as floating
 	*/

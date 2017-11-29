@@ -95,13 +95,13 @@ void hServoModuleClass::init()
 
 	for (int i = 0; i < SERVOS_COUNT; i++)
 	{
-			int pinPWM = pins[i];
+		int pinPWM = pins[i];
 
-			myPWM_init(pinPWM, PWM_POLARITY_LOW);
+		myPWM_init(pinPWM, PWM_POLARITY_LOW);
 
-			myPWM_setCnt_ns(pinPWM, 0);
-			myPWM_setPeriod_us(pinPWM, 20000);
-			myPWM_counter_enable(pinPWM);
+		myPWM_setCnt_ns(pinPWM, 0);
+		myPWM_setPeriod_us(pinPWM, 20000);
+		myPWM_counter_enable(pinPWM);
 	}
 }
 
@@ -117,8 +117,8 @@ void hServoModuleClass::setPeriod(uint16_t periodUs)
 {
 	for (int i = 0; i < SERVOS_COUNT; i++)
 	{
-			int pinPWM = pins[i];
-			myPWM_setPeriod_us(pinPWM, periodUs);
+		int pinPWM = pins[i];
+		myPWM_setPeriod_us(pinPWM, periodUs);
 	}
 }
 
@@ -148,7 +148,7 @@ uint32_t hServoModuleClass::getVoltageMV()
 #if BOARD(CORE2)
 void hServoModuleClass::setPowerMode(int mode)
 {
-	switch(mode)
+	switch (mode)
 	{
 	default:
 	case 0: pinSel1.write(0); pinSel2.write(0); break;

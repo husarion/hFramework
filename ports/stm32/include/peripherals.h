@@ -29,9 +29,9 @@ extern hLEDClass hLED1;
 extern hLEDClass hLED2;
 extern hLEDClass hLED3;
 
-static hLEDClass& LED1 __attribute__ ((deprecated)) = hLED1;
-static hLEDClass& LED2 __attribute__ ((deprecated)) = hLED2;
-static hLEDClass& LED3 __attribute__ ((deprecated)) = hLED3;
+static hLEDClass& LED1 __attribute__((deprecated)) = hLED1;
+static hLEDClass& LED2 __attribute__((deprecated)) = hLED2;
+static hLEDClass& LED3 __attribute__((deprecated)) = hLED3;
 
 extern hSD SD;
 

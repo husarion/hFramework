@@ -3,9 +3,9 @@
  * Distributed under the MIT license.
  * For full terms see the file LICENSE.md.
  */
- #ifndef hArduino
- #define hArduino
- 
+#ifndef hArduino
+#define hArduino
+
 #ifdef __cplusplus
 #define NO_USING_HFRAMEWORK
 #include <hFramework.h>
@@ -80,91 +80,105 @@ void delayMicroseconds(unsigned int us);
 #ifdef __cplusplus
 }
 
-namespace hFramework {
+namespace hFramework
+{
 //void pulseIn(int pinIndex, int value, unsigned int timeout);
-	
-class String : public std::string 
+
+class String : public std::string
 {
 public :
-	String(){}
-	String(std::string text){this->assign(text.c_str());}
-	String(char* text){this->assign(text);}
+	String() {}
+	String(std::string text) {this->assign(text.c_str());}
+	String(char* text) {this->assign(text);}
 	String(int n);
 	String(unsigned int n);
 	String(float n);
 	String(double n);
 	String(long unsigned int n);
-	~String(){}
-  
+	~String() {}
+
 	char charAt(size_t poz);
 	void setCharAt(size_t index, char c);
-	
+
 };
-	
-struct ArduinoSerial {
-    hSerial& hserial;
 
-    ArduinoSerial(hSerial& s): hserial(s) {}
+struct ArduinoSerial
+{
+	hSerial& hserial;
 
-    int available() {
-        return hserial.available();
-    }
+	ArduinoSerial(hSerial& s): hserial(s) {}
 
-    void begin(int baudrate) {
-        hserial.init(baudrate);
-    }
+	int available()
+	{
+		return hserial.available();
+	}
 
-    void print(int num, int base=10) {
-        switch (base) {
-        case 2:
-            hserial.printf("%b", num);
-            break;
-        //case 8:
-        //    hserial.printf("%o", num);
-        //    break;
-        case 10:
-            hserial.printf("%d", num);
-            break;
-        case 16:
-            hserial.printf("%x", num);
-            break;
-        }
-    }
+	void begin(int baudrate)
+	{
+		hserial.init(baudrate);
+	}
 
-    void print(double num) {
-        hserial.printf("%f", num);
-    }
+	void print(int num, int base = 10)
+	{
+		switch (base)
+		{
+		case 2:
+			hserial.printf("%b", num);
+			break;
+		//case 8:
+		//    hserial.printf("%o", num);
+		//    break;
+		case 10:
+			hserial.printf("%d", num);
+			break;
+		case 16:
+			hserial.printf("%x", num);
+			break;
+		}
+	}
 
-    void print(char c) {
-        hserial.printf("%c", c);
-    }
+	void print(double num)
+	{
+		hserial.printf("%f", num);
+	}
 
-    void print(const char* s) {
-        hserial.printf("%s", s);
-    }
-	
-	void print(String s) {
+	void print(char c)
+	{
+		hserial.printf("%c", c);
+	}
+
+	void print(const char* s)
+	{
+		hserial.printf("%s", s);
+	}
+
+	void print(String s)
+	{
 		hserial.printf("%s", s.c_str());
 	}
-	
-	void println(String s) {
+
+	void println(String s)
+	{
 		hserial.printf("%s\n", s.c_str());
 	}
-	
-	void println(const char* s) {
-        hserial.printf("%s\n", s);
-    }
-	
-	void println() {
-        hserial.printf("\n");
-    }
-	
+
+	void println(const char* s)
+	{
+		hserial.printf("%s\n", s);
+	}
+
+	void println()
+	{
+		hserial.printf("\n");
+	}
+
 	long random(long max);
 	long random(long min, long max);
 
-    operator bool() {
-        return true;
-    }
+	operator bool()
+	{
+		return true;
+	}
 };
 
 }
@@ -177,10 +191,11 @@ void loop();
 #ifdef Arduino_hMain
 void hMain()
 {
-  setup();
-  for(;;){
-    loop();
-  } 
+	setup();
+	for (;;)
+	{
+		loop();
+	}
 }
 #endif
 
