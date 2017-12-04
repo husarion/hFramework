@@ -158,59 +158,39 @@ extern "C" {
 	}
 }
 
-std::string to_string(int data)
-{
-	//TODO:
-	return std::string(" ");
-}
-
-std::string to_string(unsigned int data)
-{
-	//TODO:
-	return std::string(" ");
-}
-
-std::string to_string(float data)
-{
-	//TODO:
-	return std::string(" ");
-}
-
-std::string to_string(double data)
-{
-	//TODO:
-	return std::string(" ");
-}
-
-std::string to_string(long unsigned int data)
-{
-	//TODO:
-	return std::string(" ");
-}
-
 hFramework::String::String(int n)
 {
-	this->assign(to_string(n));
+	char buf [50];
+	sprintf(buf, "%d", n);
+	this->assign(buf);
 }
 
 hFramework::String::String(unsigned int n)
 {
-	this->assign(to_string(n));
+	char buf [50];
+	sprintf(buf, "%d", n);
+	this->assign(buf);
 }
 
 hFramework::String::String(float n)
 {
-	this->assign(to_string(n));
+	char buf [50];
+	sprintf(buf, "%f", n);
+	this->assign(buf);
 }
 
 hFramework::String::String(double n)
 {
-	this->assign(to_string(n));
+	char buf [50];
+	sprintf(buf, "%f", n);
+	this->assign(buf);
 }
 
-hFramework::String::String(long unsigned int n)
+hFramework::String::String(unsigned long n)
 {
-	this->assign(to_string(n));
+	char buf [50];
+	sprintf(buf, "%lu", n);
+	this->assign(buf);
 }
 
 char hFramework::String::charAt(size_t poz)
