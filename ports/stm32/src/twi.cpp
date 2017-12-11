@@ -1,5 +1,6 @@
 #include <hFramework.h>
 #include <twi.h>
+#include <stdint.h>
 
 void twi_init(void)
 {

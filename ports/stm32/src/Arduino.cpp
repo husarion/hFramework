@@ -1,4 +1,5 @@
 #include <hFramework.h>
+#include <stdint.h>
 #include "Arduino.h"
 
 //hFramework::ArduinoSerial Serial(Serial);

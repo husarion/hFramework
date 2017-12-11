@@ -3,6 +3,8 @@
  * Distributed under the MIT license.
  * For full terms see the file LICENSE.md.
  */
+#include <stdint.h>
+
 #ifndef hArduino
 #define hArduino
 

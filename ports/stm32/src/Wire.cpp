@@ -2,6 +2,7 @@
 #include "Wire.h"
 #include <stdlib.h>
 #include <twi.h>
+#include <stdint.h>
 
 TwoWire Wire;
 
