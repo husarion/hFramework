@@ -31,3 +31,4 @@ rules.ninja
 dist.zip
 tools/
 libs/
+*.bat

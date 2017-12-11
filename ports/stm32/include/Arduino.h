@@ -94,7 +94,7 @@ public :
 	String(unsigned int n);
 	String(float n);
 	String(double n);
-	String(long unsigned int n);
+	String(unsigned long n);
 	~String() {}
 
 	char charAt(size_t poz);
