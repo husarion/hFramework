@@ -14,20 +14,30 @@ SparkFun 9DoF Razor IMU M0
 
 Supported Platforms:
 - ATSAMD21 (Arduino Zero, SparkFun SAMD21 Breakouts)
+*************************************************************
+Husarion Sp. z o.o.
+
+Supported Platforms:
+-CORE2
 *************************************************************/
-#include <hFramework.h>
+//CORE2 elements
+#define Arduino_hMain //define to include hMain configure for Arduino platform
+#include <hFramework.h> //for Serial implementation
 #include <Arduino.h>
+
+hFramework::ArduinoSerial SerialPort(hFramework::Serial); // Serial declaration
+void printIMUData(void); // function declaration due to change from .ino to .cpp file
+//
+
 #include "SparkFunMPU9250-DMP.h"
 
-hFramework::ArduinoSerial SerialPort(hFramework::Serial);
+//#define SerialPort SerialUSB
 
 MPU9250_DMP imu;
 
-void printIMUData(void);
-
 void setup() 
 {
-  SerialPort.begin(115200);
+  SerialPort.begin(460800);
 
   // Call imu.begin() to verify communication with and
   // initialize the MPU-9250 to it's default values.
@@ -114,44 +124,22 @@ void printIMUData(void)
   float magY = imu.calcMag(imu.my);
   float magZ = imu.calcMag(imu.mz);
   
-  SerialPort.print("Accel: ");
-  SerialPort.print(accelX);
-  SerialPort.print(", ");
-  SerialPort.print(accelY);
-  SerialPort.print(", ");
-  SerialPort.print(accelZ);
-  SerialPort.println(" g");
+  String a = "";
+  a += "Accel: ";
+  a += String(accelX);
+  a += ", ";
+  a += String(accelY);
+  a += ", ";
+  a += String(accelY);
+  a += " g";
 
-  SerialPort.print("Gyro: ");
-  SerialPort.print(gyroX);
-  SerialPort.print(", ");
-  SerialPort.print(gyroY);
-  SerialPort.print(", ");
-  SerialPort.print(gyroZ);
-  SerialPort.println(" g");
-
-  SerialPort.print("Mag: ");
-  SerialPort.print(magX);
-  SerialPort.print(", ");
-  SerialPort.print(magY);
-  SerialPort.print(", ");
-  SerialPort.print(magZ);
-  SerialPort.println(" g");
-  
-  //SerialPort.println("Accel: " + String(accelX) + ", " +
-  //            String(accelY) + ", " + String(accelZ) + " g");
-  //SerialPort.println("Gyro: " + String(gyroX) + ", " +
-  //            String(gyroY) + ", " + String(gyroZ) + " dps");
-  //SerialPort.println("Mag: " + String(magX) + ", " +
-  //            String(magY) + ", " + String(magZ) + " uT");
-  //SerialPort.println("Time: " + String(imu.time) + " ms");
+  SerialPort.println("Accel: " + String(accelX) + ", " +
+              String(accelY) + ", " + String(accelZ) + " g");
+  SerialPort.println("Gyro: " + String(gyroX) + ", " +
+              String(gyroY) + ", " + String(gyroZ) + " dps");
+  SerialPort.println("Mag: " + String(magX) + ", " +
+              String(magY) + ", " + String(magZ) + " uT");
+  SerialPort.println("Time: " + String(imu.time) + " ms");
   SerialPort.println();
 }
 
-void hMain()
-{
-  setup();
-  for(;;){
-    loop();
-  } 
-}
