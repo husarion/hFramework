@@ -11,6 +11,7 @@
 #include <hFramework.h>
 #endif
 #include <string.h>
+#include <stdint.h>
 #include <stdbool.h>
 
 #ifndef arduino_cost

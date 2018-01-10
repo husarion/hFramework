@@ -24,7 +24,7 @@
 #define BUFFER_LENGTH 16
 
 #include <stdlib.h>
-//#include <string.h>
+#include <Arduino.h>
 #include <twi.h>
 //#include <Stream.h>
 

@@ -112,7 +112,9 @@ if(BOARD_TYPE STREQUAL "robocore")
 		third-party/usblib/usbh_ioreq.c
 		third-party/usblib/usbh_stdreq.c
 	)
-else()
+endif()
+
+if(BOARD_TYPE STREQUAL "core2")
   list(APPEND PORT_FILES
 	${PORT_DIR}/src/twi.cpp
     ${PORT_DIR}/src/Arduino.cpp)
