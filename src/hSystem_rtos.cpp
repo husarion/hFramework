@@ -295,13 +295,20 @@ uint64_t lastTicks = 0;
 
 uint64_t hSystem::getRefTime()
 {
+    #ifdef ESP_PLATFORM
+    // clock is slow enough, so we don't care about overflow
+    return ticks2time(xTaskGetTickCount());
+    #else
+    taskENTER_CRITICAL();
     uint64_t ticks32 = xTaskGetTickCount();
     uint64_t newTicks = (lastTicks & 0xFFFFFFFF00000000ull) | ticks32;
     if (ticks32 < (lastTicks & 0xFFFFFFFFull)) {
         newTicks += 0x100000000ull;
     }
     lastTicks = newTicks;
-    return ticks2time(lastTicks);
+    taskEXIT_CRITICAL();
+    return ticks2time(newTicks);
+    #endif
 }
 
 }
