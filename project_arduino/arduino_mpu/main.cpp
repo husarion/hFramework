@@ -22,6 +22,7 @@ Supported Platforms:
 *************************************************************/
 //CORE2 elements
 #define Arduino_hMain //define to include hMain configure for Arduino platform
+//#define I2C1
 #include <hFramework.h> //for Serial implementation
 #include <Arduino.h>
 

@@ -48,6 +48,15 @@ static const int A10 = 50;
 //typedef unsigned int word;
 //typedef bool boolean;
 
+#ifdef I2C
+#define TWI hFramework::hExt.i2c
+#elif defined I2C1
+#define TWI hFramework::hSens1.i2c
+#elif defined I2C2
+#define TWI hFramework::hSens2.i2c
+#else
+#define TWI hFramework::hExt.i2c
+#endif
 
 //namespace hFramework {
 

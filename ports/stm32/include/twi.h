@@ -19,21 +19,6 @@
 #ifndef twi_h
 #define twi_h
 
-#define TWI hFramework::hExt.i2c
-#define TWI1 hFramework::hSens1.getSoftwareI2C().getI2C()
-#define TWI2 hFramework::hSens2.getSoftwareI2C().getI2C()
-
-#ifdef I2C
-#define TWI_P hFramework::hExt.i2c
-#elif defined I2C1
-#define TWI_P hFramework::hSens1.getSoftwareI2C().getI2C()
-#elif defined I2C2
-#define TWI_P hFramework::hSens2.getSoftwareI2C().getI2C()
-#else
-#define TWI_P hFramework::hExt.i2c
-#define I2C
-#endif
-
 const int TWI_FREQ = 100000;
 
 void twi_init(void);
