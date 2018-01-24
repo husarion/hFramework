@@ -1,14 +1,21 @@
 #include "Arduino.h"
+#include "hFramework.h"
 #include "twi.h"
 #include <stdint.h>
 
+hFramework::hI2C* TWI = &I2C1;
+
+void changePort(hFramework::hI2C * port){
+	TWI = port;
+}
+
 void twi_init(void) {
-	TWI.setDataRate(TWI_FREQ);
+	TWI->setDataRate(TWI_FREQ);
 }
 
 void twi_disable(void) {
-	TWI.pinScl.setOutOD();
-	TWI.pinSda.setOutOD();
+	TWI->pinScl.setOutOD();
+	TWI->pinSda.setOutOD();
 }
 
 uint8_t I2C_ADDR = 0;
@@ -18,19 +25,19 @@ void twi_setAddress(uint8_t adress)
 }
 
 void twi_setFrequency(uint32_t freq) {
-	TWI.setDataRate(freq);
+	TWI->setDataRate(freq);
 }
 
 uint8_t twi_readFrom(uint8_t adress, uint8_t* data, uint8_t length, uint8_t sendStop)
 {
-	if(TWI.read(adress, data, length))
+	if(TWI->read(adress, data, length))
 		return  length;
 	return 0;
 }
 
 uint8_t twi_writeTo(uint8_t address, uint8_t* data, uint8_t length, uint8_t wait, uint8_t sendStop)
 {
-	if(TWI.write(address, data, length))
+	if(TWI->write(address, data, length))
 		return 0;
 	return 4;
 }
@@ -47,10 +54,10 @@ void twi_reply(uint8_t data) {}
 
 void twi_stop(void)
 {
-	TWI.pinScl.write(false);
-	TWI.pinSda.write(false);
-	TWI.pinScl.write(true);
-	TWI.pinSda.write(true);
+	TWI->pinScl.write(false);
+	TWI->pinSda.write(false);
+	TWI->pinScl.write(true);
+	TWI->pinSda.write(true);
 }
 
 void twi_releaseBus(void) {}

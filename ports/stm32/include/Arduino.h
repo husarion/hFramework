@@ -48,15 +48,9 @@ static const int A10 = 50;
 //typedef unsigned int word;
 //typedef bool boolean;
 
-#ifdef I2C
-#define TWI hFramework::hExt.i2c
-#elif defined I2C1
-#define TWI hFramework::hSens1.i2c
-#elif defined I2C2
-#define TWI hFramework::hSens2.i2c
-#else
-#define TWI hFramework::hExt.i2c
-#endif
+#define I2C0 hFramework::hExt.i2c
+#define I2C1 hFramework::hSens1.i2c
+#define I2C2 hFramework::hSens2.i2c
 
 //namespace hFramework {
 
@@ -81,7 +75,7 @@ void pinMode(int pinIndex, int value);
 int analogRead(int pinIndex);
 int digitalRead(int pinIndex);
 void digitalWrite(int pinIndex, int value);
-void analogWrite(int pinIndex, int value);
+//void analogWrite(int pinIndex, int value);
 
 unsigned long millis(void);
 unsigned long micros(void);
@@ -200,6 +194,7 @@ void setup();
 void loop();
 
 #ifdef Arduino_hMain
+
 void hMain()
 {
 	setup();

@@ -19,9 +19,9 @@ void loop()
   String s2(b1);
   String s3("Hello");
 
-  SerialPort.println(s1);
+  SerialPort.println(String(a1));
   SerialPort.println(s2);
-  SerialPort.println(s3);
+  SerialPort.println(s3 + String(a1));
 
   delay(100);
 }

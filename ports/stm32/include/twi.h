@@ -15,9 +15,12 @@
 */
 #include <stdio.h>
 #include <stdint.h>
+#include "hFramework.h"
 
 #ifndef twi_h
 #define twi_h
+
+void changePort(hFramework::hI2C * port);
 
 const int TWI_FREQ = 100000;
 

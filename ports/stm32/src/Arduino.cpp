@@ -87,7 +87,7 @@ extern "C" {
 		return gpio.analogReadRaw() / 4; // 0..4095 -> 0..1023
 	}
 
-	void analogWrite(int pinIndex, int value)
+	/*void analogWrite(int pinIndex, int value)
 	{
 		value %= 255;
 		hServoModule.enablePower();
@@ -122,7 +122,7 @@ extern "C" {
 			sys.fail_log("ERROR: pin %d doesn't support PWM", pinIndex);
 		};
 #endif
-	}
+	}*/
 
 //int hFramework::pulseIn(int pinIndex, int value, unsigned int timeout) {
 //	unsigned int time = sys.getRefTime();

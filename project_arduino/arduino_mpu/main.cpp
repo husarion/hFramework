@@ -22,7 +22,6 @@ Supported Platforms:
 *************************************************************/
 //CORE2 elements
 #define Arduino_hMain //define to include hMain configure for Arduino platform
-//#define I2C1
 #include <hFramework.h> //for Serial implementation
 #include <Arduino.h>
 
@@ -124,15 +123,6 @@ void printIMUData(void)
   float magX = imu.calcMag(imu.mx);
   float magY = imu.calcMag(imu.my);
   float magZ = imu.calcMag(imu.mz);
-  
-  String a = "";
-  a += "Accel: ";
-  a += String(accelX);
-  a += ", ";
-  a += String(accelY);
-  a += ", ";
-  a += String(accelY);
-  a += " g";
 
   SerialPort.println("Accel: " + String(accelX) + ", " +
               String(accelY) + ", " + String(accelZ) + " g");
