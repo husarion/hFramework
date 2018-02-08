@@ -40,7 +40,7 @@ public:
 	void setDataRate(uint32_t bps);
 	bool write(uint8_t addr, uint8_t* data, uint32_t len);
 	bool read(uint8_t addr, uint8_t* data, uint32_t len);
-	bool rw(uint8_t addr, uint8_t* dataTx, uint32_t lengthTx, uint8_t* dataRx, uint32_t lengthRx);
+	bool rw(uint8_t addr, uint8_t* dataTx, uint32_t lengthTx, uint8_t* dataRx, uint32_t lengthRx, uint32_t rxDelay=0);
 
 	void selectGPIO();
 	void selectI2C();

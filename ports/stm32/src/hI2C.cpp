@@ -80,7 +80,7 @@ bool hI2C::read(uint8_t addr, uint8_t* data, uint32_t len)
 	printError(res);
 	return res > 0 ? false : true;;
 }
-bool hI2C::rw(uint8_t addr, uint8_t* dataTx, uint32_t lengthTx, uint8_t* dataRx, uint32_t lengthRx, uin32_t rxDelay)
+bool hI2C::rw(uint8_t addr, uint8_t* dataTx, uint32_t lengthTx, uint8_t* dataRx, uint32_t lengthRx, uint32_t rxDelay)
 {
 	I2C_ERROR res = myI2C_read_write(i2cNum, addr, dataTx, lengthTx, dataRx, lengthRx, rxDelay);
 	printError(res);

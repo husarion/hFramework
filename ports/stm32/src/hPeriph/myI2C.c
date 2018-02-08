@@ -260,7 +260,7 @@ I2C_ERROR myI2C_read(uint8_t nr, uint8_t addr, uint8_t* dataBuf, uint32_t bufSiz
 		return I2C_ERROR_TIMEOUT;
 	}
 }
-I2C_ERROR myI2C_read_write(uint8_t nr, uint8_t addr, uint8_t* dataBuf_TX, uint32_t bufSize_TX, uint8_t* dataBuf_RX, uint32_t bufSize_RX, uin32_t rxDelay)
+I2C_ERROR myI2C_read_write(uint8_t nr, uint8_t addr, uint8_t* dataBuf_TX, uint32_t bufSize_TX, uint8_t* dataBuf_RX, uint32_t bufSize_RX, uint32_t rxDelay)
 {
 	I2C_config_t* i2c = &i2cs[nr];
 	I2C_ERROR result;
