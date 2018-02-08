@@ -52,7 +52,7 @@ public:
 	 * @param lengthRx number of bytes to read
 	 * @return true, if operation succeed, false otherwise
 	 */
-	virtual bool rw(uint8_t addr, uint8_t* dataTx, uint32_t lengthTx, uint8_t* dataRx, uint32_t lengthRx, uint32_t rxDelay) = 0;
+	virtual bool rw(uint8_t addr, uint8_t* dataTx, uint32_t lengthTx, uint8_t* dataRx, uint32_t lengthRx, uint32_t rxDelay = 0) = 0;
 
 	// deprecated
 	bool read(uint8_t addr, uint8_t* dataTx, uint32_t lengthTx, uint8_t* dataRx, uint32_t lengthRx);
