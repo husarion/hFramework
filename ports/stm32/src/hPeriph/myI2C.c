@@ -423,7 +423,7 @@ static inline I2C_ERROR myI2C_waitForBusy(I2C_config_t* i2c)
 		reg_SR1 = i2c->i2c->SR1;
 		reg_SR2 = i2c->i2c->SR2;
 		// fail_log("s SR1 0x%04x SR2 0x%04x 0x%08x\r\n", reg_SR1, reg_SR2, i2c->i2c->CR1);
-		sys_delay_ms(1);
+		//sys_delay_ms(1); //todo
 		if (i2c->i2c->SR1 & I2C_SR1_BERR)
 		{
 			// LOG("res\r\n");
