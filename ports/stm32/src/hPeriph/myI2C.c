@@ -274,28 +274,30 @@ I2C_ERROR myI2C_read_write(uint8_t nr, uint8_t addr, uint8_t* dataBuf_TX, uint32
 			return result;
 		}
 
-		GPIO_InitTypeDef GPIO_InitStructure;
-		GPIO_InitStructure.GPIO_Pin = i2c->scl.pin;
-		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-		GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
-		GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
-		GPIO_Init(i2c->scl.port, &GPIO_InitStructure);
+		if(rxDelay != 0) {
+			GPIO_InitTypeDef GPIO_InitStructure;
+			GPIO_InitStructure.GPIO_Pin = i2c->scl.pin;
+			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+			GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
+			GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
+			GPIO_Init(i2c->scl.port, &GPIO_InitStructure);
 
-		GPIO_InitStructure.GPIO_Pin = i2c->sda.pin;
-		GPIO_Init(i2c->sda.port, &GPIO_InitStructure);
+			GPIO_InitStructure.GPIO_Pin = i2c->sda.pin;
+			GPIO_Init(i2c->sda.port, &GPIO_InitStructure);
 
-		GPIO_ResetBits(i2c->scl.port, i2c->scl.pin);
-		sys_delay_us(rxDelay);
-		GPIO_SetBits(i2c->scl.port, i2c->scl.pin);
+			GPIO_ResetBits(i2c->scl.port, i2c->scl.pin);
+			sys_delay_us(rxDelay);
+			GPIO_SetBits(i2c->scl.port, i2c->scl.pin);
 
-		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 
-		GPIO_InitStructure.GPIO_Pin = i2c->scl.pin;
-		GPIO_Init(i2c->scl.port, &GPIO_InitStructure);
+			GPIO_InitStructure.GPIO_Pin = i2c->scl.pin;
+			GPIO_Init(i2c->scl.port, &GPIO_InitStructure);
 
-		GPIO_InitStructure.GPIO_Pin = i2c->sda.pin;
-		GPIO_Init(i2c->sda.port, &GPIO_InitStructure);
+			GPIO_InitStructure.GPIO_Pin = i2c->sda.pin;
+			GPIO_Init(i2c->sda.port, &GPIO_InitStructure);
+		}
 
 		result = myI2C_read_internal(nr, addr, dataBuf_RX, bufSize_RX, 0);
 
