@@ -41,7 +41,7 @@ I2C_ERROR myI2C_changeBaudrate(uint8_t i2c_nr, uint32_t baudrate);
 I2C_ERROR myI2C_write(uint8_t i2c_nr, uint8_t addr, uint8_t* dataBuf, uint32_t bufSize);
 I2C_ERROR myI2C_read(uint8_t i2c_nr, uint8_t addr, uint8_t* dataBuf, uint32_t bufSize);
 I2C_ERROR myI2C_read_write(uint8_t i2c_nr, uint8_t addr, uint8_t* dataBuf_TX,
-                           uint32_t bufSize_TX, uint8_t* dataBuf_RX, uint32_t bufSize_RX);
+                           uint32_t bufSize_TX, uint8_t* dataBuf_RX, uint32_t bufSize_RX, uint32_t rxDelay);
 void myI2C_acquireGPIO(uint8_t i2c_nr);
 void myI2C_releaseGPIO(uint8_t i2c_nr);
 

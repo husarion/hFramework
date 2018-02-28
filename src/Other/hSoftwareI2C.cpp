@@ -67,13 +67,13 @@ bool hSoftwareI2C::read(uint8_t addr, uint8_t* data, uint32_t len)
 	sendStop();
 	return true;
 }
-bool hSoftwareI2C::rw(uint8_t addr, uint8_t* dataTx, uint32_t lengthTx, uint8_t* dataRx, uint32_t lengthRx)
+bool hSoftwareI2C::rw(uint8_t addr, uint8_t* dataTx, uint32_t lengthTx, uint8_t* dataRx, uint32_t lengthRx, uint32_t rxDelay)
 {
 	if (!write(addr, dataTx, lengthTx))
 		return false;
 
 	pinSCL.write(0);
-	sys.delayUs(500);
+	sys.delayUs(rxDelay);
 	pinSCL.write(1);
 
 	if (!read(addr, dataRx, lengthRx))

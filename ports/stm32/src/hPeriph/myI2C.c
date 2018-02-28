@@ -260,7 +260,7 @@ I2C_ERROR myI2C_read(uint8_t nr, uint8_t addr, uint8_t* dataBuf, uint32_t bufSiz
 		return I2C_ERROR_TIMEOUT;
 	}
 }
-I2C_ERROR myI2C_read_write(uint8_t nr, uint8_t addr, uint8_t* dataBuf_TX, uint32_t bufSize_TX, uint8_t* dataBuf_RX, uint32_t bufSize_RX)
+I2C_ERROR myI2C_read_write(uint8_t nr, uint8_t addr, uint8_t* dataBuf_TX, uint32_t bufSize_TX, uint8_t* dataBuf_RX, uint32_t bufSize_RX, uint32_t rxDelay)
 {
 	I2C_config_t* i2c = &i2cs[nr];
 	I2C_ERROR result;
@@ -274,28 +274,30 @@ I2C_ERROR myI2C_read_write(uint8_t nr, uint8_t addr, uint8_t* dataBuf_TX, uint32
 			return result;
 		}
 
-		GPIO_InitTypeDef GPIO_InitStructure;
-		GPIO_InitStructure.GPIO_Pin = i2c->scl.pin;
-		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-		GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
-		GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
-		GPIO_Init(i2c->scl.port, &GPIO_InitStructure);
+		if(rxDelay != 0) {
+			GPIO_InitTypeDef GPIO_InitStructure;
+			GPIO_InitStructure.GPIO_Pin = i2c->scl.pin;
+			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+			GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+			GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
+			GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
+			GPIO_Init(i2c->scl.port, &GPIO_InitStructure);
 
-		GPIO_InitStructure.GPIO_Pin = i2c->sda.pin;
-		GPIO_Init(i2c->sda.port, &GPIO_InitStructure);
+			GPIO_InitStructure.GPIO_Pin = i2c->sda.pin;
+			GPIO_Init(i2c->sda.port, &GPIO_InitStructure);
 
-		GPIO_ResetBits(i2c->scl.port, i2c->scl.pin);
-		sys_delay_us(500);
-		GPIO_SetBits(i2c->scl.port, i2c->scl.pin);
+			GPIO_ResetBits(i2c->scl.port, i2c->scl.pin);
+			sys_delay_us(rxDelay);
+			GPIO_SetBits(i2c->scl.port, i2c->scl.pin);
 
-		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+			GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
 
-		GPIO_InitStructure.GPIO_Pin = i2c->scl.pin;
-		GPIO_Init(i2c->scl.port, &GPIO_InitStructure);
+			GPIO_InitStructure.GPIO_Pin = i2c->scl.pin;
+			GPIO_Init(i2c->scl.port, &GPIO_InitStructure);
 
-		GPIO_InitStructure.GPIO_Pin = i2c->sda.pin;
-		GPIO_Init(i2c->sda.port, &GPIO_InitStructure);
+			GPIO_InitStructure.GPIO_Pin = i2c->sda.pin;
+			GPIO_Init(i2c->sda.port, &GPIO_InitStructure);
+		}
 
 		result = myI2C_read_internal(nr, addr, dataBuf_RX, bufSize_RX, 0);
 
@@ -421,7 +423,7 @@ static inline I2C_ERROR myI2C_waitForBusy(I2C_config_t* i2c)
 		reg_SR1 = i2c->i2c->SR1;
 		reg_SR2 = i2c->i2c->SR2;
 		// fail_log("s SR1 0x%04x SR2 0x%04x 0x%08x\r\n", reg_SR1, reg_SR2, i2c->i2c->CR1);
-		sys_delay_ms(1);
+		//sys_delay_ms(1); //todo
 		if (i2c->i2c->SR1 & I2C_SR1_BERR)
 		{
 			// LOG("res\r\n");
