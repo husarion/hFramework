@@ -31,12 +31,14 @@ else()
   message(FATAL_ERRROR "invalid architecture ${ARCH}")
 endif()
 
+add_definitions("-fstack-protector-strong -fsanitize=undefined -fsanitize=address")
+
 set(CMAKE_C_COMPILER ${prefix}gcc)
 set(CMAKE_ASM_COMPILER ${prefix}gcc)
 set(CMAKE_CXX_COMPILER ${prefix}g++)
 
 set(port_flags "")
-set(port_lflags "${port_lflags} -pthread -lutil -lrt -lssl -lcrypto")
+set(port_lflags "${port_lflags} -pthread -lutil -lrt -lssl -lcrypto -fsanitize=undefined -fsanitize=address")
 
 include_directories(${PORT_DIR}/include)
 include_directories(${PORT_DIR}/src)

@@ -60,6 +60,12 @@ else()
 	endif()
 endif()
 
+if(DEFINED PORT)
+  if (PORT STREQUAL esp32)
+    set(BOARD_TYPE esp32)
+  endif()
+endif()
+
 if(NOT DEFINED BOARD_TYPE)
   message("BOARD_TYPE missing")
 endif()
@@ -68,7 +74,7 @@ string(TOLOWER ${BOARD_TYPE} BOARD_TYPE)
 
 set(NEED_BOARD true)
 
-if(NOT BOARD_VERSION)
+if(NOT DEFINED BOARD_VERSION)
   set(BOARD_VERSION 1.0.0)
 endif()
 

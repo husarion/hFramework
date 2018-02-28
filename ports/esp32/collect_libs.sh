@@ -5,6 +5,8 @@ src_dir="$1"
 build_dir="$2"
 sdk_dir="$3"
 
+make -C "$src_dir"
+
 archives="
 $src_dir/build/app_update/libapp_update.a
 $src_dir/build/bootloader_support/libbootloader_support.a
@@ -13,6 +15,11 @@ $src_dir/build/coap/libcoap.a
 $src_dir/build/cxx/libcxx.a
 $src_dir/build/driver/libdriver.a
 $src_dir/build/esp32/libesp32.a
+$src_dir/build/heap/libheap.a
+$src_dir/build/app_trace/libapp_trace.a
+$src_dir/build/console/libconsole.a
+$src_dir/build/pthread/libpthread.a
+$src_dir/build/libsodium/liblibsodium.a
 $sdk_dir/components/esp32/lib/libcore.a
 $sdk_dir/components/esp32/lib/librtc.a
 $sdk_dir/components/esp32/lib/libphy.a

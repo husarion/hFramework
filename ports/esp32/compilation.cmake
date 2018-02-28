@@ -1,18 +1,5 @@
 get_filename_component(PORT_DIR ${CMAKE_CURRENT_LIST_FILE} PATH) # for cmake before 2.8.3
 
-include_directories("${CURRENT_DIR}/third-party/esp-idf/components/freertos/include/")
-include_directories("${CURRENT_DIR}/ports/esp32/build-sdk/build/include")
-include_directories("${CURRENT_DIR}/third-party/esp-idf/components/esp32/include")
-include_directories("${CURRENT_DIR}/third-party/esp-idf/components/tcpip_adapter/include")
-include_directories("${CURRENT_DIR}/third-party/esp-idf/components/lwip/include/lwip")
-include_directories("${CURRENT_DIR}/third-party/esp-idf/components/lwip/include/lwip/port")
-include_directories("${CURRENT_DIR}/third-party/esp-idf/components/driver/include")
-include_directories("${CURRENT_DIR}/third-party/esp-idf/components/nvs_flash/include")
-include_directories("${CURRENT_DIR}/third-party/esp-idf/components/openssl/include")
-include_directories("${CURRENT_DIR}/third-party/esp-idf/components/app_update/include")
-include_directories("${CURRENT_DIR}/third-party/esp-idf/components/spi_flash/include")
-include_directories("${CURRENT_DIR}/third-party/esp-idf/components/soc/esp32/include")
-
 set(HFRAMEWORK_FILES
   )
 
