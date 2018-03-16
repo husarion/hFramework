@@ -10,7 +10,7 @@ set(esp32_libs "-lapp_update -lbootloader_support -lbt -lcoap -lcxx -ldriver -le
 set(port_flags "")
 set(port_lflags "-nostdlib -Wl,--gc-sections -Wl,-static -Wl,--start-group <LINK_LIBRARIES> -u uxTopUsedPriority -u call_user_start_cpu0 -u __cxa_guard_dummy ${esp32_libs} -T esp32_out.ld -u ld_include_panic_highint_hdl -T esp32.common.ld -T esp32.rom.ld -T esp32.peripherals.ld -T esp32.rom.spiram_incompatible_fns.ld -Wl,--end-group -Wl,-EL")
 
-add_definitions(-fdata-sections -fstrict-volatile-bitfields -mlongcalls -nostdlib -DWITH_POSIX -DMBEDTLS_CONFIG_FILE='"mbedtls/esp_config.h"' -DHAVE_CONFIG_H -DESP_PLATFORM -DIDF_VER="v2.0-rc1-154-g3b8c9a4" -fno-exceptions)
+add_definitions(-fdata-sections -fstrict-volatile-bitfields -mlongcalls -nostdlib -DWITH_POSIX -DMBEDTLS_CONFIG_FILE='"mbedtls/esp_config.h"' -DHAVE_CONFIG_H -DESP_PLATFORM -D IDF_VER="v3.1-dev-157-gcc69b74-dirty" -fno-exceptions)
 
 if (NOT IDF_PATH)
   #message(FATAL_ERROR "IDF_PATH variable missing")

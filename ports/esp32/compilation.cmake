@@ -26,6 +26,7 @@ set(PORT_FILES
 
 add_custom_target(
   collect_libs
-  COMMAND ${PORT_DIR}/collect_libs.sh ${PORT_DIR}/build-sdk ${CMAKE_BINARY_DIR} ${CURRENT_DIR}/third-party/esp-idf)
+  USES_TERMINAL
+  COMMAND env IDF_PATH="${IDF_PATH}" ${PORT_DIR}/collect_libs.sh ${PORT_DIR}/build-sdk ${CMAKE_BINARY_DIR} ${CURRENT_DIR}/third-party/esp-idf)
 
 set(PORT_CUSTOM_TARGETS collect_libs)
