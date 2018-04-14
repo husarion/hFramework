@@ -199,7 +199,7 @@ public:
 	/**
 	 * @brief Get list of tasks that are currently registered in the system.
 	 * @param taskList pointer to table in which TaskList will be stored
-	 * @return pointer to taskList
+	 * @return pointer to taskList in the following format: [ Task_name    Task_state(Ready/Running/Blocked/Suspended/Deleted)    Priority    Stack    Num ]
 	 */
 	static char* getTaskList(char* taskList);
 
@@ -213,7 +213,7 @@ public:
 	/**
 	 * @brief Get statistics of all tasks.
 	 * @param stats pointer to table in which Stats will be stored
-	 * @return pointer to stats
+	 * @return pointer to stats in the following format: [ Task_name    Abs_Time    %_Time ]
 	 */
 	static char* getStats(char* stats);
 
