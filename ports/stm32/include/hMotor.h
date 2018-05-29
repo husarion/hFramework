@@ -211,9 +211,9 @@ public:
 	 */
 	void setSingleMode();
 
-	void setActiveBreaking();
+	void setActiveBraking();
 
-	void setPassiveBreaking();
+	void setPassiveBraking();
 
 	/**
 	 * @brief Set motor polarity
