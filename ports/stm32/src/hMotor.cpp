@@ -129,14 +129,14 @@ void hMotor::setSingleMode()
 	impl.setSingleMode();
 }
 
-void hMotor::setActiveBreaking()
+void hMotor::setActiveBraking()
 {
-	impl.setActiveBreaking();
+	impl.setActiveBraking();
 }
 
-void hMotor::setPassiveBreaking()
+void hMotor::setPassiveBraking()
 {
-	impl.setPassiveBreaking();
+	impl.setPassiveBraking();
 }
 
 void hMotor::setMotorPolarity(Polarity polarity)
