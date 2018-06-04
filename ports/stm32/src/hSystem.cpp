@@ -353,6 +353,16 @@ void hSystem::disableUsbCharging()
 	pinUsbCharging.write(0);
 }
 #endif
+#if BOARD(CORE2) || BOARD(CORE2MINI)
+void hSystem::enable5V()
+{
+	pin5V.write(1);
+}
+void hSystem::disable5V()
+{
+	pin5V.write(0);
+}
+#endif
 void hSystem::disableAutoWatchdog()
 {
 }
