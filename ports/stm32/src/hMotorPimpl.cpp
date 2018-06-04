@@ -180,7 +180,7 @@ bool hMotorPimpl::init()
 	reg.stableRange = 10;
 	reg.stableTimes = 3;
 
-	activeBreaking = true;
+	activeBraking = true;
 
 	controlMotorId = motorId;
 	initialized = true;
@@ -251,7 +251,7 @@ void hMotorPimpl::updatePower_internal(bool force, int16_t power)
 	{
 		myGPIO_dir_out(pinA);
 		myGPIO_dir_out(pinB);
-		if (activeBreaking)
+		if (activeBraking)
 		{
 			myGPIO_write(pinA, 1);
 			myGPIO_write(pinB, 1);
@@ -266,7 +266,7 @@ void hMotorPimpl::updatePower_internal(bool force, int16_t power)
 	{
 		if (dir == 0)
 		{
-			if (activeBreaking)
+			if (activeBraking)
 			{
 				myGPIO_dir_out(pinA);
 				myGPIO_write(pinA, 1);
@@ -282,7 +282,7 @@ void hMotorPimpl::updatePower_internal(bool force, int16_t power)
 		}
 		else
 		{
-			if (activeBreaking)
+			if (activeBraking)
 			{
 				myGPIO_dir_out(pinB);
 				myGPIO_write(pinB, 1);

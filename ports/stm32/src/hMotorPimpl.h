@@ -91,7 +91,7 @@ public:
 	EMode mode;
 	hRecursiveMutex accessMutex;
 	hRecursiveMutex setPowerMutex;
-	bool activeBreaking;
+	bool activeBraking;
 
 	int motorId, controlMotorId;
 	bool initialized;
@@ -137,8 +137,8 @@ public:
 
 	void setParallelMode();
 	void setSingleMode();
-	void setActiveBreaking() { activeBreaking = true; updatePower_internal(true); }
-	void setPassiveBreaking() { activeBreaking = false; updatePower_internal(true); }
+	void setActiveBraking() { activeBraking = true; updatePower_internal(true); }
+	void setPassiveBraking() { activeBraking = false; updatePower_internal(true); }
 	
 	void setPullup();
 	void setPulldown();
