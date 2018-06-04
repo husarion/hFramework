@@ -261,6 +261,22 @@ public:
 	 */
 	static void disableUsbCharging();
 #endif
+#if BOARD(CORE2) || BOARD(CORE2MINI)
+	/**
+	 * @brief Enable 5V rail.
+	 *
+	 * Switches 5V on.
+	 */
+	static void enable5V();
+	
+	/**
+	 * @brief Disable 5V rail.
+	 *
+	 * Switches 5V off.
+	 */
+	static void disable5V();
+	
+#endif
 
 	static void disableAutoWatchdog();
 	static void enableAutoWatchdog();
