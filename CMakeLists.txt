@@ -41,9 +41,24 @@ set(HFRAMEWORK_FILES
   src/Other/hUtils.cpp
   src/Other/myprintf.cpp
   src/Other/hMath.cpp
+)
+
+if(${BOARD_TYPE} STREQUAL "core2")
+  MESSAGE ("Compilation for CORE2")
+  set(HFRAMEWORK_FILES
+
+  ${HFRAMEWORK_FILES}
   src/rosbot/ROSbot.cpp
   src/rosbot/wheel.cpp
-)
+  src/rosbot/IMU.cpp
+  src/rosbot/arduino_mpu9250_clk.cpp
+  src/rosbot/arduino_mpu9250_i2c.cpp 
+  src/rosbot/arduino_mpu9250_log.cpp 
+  src/rosbot/inv_mpu.cpp
+  src/rosbot/inv_mpu_dmp_motion_driver.cpp
+  src/rosbot/SparkFunMPU9250-DMP.cpp
+  )
+endif()
 
 set(PORT_CUSTOM_TARGETS)
 

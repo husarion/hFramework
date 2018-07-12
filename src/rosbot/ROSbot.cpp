@@ -2,13 +2,12 @@
 
 namespace hFramework
 {
-#if BOARD(CORE2)
 ROSbot rosbot;
 
 void ROSbot::initROSbot()
 {
     Serial.printf("ROSbot initialization begin\n");
-    // initIMU();
+    initIMU();
     initBatteryMonitor();
     initOdometry();
     // initDistanceSensors();
@@ -254,25 +253,24 @@ void ROSbot::reset_odometry()
 //     return ranges;
 // }
 
-// void ROSbot::initIMU()
-// {
-//     imu.begin();
-//     imu.resetFifo();
-//     // Serial.printf("Create IMUPublisher task\n");
-//     // sys.taskCreate(std::bind(&ROSbot::IMUPublisher, this));
-// }
+void ROSbot::initIMU()
+{
+    imu.begin();
+    imu.resetFifo();
+    // Serial.printf("Create IMUPublisher task\n");
+    // sys.taskCreate(std::bind(&ROSbot::IMUPublisher, this));
+}
 
-// std::vector<float> ROSbot::getRPY()
-// {
-//     float roll = 0;
-//     float pitch = 0;
-//     float yaw = 0;
-//     imu.getEulerAngles(&roll, &pitch, &yaw);
-//     imuArray.clear();
-//     imuArray.push_back(roll);
-//     imuArray.push_back(pitch);
-//     imuArray.push_back(yaw);
-//     return imuArray;
-// }
-#endif // BOARD(CORE2)
+std::vector<float> ROSbot::getRPY()
+{
+    float roll = 0;
+    float pitch = 0;
+    float yaw = 0;
+    imu.getEulerAngles(&roll, &pitch, &yaw);
+    imuArray.clear();
+    imuArray.push_back(roll);
+    imuArray.push_back(pitch);
+    imuArray.push_back(yaw);
+    return imuArray;
+}
 } // namespace hFramework

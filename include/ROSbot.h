@@ -8,7 +8,7 @@
 #include "wheel.h"
 //#include "VL53L0X.h"
 // #include "hMotor.h"
-// #include "IMU.h"
+#include "IMU.h"
 // #include "tf/tf.h"
 // #include "geometry_msgs/Twist.h"
 // #include "geometry_msgs/PoseStamped.h"
@@ -36,8 +36,8 @@ public:
   void reset_odometry();
   // void initDistanceSensors();
   // std::vector<float> getRanges();
-  // void initIMU();
-  // std::vector<float> getRPY();
+  void initIMU();
+  std::vector<float> getRPY();
 
 private:
   void wheelUpdater();
@@ -94,8 +94,8 @@ private:
   // VL53L0X sensor_dis[4]; //0 - FR, 1 - FL, 2 - RL, 3 - RR
   // std::vector<float> ranges;
 
-  // IMU imu;
-  // std::vector<float> imuArray;
+  IMU imu;
+  std::vector<float> imuArray;
 };
 
 extern ROSbot rosbot;
