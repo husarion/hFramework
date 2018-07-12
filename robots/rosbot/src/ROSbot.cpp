@@ -2,6 +2,7 @@
 
 namespace hFramework
 {
+#if BOARD(CORE2)
 ROSbot rosbot;
 
 void ROSbot::initROSbot()
@@ -273,5 +274,5 @@ void ROSbot::reset_odometry()
 //     imuArray.push_back(yaw);
 //     return imuArray;
 // }
-
+#endif // BOARD(CORE2)
 } // namespace hFramework
