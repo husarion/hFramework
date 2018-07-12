@@ -15,6 +15,8 @@ endif()
 include("${HFRAMEWORK_PATH}/hFrameworkPort.cmake")
 
 include_directories("${CURRENT_DIR}/include/")
+include_directories("${CURRENT_DIR}/robots/rosbot/include/")
+include_directories("${CURRENT_DIR}/robots/rosbot/MPU9250lib")
 include_directories("${CMAKE_BINARY_DIR}")
 
 SET(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
@@ -41,6 +43,16 @@ set(HFRAMEWORK_FILES
   src/Other/hUtils.cpp
   src/Other/myprintf.cpp
   src/Other/hMath.cpp
+  robots/rosbot/src/ROSbot.cpp
+  robots/rosbot/src/wheel.cpp
+  robots/rosbot/src/VL53L0X.cpp
+  robots/rosbot/src/IMU.cpp
+  robots/rosbot/MPU9250lib/arduino_mpu9250_clk.cpp
+  robots/rosbot/MPU9250lib/arduino_mpu9250_i2c.cpp
+  robots/rosbot/MPU9250lib/arduino_mpu9250_log.cpp
+  robots/rosbot/MPU9250lib/inv_mpu_dmp_motion_driver.cpp
+  robots/rosbot/MPU9250lib/inv_mpu.cpp
+  robots/rosbot/MPU9250lib/SparkFunMPU9250-DMP.cpp
 )
 
 set(PORT_CUSTOM_TARGETS)
