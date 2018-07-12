@@ -15,7 +15,6 @@ endif()
 include("${HFRAMEWORK_PATH}/hFrameworkPort.cmake")
 
 include_directories("${CURRENT_DIR}/include/")
-include_directories("${CURRENT_DIR}/robots/rosbot/include/")
 include_directories("${CMAKE_BINARY_DIR}")
 
 SET(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
@@ -42,8 +41,8 @@ set(HFRAMEWORK_FILES
   src/Other/hUtils.cpp
   src/Other/myprintf.cpp
   src/Other/hMath.cpp
-  robots/rosbot/src/ROSbot.cpp
-  robots/rosbot/src/wheel.cpp
+  src/rosbot/ROSbot.cpp
+  src/rosbot/wheel.cpp
 )
 
 set(PORT_CUSTOM_TARGETS)
