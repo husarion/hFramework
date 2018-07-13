@@ -6,7 +6,7 @@
 // #include "hCloudClient.h"
 // #include "ros.h"
 #include "wheel.h"
-//#include "VL53L0X.h"
+#include "VL53L0X.h"
 // #include "hMotor.h"
 #include "IMU.h"
 // #include "tf/tf.h"
@@ -18,15 +18,33 @@
 // #include "geometry_msgs/Vector3.h"
 #include "vector"
 
-// #define VL53L0XXshutPort hSens6
+#define VL53L0XXshutPort hSens6
 
 namespace hFramework
 {
+
+enum SensorType
+{
+  SENSOR_INFRARED,
+  SENSOR_LASER
+};
+
+struct hMUX
+{
+  bool p2;
+  bool p3;
+  bool p4;
+  bool active;
+  float *dis;
+  hMUX(bool tp2, bool tp3, bool tp4, bool tactive, float *tdis) : p2(tp2), p3(tp3), p4(tp4), active(tactive), dis(tdis) {}
+  hMUX(bool tp2, bool tp3, bool tp4, bool tactive) : p2(tp2), p3(tp3), p4(tp4), active(tactive) {}
+};
+
 class ROSbot
 {
 public:
   ROSbot(){};
-  void initROSbot();
+  void initROSbot(SensorType s = SENSOR_INFRARED);
   void initWheelController();
   void initBatteryMonitor(float voltage_threshold = 10.5);
   float getBatteryLevel();
@@ -34,8 +52,8 @@ public:
   void initOdometry();
   std::vector<float> getPose();
   void reset_odometry();
-  // void initDistanceSensors();
-  // std::vector<float> getRanges();
+  void initDistanceSensors(SensorType s = SENSOR_INFRARED);
+  std::vector<float> getRanges(SensorType s = SENSOR_INFRARED);
   void initIMU();
   std::vector<float> getRPY();
 
@@ -47,7 +65,8 @@ private:
   void reset_encoders();
   void reset_odom_vars();
   void reset_wheels();
-  // int readDistanceSensor(VL53L0X &s);
+  int readLaserDistanceSensor(VL53L0X &s);
+  void readIRSensors();
 
   Wheel *wheelFL;
   Wheel *wheelRL;
@@ -91,8 +110,24 @@ private:
   float robot_x_vel = 0; // meters per second
   float robot_y_vel = 0; // meters per second
 
-  // VL53L0X sensor_dis[4]; //0 - FR, 1 - FL, 2 - RL, 3 - RR
-  // std::vector<float> ranges;
+  VL53L0X sensor_dis[4]; //0 - FR, 1 - FL, 2 - RL, 3 - RR
+  std::vector<float> ranges;
+  float MUXStepTime = 50; //200ms for scan
+  float dis1 = 0;         //Sharp LF
+  float dis2 = 0;         //Sharp RF
+  float dis3 = 0;         //Sharp LR
+  float dis4 = 0;         //Sharp RR
+  hSensor *sensMUX;
+  hMUX tMUX[8] = {
+      hMUX(false, false, false, true, &dis4), //ch0
+      hMUX(false, false, true, true, &dis3),  //ch1
+      hMUX(false, true, false, false),        //ch2
+      hMUX(false, true, true, false),         //ch3
+      hMUX(true, false, false, false),        //ch4
+      hMUX(true, false, true, false),         //ch5
+      hMUX(true, true, false, true, &dis1),   //ch6
+      hMUX(true, true, true, true, &dis2)     //ch7
+  };
 
   IMU imu;
   std::vector<float> imuArray;

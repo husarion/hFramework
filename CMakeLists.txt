@@ -57,6 +57,7 @@ if(${BOARD_TYPE} STREQUAL "core2")
   src/rosbot/inv_mpu.cpp
   src/rosbot/inv_mpu_dmp_motion_driver.cpp
   src/rosbot/SparkFunMPU9250-DMP.cpp
+  src/VL53L0X.cpp
   )
 endif()
 

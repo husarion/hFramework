@@ -4,13 +4,13 @@ namespace hFramework
 {
 ROSbot rosbot;
 
-void ROSbot::initROSbot()
+void ROSbot::initROSbot(SensorType s)
 {
     Serial.printf("ROSbot initialization begin\n");
     initIMU();
     initBatteryMonitor();
     initOdometry();
-    // initDistanceSensors();
+    initDistanceSensors(s);
     initWheelController();
     return;
 }
@@ -202,56 +202,100 @@ void ROSbot::reset_odometry()
     reset_odom_vars();
 }
 
-// void ROSbot::initDistanceSensors()
-// {
-//     hSens1.selectI2C();
-//     VL53L0XXshutPort.pin1.setOut();
-//     VL53L0XXshutPort.pin1.write(false);
-//     VL53L0XXshutPort.pin2.setOut();
-//     VL53L0XXshutPort.pin2.write(false);
-//     VL53L0XXshutPort.pin3.setOut();
-//     VL53L0XXshutPort.pin3.write(false);
-//     VL53L0XXshutPort.pin4.setOut();
-//     VL53L0XXshutPort.pin4.write(false);
-//     VL53L0XXshutPort.pin1.reset();
-//     sensor_dis[0].setAddress(44);
-//     sys.delay(100);
-//     VL53L0XXshutPort.pin2.reset();
-//     sensor_dis[1].setAddress(43);
-//     sys.delay(100);
-//     VL53L0XXshutPort.pin3.reset();
-//     sensor_dis[2].setAddress(42);
-//     sys.delay(100);
-//     VL53L0XXshutPort.pin4.reset();
-//     sys.delay(100);
-//     sensor_dis[0].setTimeout(500);
-//     sensor_dis[1].setTimeout(500);
-//     sensor_dis[2].setTimeout(500);
-//     sensor_dis[3].setTimeout(500);
-//     sensor_dis[0].init();
-//     sensor_dis[1].init();
-//     sensor_dis[2].init();
-//     sensor_dis[3].init();
-//     sensor_dis[0].startContinuous();
-//     sensor_dis[1].startContinuous();
-//     sensor_dis[2].startContinuous();
-//     sensor_dis[3].startContinuous();
-// }
+void ROSbot::initDistanceSensors(SensorType s)
+{
+    switch (s)
+    {
+    case SENSOR_LASER:
+        hSens1.selectI2C();
+        VL53L0XXshutPort.pin1.setOut();
+        VL53L0XXshutPort.pin1.write(false);
+        VL53L0XXshutPort.pin2.setOut();
+        VL53L0XXshutPort.pin2.write(false);
+        VL53L0XXshutPort.pin3.setOut();
+        VL53L0XXshutPort.pin3.write(false);
+        VL53L0XXshutPort.pin4.setOut();
+        VL53L0XXshutPort.pin4.write(false);
+        VL53L0XXshutPort.pin1.reset();
+        sensor_dis[0].setAddress(44);
+        sys.delay(100);
+        VL53L0XXshutPort.pin2.reset();
+        sensor_dis[1].setAddress(43);
+        sys.delay(100);
+        VL53L0XXshutPort.pin3.reset();
+        sensor_dis[2].setAddress(42);
+        sys.delay(100);
+        VL53L0XXshutPort.pin4.reset();
+        sys.delay(100);
+        sensor_dis[0].setTimeout(500);
+        sensor_dis[1].setTimeout(500);
+        sensor_dis[2].setTimeout(500);
+        sensor_dis[3].setTimeout(500);
+        sensor_dis[0].init();
+        sensor_dis[1].init();
+        sensor_dis[2].init();
+        sensor_dis[3].init();
+        sensor_dis[0].startContinuous();
+        sensor_dis[1].startContinuous();
+        sensor_dis[2].startContinuous();
+        sensor_dis[3].startContinuous();
+        break;
+    case SENSOR_INFRARED:
+        sensMUX = new hSensor(hSens_ID_3);
+        break;
+    }
+}
 
-// int ROSbot::readDistanceSensor(VL53L0X &s)
-// {
-//     return s.readRangeContinuousMillimeters();
-// }
+void ROSbot::readIRSensors()
+{
+    sensMUX->pin1.enableADC();
+    sensMUX->pin2.setOut();
+    sensMUX->pin3.setOut();
+    sensMUX->pin4.setOut();
+    for (size_t i = 0; i < 8; i++)
+    {
+        if (tMUX[i].active == true)
+        {
+            sensMUX->pin2.write(tMUX[i].p2);
+            sensMUX->pin3.write(tMUX[i].p3);
+            sensMUX->pin4.write(tMUX[i].p4);
+            sys.delay(MUXStepTime);
+            float temp = 20 * (1 / (sensMUX->pin1.analogReadRaw() * 0.001220703));
+            if (temp > 30)
+                temp = 30;
+            if (temp < 4)
+                temp = 4;
+            *tMUX[i].dis = temp;
+        }
+    }
+}
 
-// std::vector<float> ROSbot::getRanges()
-// {
-//     ranges.clear();
-//     ranges.push_back(0.001 * ((float)readDistanceSensor(sensor_dis[0])));
-//     ranges.push_back(0.001 * ((float)readDistanceSensor(sensor_dis[1])));
-//     ranges.push_back(0.001 * ((float)readDistanceSensor(sensor_dis[2])));
-//     ranges.push_back(0.001 * ((float)readDistanceSensor(sensor_dis[3])));
-//     return ranges;
-// }
+int ROSbot::readLaserDistanceSensor(VL53L0X &s)
+{
+    return s.readRangeContinuousMillimeters();
+}
+
+std::vector<float> ROSbot::getRanges(SensorType s)
+{
+    ranges.clear();
+    switch (s)
+    {
+    case SENSOR_LASER:
+        ranges.push_back(0.001 * ((float)readLaserDistanceSensor(sensor_dis[0])));
+        ranges.push_back(0.001 * ((float)readLaserDistanceSensor(sensor_dis[1])));
+        ranges.push_back(0.001 * ((float)readLaserDistanceSensor(sensor_dis[2])));
+        ranges.push_back(0.001 * ((float)readLaserDistanceSensor(sensor_dis[3])));
+        break;
+    case SENSOR_INFRARED:
+        readIRSensors();
+        ranges.push_back(0.01 * dis1);
+        ranges.push_back(0.01 * dis2);
+        ranges.push_back(0.01 * dis3);
+        ranges.push_back(0.01 * dis4);
+        break;
+    }
+    return ranges;
+}
 
 void ROSbot::initIMU()
 {
