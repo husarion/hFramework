@@ -30,6 +30,12 @@ enum SensorType
   NO_DISTANCE_SENSOR
 };
 
+enum ImuType
+{
+  MPU9250,
+  NO_IMU
+};
+
 struct hMUX
 {
   bool p2;
@@ -45,12 +51,12 @@ class ROSbot
 {
 public:
   ROSbot(){};
-  void initROSbot(SensorType s = SENSOR_LASER);
+  void initROSbot(SensorType s = SENSOR_LASER, ImuType i = MPU9250);
   void initWheelController();
   void initBatteryMonitor(float voltage_threshold = 10.5);
   void initOdometry();
   void initDistanceSensors(SensorType s = SENSOR_LASER);
-  void initIMU();
+  void initIMU(ImuType i = MPU9250);
 
   void reset_odometry();
   void setSpeed(float linear, float angular);

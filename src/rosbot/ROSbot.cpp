@@ -4,10 +4,10 @@ namespace hFramework
 {
 ROSbot rosbot;
 
-void ROSbot::initROSbot(SensorType s)
+void ROSbot::initROSbot(SensorType s, ImuType i)
 {
     Serial.printf("ROSbot initialization begin\n");
-    initIMU();
+    initIMU(i);
     initBatteryMonitor();
     initOdometry();
     initDistanceSensors(s);
@@ -311,11 +311,18 @@ void ROSbot::rangesTask()
     }
 }
 
-void ROSbot::initIMU()
+void ROSbot::initIMU(ImuType i)
 {
-    imu.begin();
-    imu.resetFifo();
-    sys.taskCreate(std::bind(&ROSbot::eulerAnglesTask, this));
+    switch (i)
+    {
+    case MPU9250:
+        imu.begin();
+        imu.resetFifo();
+        sys.taskCreate(std::bind(&ROSbot::eulerAnglesTask, this));
+        break;
+    case NO_IMU:
+        break;
+    }
 }
 
 std::vector<float> ROSbot::getRPY()
