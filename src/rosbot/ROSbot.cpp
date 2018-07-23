@@ -204,7 +204,8 @@ void ROSbot::reset_odometry()
 
 void ROSbot::initDistanceSensors(SensorType s)
 {
-    switch (s)
+    sensor_type = s;
+    switch (sensor_type)
     {
     case SENSOR_LASER:
         hSens1.selectI2C();
@@ -239,9 +240,13 @@ void ROSbot::initDistanceSensors(SensorType s)
         sensor_dis[1].startContinuous();
         sensor_dis[2].startContinuous();
         sensor_dis[3].startContinuous();
+        sys.taskCreate(std::bind(&ROSbot::rangesTask, this));
         break;
     case SENSOR_INFRARED:
         sensMUX = new hSensor(hSens_ID_3);
+        sys.taskCreate(std::bind(&ROSbot::rangesTask, this));
+        break;
+    default:
         break;
     }
 }
@@ -265,7 +270,7 @@ void ROSbot::readIRSensors()
                 temp = 30;
             if (temp < 4)
                 temp = 4;
-            *tMUX[i].dis = temp;
+            *tMUX[i].dis = temp * 0.01;
         }
     }
 }
@@ -278,43 +283,56 @@ int ROSbot::readLaserDistanceSensor(VL53L0X &s)
 std::vector<float> ROSbot::getRanges(SensorType s)
 {
     ranges.clear();
-    switch (s)
-    {
-    case SENSOR_LASER:
-        ranges.push_back(0.001 * ((float)readLaserDistanceSensor(sensor_dis[0])));
-        ranges.push_back(0.001 * ((float)readLaserDistanceSensor(sensor_dis[1])));
-        ranges.push_back(0.001 * ((float)readLaserDistanceSensor(sensor_dis[2])));
-        ranges.push_back(0.001 * ((float)readLaserDistanceSensor(sensor_dis[3])));
-        break;
-    case SENSOR_INFRARED:
-        readIRSensors();
-        ranges.push_back(0.01 * dis1);
-        ranges.push_back(0.01 * dis2);
-        ranges.push_back(0.01 * dis3);
-        ranges.push_back(0.01 * dis4);
-        break;
-    }
+    ranges.push_back(dis1);
+    ranges.push_back(dis2);
+    ranges.push_back(dis3);
+    ranges.push_back(dis4);
     return ranges;
+}
+
+void ROSbot::rangesTask()
+{
+    while (true)
+    {
+
+        switch (sensor_type)
+        {
+        case SENSOR_LASER:
+            dis1 = 0.001 * ((float)readLaserDistanceSensor(sensor_dis[0]));
+            dis2 = 0.001 * ((float)readLaserDistanceSensor(sensor_dis[1]));
+            dis3 = 0.001 * ((float)readLaserDistanceSensor(sensor_dis[2]));
+            dis4 = 0.001 * ((float)readLaserDistanceSensor(sensor_dis[3]));
+            break;
+        case SENSOR_INFRARED:
+            readIRSensors();
+            break;
+        }
+        sys.delay(50);
+    }
 }
 
 void ROSbot::initIMU()
 {
     imu.begin();
     imu.resetFifo();
-    // Serial.printf("Create IMUPublisher task\n");
-    // sys.taskCreate(std::bind(&ROSbot::IMUPublisher, this));
+    sys.taskCreate(std::bind(&ROSbot::eulerAnglesTask, this));
 }
 
 std::vector<float> ROSbot::getRPY()
 {
-    float roll = 0;
-    float pitch = 0;
-    float yaw = 0;
-    imu.getEulerAngles(&roll, &pitch, &yaw);
     imuArray.clear();
     imuArray.push_back(roll);
     imuArray.push_back(pitch);
     imuArray.push_back(yaw);
     return imuArray;
+}
+
+void ROSbot::eulerAnglesTask()
+{
+    while (true)
+    {
+        imu.getEulerAngles(&roll, &pitch, &yaw);
+        sys.delay(50);
+    }
 }
 } // namespace hFramework

@@ -26,7 +26,8 @@ namespace hFramework
 enum SensorType
 {
   SENSOR_INFRARED,
-  SENSOR_LASER
+  SENSOR_LASER,
+  NO_DISTANCE_SENSOR
 };
 
 struct hMUX
@@ -44,17 +45,19 @@ class ROSbot
 {
 public:
   ROSbot(){};
-  void initROSbot(SensorType s = SENSOR_INFRARED);
+  void initROSbot(SensorType s = SENSOR_LASER);
   void initWheelController();
   void initBatteryMonitor(float voltage_threshold = 10.5);
-  float getBatteryLevel();
-  void setSpeed(float linear, float angular);
   void initOdometry();
-  std::vector<float> getPose();
-  void reset_odometry();
-  void initDistanceSensors(SensorType s = SENSOR_INFRARED);
-  std::vector<float> getRanges(SensorType s = SENSOR_INFRARED);
+  void initDistanceSensors(SensorType s = SENSOR_LASER);
   void initIMU();
+
+  void reset_odometry();
+  void setSpeed(float linear, float angular);
+
+  float getBatteryLevel();
+  std::vector<float> getPose();
+  std::vector<float> getRanges(SensorType s = SENSOR_LASER);
   std::vector<float> getRPY();
 
 private:
@@ -67,7 +70,10 @@ private:
   void reset_wheels();
   int readLaserDistanceSensor(VL53L0X &s);
   void readIRSensors();
+  void rangesTask();
+  void eulerAnglesTask();
 
+  SensorType sensor_type;
   Wheel *wheelFL;
   Wheel *wheelRL;
   Wheel *wheelFR;
@@ -131,6 +137,9 @@ private:
 
   IMU imu;
   std::vector<float> imuArray;
+  float roll = 0;
+  float pitch = 0;
+  float yaw = 0;
 };
 
 extern ROSbot rosbot;
