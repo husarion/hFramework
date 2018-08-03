@@ -294,12 +294,11 @@ void ROSbot::rangesTask()
 {
     while (true)
     {
-
         switch (sensor_type)
         {
         case SENSOR_LASER:
-            dis1 = 0.001 * ((float)readLaserDistanceSensor(sensor_dis[0]));
-            dis2 = 0.001 * ((float)readLaserDistanceSensor(sensor_dis[1]));
+            dis2 = 0.001 * ((float)readLaserDistanceSensor(sensor_dis[0]));
+            dis1 = 0.001 * ((float)readLaserDistanceSensor(sensor_dis[1]));
             dis3 = 0.001 * ((float)readLaserDistanceSensor(sensor_dis[2]));
             dis4 = 0.001 * ((float)readLaserDistanceSensor(sensor_dis[3]));
             break;
