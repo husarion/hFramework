@@ -82,26 +82,26 @@ public:
 	static hTask& taskCreate(const UserDataFunc& handler, void* param = 0, uint8_t priority = 2, uint32_t stack = DEFAULT_STACK_SIZE, const char* desc = 0)
 	{
 		return taskCreate(std::bind(handler, param), priority, stack, desc);
-	}
+	};
 
 	static hTimer& addTimer(uint32_t timeout, TimerMode mode, TimerRun startMode, const std::function<void()>& handler);
 	__attribute__((deprecated))
 	static hTimer& addTimer(uint32_t timeout, TimerMode mode, TimerRun startMode, const UserDataFunc& handler, void* userdata)
 	{
 		return addTimer(timeout, mode, startMode, std::bind(handler, userdata));
-	}
+	};
 
 	__attribute__((deprecated))
 	static hTimer& addTimeout(uint32_t timeout, const UserDataFunc& handler, void* userdata)
 	{
 		return addTimer(timeout, TimerMode::OneShot, TimerRun::Immediately, std::bind(handler, userdata));
-	}
+	};
 
 	__attribute__((deprecated))
 	static hTimer& addInterval(uint32_t interval, const UserDataFunc& handler, void* userdata)
 	{
 		return addTimer(interval, TimerMode::Repeat, TimerRun::Immediately, std::bind(handler, userdata));
-	}
+	};
 
 	/**
 	 * @brief Get timestamp from all time working timer with 1us resolution
@@ -143,14 +143,14 @@ public:
 
 	// @cond
 	__attribute__((deprecated))
-	static void delay_ms(uint32_t _delay) { delay(_delay); }
+	static void delay_ms(uint32_t _delay) { delay(_delay); };
 	__attribute__((deprecated))
-	static void delay_us(uint32_t _delay) { delayUs(_delay); }
+	static void delay_us(uint32_t _delay) { delayUs(_delay); };
 	__attribute__((deprecated))
 	static void delay_ms_sync(uint32_t& refTime, uint32_t delay)
 	{
 		delaySync(refTime, delay);
-	}
+	};
 	// @endcond
 
 	/**
@@ -179,7 +179,7 @@ public:
 
 	// @cond
 	__attribute__((deprecated))
-	static float getBatteryLevel() { return getSupplyVoltage(); }
+	static float getBatteryLevel() { return getSupplyVoltage(); };
 	// @endcond
 
 	/**

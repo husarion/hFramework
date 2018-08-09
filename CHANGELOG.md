@@ -2,6 +2,7 @@
 All notable changes to the hFramework library.
 
 ## [Unreleased]
+- Refactored code for better IntelliSense support on windows
 - Added changelog
 ## [1.5.11] - 2018-07-30
 - Added enum for selecting IMU type
