@@ -27,8 +27,17 @@ private:
 public:
 	Wheel(hMotor& motor, bool polarity);
 	void begin();
+
+	/**
+	 * @brief Trigger PID regulator update cycle.
+	 * @param dt Regulator time step [ms]
+	 */
 	void update(uint32_t dt);
 	
+	/**
+	 * @brief Set desired motor speed controlled by PID regulator
+	 * @param speed Desired speed in encoder ticks per second
+	 */
 	void setSpeed(float speed);
 	float getSpeed();
 	

@@ -1,7 +1,11 @@
 # Change Log
 All notable changes to the hFramework library.
 
-## [Unreleased]
+## [1.5.13] - 2018-08-27
+- Updated documentation
+- Refactored wheel.h
+- Updated ROSbot parameters
+## [1.5.12] - 2018-08-09
 - Refactored code for better IntelliSense support on windows
 - Added changelog
 ## [1.5.11] - 2018-07-30

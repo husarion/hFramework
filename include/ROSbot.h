@@ -59,6 +59,12 @@ public:
   void initIMU(ImuType i = MPU9250);
 
   void reset_odometry();
+
+  /**
+   * @brief Set the motor speed accordingly to given angular and linear velocities.
+   * @param linear Desired robot linear speed [m/s]
+   * @param angular Desired angular speed [rad/s]
+   */
   void setSpeed(float linear, float angular);
 
   float getBatteryLevel();
@@ -95,8 +101,8 @@ private:
   float robot_width = 0.195;   // meters
   float wheel_radius = 0.0425; //meters
   float tyre_deflection = 1.042;
-  float diameter_mod = 1.24; 
-  uint16_t enc_res = 1633;   // encoder tics per wheel revolution
+  float diameter_mod = 1.24;
+  uint16_t enc_res = 1633; // encoder tics per wheel revolution
 
   float voltage_limit;
   float current_voltage;
