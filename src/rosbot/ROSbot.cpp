@@ -31,6 +31,7 @@ void ROSbot::initWheelController()
 
 void ROSbot::wheelUpdater()
 {
+    uint32_t t = sys.getRefTime();
     long dt = 10;
     for (;;)
     {
@@ -38,7 +39,7 @@ void ROSbot::wheelUpdater()
         wheelRR->update(dt);
         wheelRL->update(dt);
         wheelFL->update(dt);
-        sys.delay(dt);
+        sys.delaySync(t, dt);
     }
 }
 
@@ -47,13 +48,13 @@ void ROSbot::setSpeed(float linear, float angular)
     lin = linear;
     ang = angular;
 
-    L_wheel_lin_speed = lin - (ang * robot_width / 2.05);
-    R_wheel_lin_speed = lin + (ang * robot_width / 2.05);
+    L_wheel_lin_speed = lin - (ang * robot_width / 2);
+    R_wheel_lin_speed = lin + (ang * robot_width / 2);
     L_wheel_angular_velocity = L_wheel_lin_speed / wheel_radius;
     R_wheel_angular_velocity = R_wheel_lin_speed / wheel_radius;
-    L_enc_speed = 0.001 * enc_res * L_wheel_angular_velocity / (2 * M_PI);
-    R_enc_speed = 0.001 * enc_res * R_wheel_angular_velocity / (2 * M_PI);
-
+    L_enc_speed = enc_res * L_wheel_angular_velocity / (2 * M_PI);
+    R_enc_speed = enc_res * R_wheel_angular_velocity / (2 * M_PI);
+    
     wheelFL->setSpeed(L_enc_speed);
     wheelRL->setSpeed(L_enc_speed);
     wheelFR->setSpeed(R_enc_speed);
@@ -131,8 +132,8 @@ void ROSbot::odometryUpdater()
         enc_RL = wheelRL->getDistance();
         enc_FL = wheelFL->getDistance();
 
-        enc_L = (enc_FL + enc_RL) / 2;
-        enc_R = (enc_FR + enc_RR) / 2;
+        enc_L = (enc_FL + enc_RL) / (2 * tyre_deflection);
+        enc_R = (enc_FR + enc_RR) / (2 * tyre_deflection);
 
         wheel_L_ang_vel = ((2 * 3.14 * enc_L / enc_res) - wheel_L_ang_pos) / delay_s;
         wheel_R_ang_vel = ((2 * 3.14 * enc_R / enc_res) - wheel_R_ang_pos) / delay_s;
@@ -140,8 +141,8 @@ void ROSbot::odometryUpdater()
         wheel_L_ang_pos = 2 * 3.14 * enc_L / enc_res;
         wheel_R_ang_pos = 2 * 3.14 * enc_R / enc_res;
 
-        robot_angular_vel = (((wheel_R_ang_pos - wheel_L_ang_pos) * wheel_radius / robot_width) - robot_angular_pos) / delay_s;
-        robot_angular_pos = (wheel_R_ang_pos - wheel_L_ang_pos) * wheel_radius / robot_width;
+        robot_angular_vel = (((wheel_R_ang_pos - wheel_L_ang_pos) * wheel_radius / (robot_width * diameter_mod)) - robot_angular_pos) / delay_s;
+        robot_angular_pos = (wheel_R_ang_pos - wheel_L_ang_pos) * wheel_radius / (robot_width * diameter_mod);
         robot_x_vel = (wheel_L_ang_vel * wheel_radius + robot_angular_vel * robot_width / 2) * cos(robot_angular_pos);
         robot_y_vel = (wheel_L_ang_vel * wheel_radius + robot_angular_vel * robot_width / 2) * sin(robot_angular_pos);
         robot_x_pos = robot_x_pos + robot_x_vel * delay_s;

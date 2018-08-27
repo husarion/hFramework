@@ -92,9 +92,11 @@ private:
   float R_wheel_angular_velocity;
   float L_enc_speed;
   float R_enc_speed;
-  float robot_width = 0.3;   // meters
-  float wheel_radius = 0.04; //meters
-  uint16_t enc_res = 1400;   // encoder tics per wheel revolution
+  float robot_width = 0.195;   // meters
+  float wheel_radius = 0.0425; //meters
+  float tyre_deflection = 1.042;
+  float diameter_mod = 1.24; 
+  uint16_t enc_res = 1633;   // encoder tics per wheel revolution
 
   float voltage_limit;
   float current_voltage;
