@@ -9,17 +9,10 @@ Wheel::Wheel(hMotor& motor, bool polarity)
 
 void Wheel::begin()
 {
-	//dzialaly 01.03.2018
-	vReg.setScale(2);
-	vReg.setKP(100.0);
-	vReg.setKI(0.5);
-	vReg.setKD(200.0);
-
-
-// 	vReg.setScale(2);
-// 	vReg.setKP(100.0);
-// 	vReg.setKI(0.5); //0.5 - ok
-// 	vReg.setKD(400.0);
+	vReg.setScale(1);
+	vReg.setKP(0.25);
+	vReg.setKI(0.005);
+	vReg.setKD(0);
 
 	vReg.setRange(-vRange, vRange);
 
@@ -34,9 +27,9 @@ void Wheel::begin()
 void Wheel::update(uint32_t dt)
 {
 	float vErr = 0.0;
-	int32_t pidOut = 0;
+	float pidOut = 0;
 	dNow = mot->getEncoderCnt();
-	vNow = (dNow - lastPositions[0]) / (dt * lastPositions.size());
+	vNow = (dNow - (float)lastPositions[0]) / (dt * lastPositions.size() * 0.001);
 	lastPositions.push_back(dNow);
 
 	vErr = vNow - vTarget;
