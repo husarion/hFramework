@@ -64,8 +64,13 @@ void Wheel::reset()
 {
 	mot->resetEncoderCnt();
 	vReg.reset();
+	for (int i = 0; i < lastPositions.size(); i++)
+	{
+		lastPositions.push_back(0);
+	}
 	dNow = 0;
 	vNow = 0;
+	vTarget = 0;
 	mot->setPower(0);
 }
 

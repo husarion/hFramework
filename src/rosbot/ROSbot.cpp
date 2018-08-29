@@ -199,7 +199,6 @@ void ROSbot::reset_wheels()
 void ROSbot::reset_odometry()
 {
     reset_wheels();
-    reset_encoders();
     reset_odom_vars();
 }
 
