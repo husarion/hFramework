@@ -48,6 +48,7 @@ if(${BOARD_TYPE} STREQUAL "core2")
   set(HFRAMEWORK_FILES
 
   ${HFRAMEWORK_FILES}
+  src/panther/Panther.cpp
   src/rosbot/ROSbot.cpp
   src/rosbot/wheel.cpp
   src/rosbot/IMU.cpp
