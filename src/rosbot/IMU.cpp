@@ -103,7 +103,6 @@ float IMU::getAngle()
 	{
 		while (mpu.fifoAvailable())
 		{
-			hSens3.pin2.write(1);
 			// Use dmpUpdateFifo to update the ax, gx, mx, etc. values
 			if (mpu.dmpUpdateFifo() == INV_SUCCESS)
 			{
@@ -114,7 +113,6 @@ float IMU::getAngle()
 				retval = mpu.roll;
 				//	quatVisualisation();
 			}
-			hSens3.pin2.write(0);
 		}
 	}
 	return retval;
@@ -126,7 +124,6 @@ void IMU::getEulerAngles(float *roll, float *pitch, float *yaw)
 	{
 		while (mpu.fifoAvailable())
 		{
-			hSens3.pin2.write(1);
 			// Use dmpUpdateFifo to update the ax, gx, mx, etc. values
 			if (mpu.dmpUpdateFifo() == INV_SUCCESS)
 			{
@@ -141,7 +138,6 @@ void IMU::getEulerAngles(float *roll, float *pitch, float *yaw)
 				*pitch = -mpu.pitch;
 				*yaw = mpu.yaw;
 			}
-			hSens3.pin2.write(0);
 		}
 	}
 
