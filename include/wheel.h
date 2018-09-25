@@ -42,7 +42,6 @@ public:
 	float getSpeed();
 	
 	int32_t getDistance();
-	void resetDistance();
 	
 	void reset();
 	void turnOff();

@@ -55,11 +55,6 @@ int32_t Wheel::getDistance()
 	return dNow;
 }
 
-void Wheel::resetDistance()
-{
-	mot->resetEncoderCnt();
-}
-
 void Wheel::reset()
 {
 	mot->resetEncoderCnt();
