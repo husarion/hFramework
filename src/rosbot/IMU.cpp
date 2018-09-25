@@ -3,7 +3,6 @@
 #include "IMU.h"
 
 MPU9250_DMP mpu;
-hGPIO pin5V(91);
 
 void quatVisualisation()
 {
@@ -46,11 +45,6 @@ const signed char orientationDefault[9] = {0, 1, 0, 0, 0, 1, 1, 0, 0};
 
 void IMU::begin()
 {
-
-	pin5V.write(0);
-	sys.delay(50);
-	pin5V.write(1);
-	sys.delay(150);
 
 	hSens2.pin1.interruptOn_EdgeRising(); //interruptOn(InterruptEdge::Rising);
 
