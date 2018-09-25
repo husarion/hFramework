@@ -6,6 +6,9 @@
 #include "hFramework.h"
 #include "hCyclicBuffer.h"
 
+/** A class for controlling single wheel.
+ *  Class is using PID regulator for controlling wheel speed.
+ */
 class Wheel {
 private:
 	hMotor* mot;
@@ -25,6 +28,11 @@ private:
 	bool turnedOn = 1;
 	
 public:
+	/** 
+	 * Default constructor.
+	 * @param motor Pointer to motor which should be controlled.
+	 * @param polarity Determines which way is the positive rotation direction, if true, the direction is reversed.
+	 */
 	Wheel(hMotor& motor, bool polarity);
 	void begin();
 
@@ -35,16 +43,36 @@ public:
 	void update(uint32_t dt);
 	
 	/**
-	 * @brief Set desired motor speed controlled by PID regulator
+	 * @brief Set desired motor speed controlled by PID regulator.
 	 * @param speed Desired speed in encoder ticks per second
 	 */
 	void setSpeed(float speed);
+
+	/**
+	 * @brief Get current wheel speed.
+	 * @return Current speed in encoder ticks per second
+	 */
 	float getSpeed();
 	
+	/**
+	 * @brief Get distance travelled by the wheel.
+	 * @return Distance in encoder ticks
+	 */
 	int32_t getDistance();
-	
+
+	/**
+	 * @brief Reset wheel to initial state.
+	 */	
 	void reset();
+
+	/**
+	 * @brief Disable wheel operation.
+	 */
 	void turnOff();
+
+	/**
+	 * @brief Enable wheel operation.
+	 */
 	void turnOn();
 };
 
