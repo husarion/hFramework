@@ -4,12 +4,13 @@ namespace hFramework
 {
 Panther panther;
 
-void Panther::initPanther()
+void Panther::initPanther(uint16_t speed_timeout)
 {
     Serial.printf("panther initialization begin\n");
     initBatteryMonitor();
     initOdometry();
     initWheelController();
+    sys.taskCreate(std::bind(&Panther::speedWatchdog, this, speed_timeout));
     return;
 }
 
@@ -31,6 +32,23 @@ void Panther::setSpeedPower(float linear, float angular)
     hMotC.setPower(10 * (linear - angular));
     hMotA.setPower(10 * (linear + angular));
     hMotB.setPower(10 * (linear + angular));
+    lastSpeedUpdate = sys.getRefTime();
+}
+
+void Panther::speedWatchdog(uint32_t timeout)
+{
+    sys.log("Init watchdog for motors, timeout: %d", timeout);
+    uint64_t now;
+    while (true)
+    {
+        now = sys.getRefTime();
+        if (now > lastSpeedUpdate + timeout)
+        {
+            sys.log("Speed command not received for 300ms, stop motors\r\n");
+            setSpeedPower(0, 0);
+        }
+        sys.delay(timeout / 10);
+    }
 }
 
 void Panther::batteryMonitor()
