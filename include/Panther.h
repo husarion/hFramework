@@ -12,24 +12,30 @@ class Panther
 public:
   Panther(){};
   /**
-   * @brief RObot initialisation
+   * @brief Robot initialisation
    * @param speed_timeout Time in milliseconds to wait until motors are stopped.
+   * @param use_motor_PIDs If true will use PID regulators for motors speed, otherwise user can control motors power directly.
    */
-  void initPanther(uint16_t speed_timeout = 300, bool use_motor_PIDs = true);
+  void initPanther(uint16_t speed_timeout = 300, bool use_motor_PIDs = false);
 
-  void initWheelController(bool use_PID = true, float slewRate = 0.075);
+/**
+ * @brief Setup controller for motors 
+ * @param use_PID If true will use PID regulators for motors speed, otherwise user can control motors power directly.
+ * @param slewRate Time constant for motors acceleration limit.
+ */
+  void initWheelController(bool use_PID = false, float slewRate = 0.075);
   void initBatteryMonitor(float voltage_threshold = 10.5);
   float getBatteryLevel();
 
   /**
-   * @brief Set motors to drive with desired speed
+   * @brief Set robot to drive with desired speed, PID controllers must be enabled prior to use of this function.
    * @param linear Linear velocity [m/s]
    * @param angular Angular velocity [rad/s]
    */
   void setSpeed(float linear, float angular);
 
   /**
-   * @brief Set motors to drive with desired power
+   * @brief Set robot to drive with desired power
    * @param linear Percentage of maximum linear power
    * @param angular Percentage of maximum angular power
    */
