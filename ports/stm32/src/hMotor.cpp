@@ -77,7 +77,7 @@ void hMotor::setPowerLimit(int16_t limit)
 	impl.limit = limit;
 	impl.updatePower_internal(false);
 }
-void hMotor::setSlewRate(float time)
+void hMotor::setSlewRate(float time, bool useProgressiveSlew)
 {
 	impl.setSlewRate(time);
 }

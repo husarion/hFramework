@@ -303,7 +303,8 @@ void hMotorPimpl::updatePower_internal(bool force, int16_t power)
 	myPWM_counter_enable(pinPWM);
 	portENABLE_INTERRUPTS();
 }
-void hMotorPimpl::setSlewRate(float time)
+
+void hMotorPimpl::setSlewRate(float time, bool useProgressiveSlew)
 {
 	hMutexGuard guard(accessMutex);
 
@@ -316,7 +317,14 @@ void hMotorPimpl::setSlewRate(float time)
 			taskName[sizeof(taskName) - 2] = motorId + 1 + '0';
 			slewTaskRunning = true;
 			slewTaskExit = false;
-			slewTask = &sys.taskCreate(std::bind(&hMotorPimpl::slewRateTask, this), 3, 400, taskName);
+			if (useProgressiveSlew)
+			{
+				slewTask = &sys.taskCreate(std::bind(&hMotorPimpl::progressiveSlewRateTask, this), 3, 400, taskName);
+			}
+			else
+			{
+				slewTask = &sys.taskCreate(std::bind(&hMotorPimpl::slewRateTask, this), 3, 400, taskName);
+			}
 		}
 	}
 	else
@@ -328,6 +336,7 @@ void hMotorPimpl::setSlewRate(float time)
 		slewTask->join();
 	}
 }
+
 void hMotorPimpl::slewRateTask()
 {
 	uint32_t t = sys.getRefTime();
@@ -342,6 +351,35 @@ void hMotorPimpl::slewRateTask()
 			diffMult = diff > 0 ? 1 : -1;
 
 		int32_t newPower = curPower + diffMult;
+		updatePower_internal(false, newPower);
+	}
+
+	LOG("slew task ended");
+	slewTaskRunning = false;
+}
+
+void hMotorPimpl::progressiveSlewRateTask()
+{
+	uint32_t t = sys.getRefTime();
+	int32_t diff;
+	int32_t diffMult;
+	int32_t newPower;
+	int dt = 10;
+	int32_t diffThreshold = 200;
+	int32_t powerThreshold = 400;
+	while (!slewTaskExit)
+	{
+		sys.delaySync(t, dt);
+		diff = slewTarget - curPower;
+		if (abs(diff) > diffThreshold && abs(curPower) < powerThreshold)
+		{
+			diff = diff > 0 ? diffThreshold : -diffThreshold;
+		}
+		diffMult = diff * (int32_t)slewRate / 100;
+		if (diff != 0 && diffMult == 0)
+			diffMult = diff > 0 ? 1 : -1;
+		// Serial.printf("d: %5d, dM: %5d, cP: %5d, sT: %5d\r\n", diff, diffMult, curPower, slewTarget);
+		newPower = curPower + diffMult;
 		updatePower_internal(false, newPower);
 	}
 

@@ -158,8 +158,9 @@ public:
 	/**
 	* @brief Set slew rate for motor
 	* @param time (min 0.01) Time constant of rate regulation
+	* @param useProgressiveSlew If true, rate will be lowered when motors are close to stopping or reversing direction.
 	*/
-	void setSlewRate(float time);
+	void setSlewRate(float time, bool useProgressiveSlew = false);
 
 	/**
 	 * @brief Get number of encoder ticks.

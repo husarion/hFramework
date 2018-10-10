@@ -123,8 +123,9 @@ public:
 	void setPower(int16_t power);
 	void updatePower_internal(bool force) { updatePower_internal(force, curPower); }
 	void updatePower_internal(bool force, int16_t power);
-	void setSlewRate(float time);
+	void setSlewRate(float time, bool useProgressiveSlew = false);
 	void slewRateTask();
+	void progressiveSlewRateTask();
 
 	void attachPositionRegulator(hRegulator& regPosition);
 	bool rotAbs(int32_t angle, uint16_t power, uint32_t timeout);
