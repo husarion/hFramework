@@ -2,9 +2,8 @@
 #define _PANTHER_H_
 
 #include "hFramework.h"
+#include "wheel.h"
 #include "vector"
-
-#define VL53L0XXshutPort hSens6
 
 namespace hFramework
 {
@@ -16,11 +15,19 @@ public:
    * @brief RObot initialisation
    * @param speed_timeout Time in milliseconds to wait until motors are stopped.
    */
-  void initPanther(uint16_t speed_timeout = 300);
+  void initPanther(uint16_t speed_timeout = 300, bool use_motor_PIDs = true);
 
-  void initWheelController();
+  void initWheelController(bool use_PID = true, float slewRate = 0.075);
   void initBatteryMonitor(float voltage_threshold = 10.5);
   float getBatteryLevel();
+
+  /**
+   * @brief Set motors to drive with desired speed
+   * @param linear Linear velocity [m/s]
+   * @param angular Angular velocity [rad/s]
+   */
+  void setSpeed(float linear, float angular);
+
   /**
    * @brief Set motors to drive with desired power
    * @param linear Percentage of maximum linear power
@@ -47,6 +54,11 @@ private:
    */
   void speedWatchdog(uint32_t timeout);
 
+  Wheel *wheelFL;
+  Wheel *wheelRL;
+  Wheel *wheelFR;
+  Wheel *wheelRR;
+
   float lin;
   float ang;
   float L_wheel_lin_speed;
@@ -55,9 +67,9 @@ private:
   float R_wheel_angular_velocity;
   float L_enc_speed;
   float R_enc_speed;
-  float robot_width = 0.65;  // meters
-  float wheel_radius = 0.35; //meters
-  uint16_t enc_res = 100;    // encoder tics per wheel revolution
+  float robot_width = 0.65;   // meters
+  float wheel_radius = 0.381; //meters
+  uint16_t enc_res = 100;     // encoder tics per wheel revolution
 
   float voltage_limit;
   float current_voltage;

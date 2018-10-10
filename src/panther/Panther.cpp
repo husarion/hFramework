@@ -4,34 +4,93 @@ namespace hFramework
 {
 Panther panther;
 
-void Panther::initPanther(uint16_t speed_timeout)
+void Panther::initPanther(uint16_t speed_timeout, bool use_motor_PIDs)
 {
     Serial.printf("panther initialization begin\n");
     initBatteryMonitor();
     initOdometry();
-    initWheelController();
+    initWheelController(use_motor_PIDs, 0.075);
     sys.taskCreate(std::bind(&Panther::speedWatchdog, this, speed_timeout));
     return;
 }
 
-void Panther::initWheelController()
+void Panther::initWheelController(bool use_PID, float slewRate)
 {
-    hMotD.setMotorPolarity(Polarity::Reversed);
-    hMotD.setEncoderPolarity(Polarity::Reversed);
-    hMotC.setMotorPolarity(Polarity::Reversed);
-    hMotC.setEncoderPolarity(Polarity::Reversed);
-    hMotA.setMotorPolarity(Polarity::Normal);
-    hMotA.setEncoderPolarity(Polarity::Normal);
-    hMotB.setMotorPolarity(Polarity::Normal);
-    hMotB.setEncoderPolarity(Polarity::Normal);
+    if (use_PID)
+    {
+        wheelFL = new Wheel(hMotD, 1);
+        wheelRL = new Wheel(hMotC, 1);
+        wheelFR = new Wheel(hMotA, 0);
+        wheelRR = new Wheel(hMotB, 0);
+
+        wheelFL->begin();
+        wheelRL->begin();
+        wheelFR->begin();
+        wheelRR->begin();
+        sys.taskCreate(std::bind(&Panther::wheelUpdater, this));
+    }
+    else
+    {
+        hMotD.setMotorPolarity(Polarity::Reversed);
+        hMotD.setEncoderPolarity(Polarity::Reversed);
+        hMotC.setMotorPolarity(Polarity::Reversed);
+        hMotC.setEncoderPolarity(Polarity::Reversed);
+        hMotA.setMotorPolarity(Polarity::Normal);
+        hMotA.setEncoderPolarity(Polarity::Normal);
+        hMotB.setMotorPolarity(Polarity::Normal);
+        hMotB.setEncoderPolarity(Polarity::Normal);
+    }
+    hMot1.setPWMFreq(PWM_freq_hMotor_ID_1, PWM_freq_1_kHz);
+    hMot2.setPWMFreq(PWM_freq_hMotor_ID_2, PWM_freq_1_kHz);
+    hMot3.setPWMFreq(PWM_freq_hMotor_ID_3, PWM_freq_1_kHz);
+    hMot4.setPWMFreq(PWM_freq_hMotor_ID_4, PWM_freq_1_kHz);
+
+    hMot1.setSlewRate(slewRate, true);
+    hMot2.setSlewRate(slewRate, true);
+    hMot3.setSlewRate(slewRate, true);
+    hMot4.setSlewRate(slewRate, true);
+}
+
+void Panther::wheelUpdater()
+{
+    uint32_t t = sys.getRefTime();
+    long dt = 10;
+    for (;;)
+    {
+        wheelFR->update(dt);
+        wheelRR->update(dt);
+        wheelRL->update(dt);
+        wheelFL->update(dt);
+        sys.delaySync(t, dt);
+    }
+}
+
+void Panther::setSpeed(float linear, float angular)
+{
+    lin = linear;
+    ang = angular;
+
+    L_wheel_lin_speed = lin - (ang * robot_width / 2);
+    R_wheel_lin_speed = lin + (ang * robot_width / 2);
+    L_wheel_angular_velocity = L_wheel_lin_speed / wheel_radius;
+    R_wheel_angular_velocity = R_wheel_lin_speed / wheel_radius;
+    L_enc_speed = enc_res * L_wheel_angular_velocity / (2 * M_PI);
+    R_enc_speed = enc_res * R_wheel_angular_velocity / (2 * M_PI);
+
+    wheelFL->setSpeed(L_enc_speed);
+    wheelRL->setSpeed(L_enc_speed);
+    wheelFR->setSpeed(R_enc_speed);
+    wheelRR->setSpeed(R_enc_speed);
 }
 
 void Panther::setSpeedPower(float linear, float angular)
 {
-    hMotD.setPower(10 * (linear - angular));
-    hMotC.setPower(10 * (linear - angular));
-    hMotA.setPower(10 * (linear + angular));
-    hMotB.setPower(10 * (linear + angular));
+    float left_mot = 10 * (linear - angular);
+    float right_mot = 10 * (linear + angular);
+    hMotD.setPower(left_mot);
+    hMotC.setPower(left_mot);
+    hMotA.setPower(right_mot);
+    hMotB.setPower(right_mot);
     lastSpeedUpdate = sys.getRefTime();
 }
 
