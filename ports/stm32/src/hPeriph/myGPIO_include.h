@@ -26,7 +26,7 @@
 #elif BOARD_VERSION_EQ(CORE2MINI,0,2,0)
 #include "myGPIO_0_2_0_core2mini.h"
 #elif BOARD_VERSION_EQ(CORE2MINI,1,0,0)
-#include "myGPIO_0_2_0_core2mini.h"
+#include "myGPIO_1_0_0_core2mini.h"
 #elif BOARD_VERSION_EQ(ROBOCORE,1,0,0)
 #include "myGPIO_1_0_0_robocore.h"
 #elif BOARD_VERSION_EQ(CORE2,0,2,0)
