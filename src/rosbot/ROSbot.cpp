@@ -54,7 +54,7 @@ void ROSbot::setSpeed(float linear, float angular)
     R_wheel_angular_velocity = R_wheel_lin_speed / wheel_radius;
     L_enc_speed = enc_res * L_wheel_angular_velocity / (2 * M_PI);
     R_enc_speed = enc_res * R_wheel_angular_velocity / (2 * M_PI);
-    
+
     wheelFL->setSpeed(L_enc_speed);
     wheelRL->setSpeed(L_enc_speed);
     wheelFR->setSpeed(R_enc_speed);
@@ -123,6 +123,16 @@ void ROSbot::initOdometry()
     sys.taskCreate(std::bind(&ROSbot::odometryUpdater, this));
 }
 
+wheelsState ROSbot::getWheelsState()
+{
+    wheelsState ws;
+    ws.FL = wheel_FL_ang_pos;
+    ws.FR = wheel_FR_ang_pos;
+    ws.RL = wheel_RL_ang_pos;
+    ws.RR = wheel_RR_ang_pos;
+    return ws;
+}
+
 void ROSbot::odometryUpdater()
 {
     while (true)
@@ -131,6 +141,11 @@ void ROSbot::odometryUpdater()
         enc_RR = wheelRR->getDistance();
         enc_RL = wheelRL->getDistance();
         enc_FL = wheelFL->getDistance();
+
+        wheel_FL_ang_pos = 2 * 3.14 * enc_FL / enc_res;
+        wheel_FR_ang_pos = 2 * 3.14 * enc_FR / enc_res;
+        wheel_RL_ang_pos = 2 * 3.14 * enc_RL / enc_res;
+        wheel_RR_ang_pos = 2 * 3.14 * enc_RR / enc_res;
 
         enc_L = (enc_FL + enc_RL) / (2 * tyre_deflection);
         enc_R = (enc_FR + enc_RR) / (2 * tyre_deflection);
