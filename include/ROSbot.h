@@ -47,6 +47,9 @@ struct hMUX
   hMUX(bool tp2, bool tp3, bool tp4, bool tactive) : p2(tp2), p3(tp3), p4(tp4), active(tactive) {}
 };
 
+/**
+ * Container for wheel angular position.
+ */
 struct wheelsState
 {
   float FL;
@@ -80,6 +83,9 @@ public:
   std::vector<float> getRanges(SensorType s = SENSOR_LASER);
   std::vector<float> getRPY();
 
+  /**
+   * @brief Get wheels angular positions in radians.
+   */
   wheelsState getWheelsState();
 
 private:
