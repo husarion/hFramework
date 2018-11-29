@@ -31,7 +31,7 @@ else()
   message(FATAL_ERRROR "invalid architecture ${ARCH}")
 endif()
 
-add_definitions("-fstack-protector-strong -fsanitize=undefined -fsanitize=address")
+add_definitions("-fstack-protector-strong")# -fsanitize=undefined -fsanitize=address")
 
 set(CMAKE_C_COMPILER ${prefix}gcc)
 set(CMAKE_ASM_COMPILER ${prefix}gcc)

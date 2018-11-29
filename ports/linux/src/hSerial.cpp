@@ -234,6 +234,7 @@ bool hSerialPTY::init()
 
 	write_fd = master;
 	read_fd = master;
+	return true;
 }
 
 }
