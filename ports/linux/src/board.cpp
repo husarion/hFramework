@@ -7,7 +7,8 @@ bool initialized = false;
 
 enum BoardModel {
     RaspberryPi,
-    Tinkerboard
+    Tinkerboard,
+    UpBoard
 };
 
 BoardModel boardModel;
@@ -16,6 +17,7 @@ void initBoard() {
     hMutexGuard guard (mutex);
     if (initialized) return;
 
+    #if defined(__arm__)
     std::ifstream f ("/proc/device-tree/compatible");
     std::string model;
     std::getline(f, model);
@@ -43,6 +45,20 @@ void initBoard() {
         gpio12.nr = 18;
         gpio13.nr = 27;
     }
+    #else
+    // upboard
+
+    boardModel = UpBoard;
+    gpio3.nr = 2; // same layout as RPi :)
+    gpio5.nr = 3;
+    gpio7.nr = 4;
+    gpio8.nr = 14;
+    gpio10.nr = 15;
+    gpio11.nr = 17;
+    gpio12.nr = 18;
+    gpio13.nr = 27;
+
+    #endif
 
     initialized = true;
 }
@@ -56,6 +72,9 @@ bool hBoardSerial::init(uint32_t baudrate, Parity parity) {
         break;
     case Tinkerboard:
         path = "/dev/ttyS1";
+        break;
+    case UpBoard:
+        path = "/dev/ttyS4";
         break;
     }
 

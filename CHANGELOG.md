@@ -1,6 +1,14 @@
 # Change Log
 All notable changes to the hFramework library.
 
+## [Unreleased]
+- Fixed ADC ports assignment for CORE2mini
+## [1.5.16] - 2018-10-22
+- Corrected timer association for encoders
+- Added pinout for CORE2mini 1.0.0 and swapped master/slave motor port
+## [1.5.15] - 2018-10-17
+- Removed calls to pin 91
+- Fixed wheel reset
 ## [1.5.13] - 2018-08-27
 - Updated documentation
 - Refactored wheel.h

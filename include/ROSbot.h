@@ -47,6 +47,17 @@ struct hMUX
   hMUX(bool tp2, bool tp3, bool tp4, bool tactive) : p2(tp2), p3(tp3), p4(tp4), active(tactive) {}
 };
 
+/**
+ * Container for wheel angular position.
+ */
+struct wheelsState
+{
+  float FL;
+  float RL;
+  float FR;
+  float RR;
+};
+
 class ROSbot
 {
 public:
@@ -71,6 +82,11 @@ public:
   std::vector<float> getPose();
   std::vector<float> getRanges(SensorType s = SENSOR_LASER);
   std::vector<float> getRPY();
+
+  /**
+   * @brief Get wheels angular positions in radians.
+   */
+  wheelsState getWheelsState();
 
 private:
   void wheelUpdater();
@@ -113,6 +129,11 @@ private:
   int32_t enc_RL = 0; // encoder tics
   int32_t enc_FR = 0; // encoder tics
   int32_t enc_RR = 0; // encoder tics
+
+  float wheel_FL_ang_pos = 0; //radians
+  float wheel_FR_ang_pos = 0; //radians
+  float wheel_RL_ang_pos = 0; //radians
+  float wheel_RR_ang_pos = 0; //radians
 
   int32_t enc_L = 0;         // encoder tics
   float wheel_L_ang_pos = 0; // radians
