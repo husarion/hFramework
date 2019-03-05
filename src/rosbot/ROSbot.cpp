@@ -17,10 +17,10 @@ void ROSbot::initROSbot(SensorType s, ImuType i)
 
 void ROSbot::initWheelController()
 {
-    wheelFL = new Wheel(hMotD, 1);
-    wheelRL = new Wheel(hMotC, 1);
-    wheelFR = new Wheel(hMotA, 0);
-    wheelRR = new Wheel(hMotB, 0);
+    wheelFL = new Wheel(hMotD, 1, wheel_max_speed);
+    wheelRL = new Wheel(hMotC, 1, wheel_max_speed);
+    wheelFR = new Wheel(hMotA, 0, wheel_max_speed);
+    wheelRR = new Wheel(hMotB, 0, wheel_max_speed);
 
     wheelFL->begin();
     wheelRL->begin();

@@ -119,6 +119,7 @@ private:
   float tyre_deflection = 1.042;
   float diameter_mod = 1.24;
   uint16_t enc_res = 1633; // encoder tics per wheel revolution
+  float wheel_max_speed = 8000;
 
   float voltage_limit;
   float current_voltage;
