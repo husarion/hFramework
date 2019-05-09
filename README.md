@@ -17,12 +17,12 @@ This section describes how to build hFramework yourself,
 1. First install the dependencies. For example, on Ubuntu:
 
   ```
-  apt-get install cmake ninja-build gcc-arm-none-eabi
+  sudo apt-get install cmake ninja-build gcc-arm-none-eabi
   ```
 
   On Windows, all required dependencies are bundled as part of VSCode plugin. You can also download standalone package: [HusarionTools-v3.exe](https://cdn.atomshare.net/cc70b0184feefaf7ead3741c58f98200cf8e017b/HusarionTools-v3.exe).
 
-  A complete tutorial how to ude hFramework library can be found here: https://husarion.com/core2/tutorials/howtostart/hframework-library-development/
+  A complete tutorial how to ude hFramework library can be found here: https://husarion.com/tutorials/other-tutorials/hframework-library-development/
 
 2. Configure and build the project.
 
