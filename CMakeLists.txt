@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 get_filename_component(CURRENT_DIR ${CMAKE_CURRENT_LIST_FILE} PATH) # for cmake before 2.8.3
+get_filename_component(HFRAMEWORK_BASE_DIR ${CMAKE_CURRENT_LIST_FILE} PATH)
+get_filename_component(HFRAMEWORK_DIR ${CMAKE_CURRENT_LIST_FILE} PATH)
 
 project(hFramework NONE)
 
@@ -12,7 +14,7 @@ if(NOT RELEASE)
 	set(debug_flags "${debug_flags} -DDEBUG")
 endif()
 
-include("${HFRAMEWORK_PATH}/hFrameworkPort.cmake")
+include("${HFRAMEWORK_DIR}/hFrameworkPort.cmake")
 
 include_directories("${CURRENT_DIR}/include/")
 include_directories("${CMAKE_BINARY_DIR}")

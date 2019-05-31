@@ -32,3 +32,4 @@ dist.zip
 tools/
 libs/
 *.bat
+/robocore

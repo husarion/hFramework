@@ -1,5 +1,4 @@
 set(CMAKE_SYSTEM_NAME "Generic")
-get_filename_component(HFRAMEWORK_DIR ${CMAKE_CURRENT_LIST_FILE} PATH) # for cmake before 2.8.3
 cmake_policy(SET CMP0015 NEW) # absolute link_directories
 cmake_policy(SET CMP0011 OLD) # policy
 
@@ -112,7 +111,7 @@ else()
   set(USES_SDK true)
 endif()
 
-include("${HFRAMEWORK_DIR}/ports/${PORT}/options.cmake")
+include("${HFRAMEWORK_BASE_DIR}/ports/${PORT}/options.cmake")
 
 #set(CMAKE_FIND_ROOT_PATH toolchain)
 #set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)

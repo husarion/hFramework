@@ -1,4 +1,4 @@
-get_filename_component(PORT_DIR ${CMAKE_CURRENT_LIST_FILE} PATH) # for cmake before 2.8.3
+set(PORT_DIR "${HFRAMEWORK_DIR}/ports/stm32")
 
 set(prefix arm-none-eabi-)
 if (WIN32)

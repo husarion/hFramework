@@ -1,5 +1,4 @@
 get_filename_component(HFRAMEWORK_DIR ${CMAKE_CURRENT_LIST_FILE} PATH) # for cmake before 2.8.3
-set(HFRAMEWORK_DIR_Q "\"${HFRAMEWORK_DIR}\"")
 
 if(WIN32)
   set(TOOLS_ARCH_NAME win)
@@ -9,7 +8,14 @@ else()
   set(TOOLS_ARCH_NAME amd64-linux)
 endif()
 
-include("${HFRAMEWORK_DIR}/hFrameworkPort.cmake")
+set(HFRAMEWORK_BASE_DIR "${HFRAMEWORK_DIR}")
+if ("${BOARD_TYPE}" STREQUAL robocore)
+  set(HFRAMEWORK_DIR "${HFRAMEWORK_DIR}/robocore")
+endif()
+
+set(HFRAMEWORK_DIR_Q "\"${HFRAMEWORK_DIR}\"")
+
+include("${HFRAMEWORK_BASE_DIR}/hFrameworkPort.cmake")
 
 set(compiler_flags "-g")
 
@@ -18,6 +24,7 @@ macro(add_component_lib name)
 endmacro()
 
 macro(enable_module name)
+  if (NOT ((${name} STREQUAL hModules) AND ("${BOARD_TYPE}" STREQUAL robocore)))
   if (USES_SDK)
     include_directories("${HFRAMEWORK_DIR}/include/${name}")
     set(module_libraries "${module_libraries} -l${name}")
@@ -35,6 +42,7 @@ macro(enable_module name)
     include_directories("${module_path}/include/")
     set(ADDITIONAL_LINK_DIRS "${ADDITIONAL_LINK_DIRS} -L${module_path}/build/${PORT}_${BOARD_TYPE}_${BOARD_VERSION_DOT}")
     set(module_libraries "${module_libraries} -l${name}")
+  endif()
   endif()
 endmacro()
 
@@ -79,7 +87,7 @@ endfunction()
 
 include_directories("${HFRAMEWORK_DIR}/include")
 
-if (USES_SDK)
+if (USES_SDK OR "${BOARD_TYPE}" STREQUAL robocore)
   set(ADDITIONAL_LINK_DIRS "-L${HFRAMEWORK_DIR_Q}/libs/${PORT}_${BOARD_TYPE}_${BOARD_VERSION}")
 else()
   string(REPLACE _ . BOARD_VERSION_DOT ${BOARD_VERSION})
