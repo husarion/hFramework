@@ -61,7 +61,7 @@ void hServoModule_Servo::setWidth(uint16_t widthUs)
 }
 void hServoModule_Servo::setPeriod(uint16_t periodUs)
 {
-	hServoModule.setPeriod(periodUs);
+	hServoModule.setPeriod(num - 1, periodUs);
 }
 
 // ***************************************************************
