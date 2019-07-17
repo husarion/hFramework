@@ -113,13 +113,19 @@ void hServoModuleClass::setWidth(int num, uint16_t widthUs)
 	myPWM_setWidth_us(pinPWM, widthUs);
 }
 
-void hServoModuleClass::setPeriod(uint16_t periodUs)
+void hServoModuleClass::setPeriod(int num, uint16_t periodUs)
 {
-	for (int i = 0; i < SERVOS_COUNT; i++)
-	{
-		int pinPWM = pins[i];
-		myPWM_setPeriod_us(pinPWM, periodUs);
+	if (num >= SERVOS_COUNT) {
+		for (int i = 0; i < SERVOS_COUNT; i++)
+		{
+			int pinPWM = pins[i];
+			myPWM_setPeriod_us(pinPWM, periodUs);
+		}
+		return;
 	}
+		
+	int pinPWM = pins[num];
+	myPWM_setPeriod_us(pinPWM, periodUs);
 }
 
 void hServoModuleClass::enablePower()
