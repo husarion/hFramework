@@ -39,7 +39,7 @@ public:
 	hServoModuleClass();
 
 	void setWidth(int num, uint16_t widthUs);
-	void setPeriod(int num=0xff, uint16_t periodUs);
+	void setPeriod(int num=0xff, uint16_t periodUs=20000);
 
 	void enablePower();
 	void disablePower();
